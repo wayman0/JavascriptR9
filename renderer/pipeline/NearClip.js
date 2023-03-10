@@ -4,7 +4,7 @@ import * as Point from "./NearClip_Point.js"
 export var doNearClipping = true;
 export var debug = false;
 
-export default function clip(model, camera)
+export function clip(model, camera)
 {
     if(!doNearClipping)
         return model;

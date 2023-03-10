@@ -3,7 +3,7 @@ export var doAntiAliasing = false;
 export var doGamma = true;
 export var GAMMA = 2.2;
 
-export default function rasterize(model, vp)
+export function rasterize(model, vp)
 {
     for(const p of model.primitiveList)
     {

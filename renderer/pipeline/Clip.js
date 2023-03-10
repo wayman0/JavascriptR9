@@ -3,7 +3,7 @@ import * as Point from "./Clip_Point.js"
 
 export var debug = false;
 
-export default function clip(model)
+export function clip(model)
 {
     const model2 = new model(model.vertexList, 
                             model.primitiveList,
