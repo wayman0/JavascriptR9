@@ -84,7 +84,7 @@
    and {@code top = +1}.
 */
 
-import Scene from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
 
 export default class PerspectiveNormalizeMatrix
 {

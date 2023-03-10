@@ -18,7 +18,7 @@
       positive {@code y} direction is downward.
 */
 
-import FrameBuffer from "./FrameBuffer.js";
+import {FrameBuffer} from "./FramebufferImport.js";
 import Color from "../color/Color.js";
 
 export default class Viewport

@@ -4,8 +4,9 @@
  * See LICENSE for details.
 */
 
-import Scene from "./SceneImport.js";
-import Util from "./UtilImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "../SceneImport.js";
+import {Primitive, Point, LineSegment} from "../primitives/PrimitiveImport.js";
+import Color from "../../color/Color.js";
 
 /**
    Convert a {@link Model} object into a point cloud {@link Model}.

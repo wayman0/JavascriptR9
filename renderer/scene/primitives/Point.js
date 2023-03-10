@@ -12,7 +12,8 @@
    into the {@link java.awt.Color} list of that {@link renderer.scene.Model}
    object.
 */
-import Primitive from "./Primitive.js";
+
+import {Primitive} from "./PrimitiveImport";
 
 export default class Point extends Primitive
 {

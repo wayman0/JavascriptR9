@@ -9,8 +9,8 @@
    and/or debugging a {@link Model}.
 */
 
-import Scene from "./SceneImport.js";
-import Util from "./UtilImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
+import {Primitive, Point, LineSegment} from "../primitives/PrimitiveImport.js";
 
 export default class CheckModel
 {

@@ -65,7 +65,7 @@
               https://www.google.com/search?q=computer+graphics+wireframe&tbm=isch</a>
 */
 
-import Scene from "./SceneImport.js";
+import {Camera, Matrix, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
 
 import Color from "../color/Color.js";
 

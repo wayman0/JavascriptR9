@@ -4,7 +4,7 @@
     See LICENSE for details.
 */
 
-import Viewport from "./Viewport.js";
+import {Viewport} from "./FramebufferImport.js";
 import Color from "../color/Color.js";
 
 export default class FrameBuffer

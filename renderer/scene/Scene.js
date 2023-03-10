@@ -18,7 +18,7 @@
    determines how much of the scene is actually visible (to the
    camera) and gets rendered into the framebuffer.
 */
-import Scene from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Vector, Vertex} from "./SceneImport.js";
 
 export default class Scene
 {

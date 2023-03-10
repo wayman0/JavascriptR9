@@ -15,8 +15,7 @@
    has its fourth coordinate set to 0.
 */
 
-import Scene from "./SceneImport.js";
-
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vertex} from "./SceneImport.js";
 export default class Vector
 {
    x;

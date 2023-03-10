@@ -11,6 +11,8 @@
    keeping all the other model parameters unchanged.
 */
 
+import {Model} from "../SceneImport.js";
+
 export default class MeshMaker
 {
     getHorzCount();

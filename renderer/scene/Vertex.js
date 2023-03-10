@@ -27,7 +27,7 @@
    {@code Vertex} object, instead of mutating it.
 */
 
-import Scene from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector} from "./SceneImport.js";
 
 export default class Vertex
 {

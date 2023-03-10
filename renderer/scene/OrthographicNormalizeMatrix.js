@@ -47,7 +47,7 @@
    and {@code top = +1}.
 */
 
-import Scene from "./SceneImport.js";
+import {Camera, Matrix, Model, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
 
 export default class OrthographicNormalizeMatrix
 {

@@ -4,13 +4,16 @@
  * See LICENSE for details.
 */
 
-import SceneImport from "./SceneImport.js";
-import UtilImport from "./UtilImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Scene, Position, Vector, Vertex} from "./SceneImport.js";
+import {CheckModel, MeshMaker, PointCloud} from "./UtilImport.js";
 
 /**
    This is a library of static methods that
    add color shading to a {@link Model}.
 */
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
+import {Primitive, Point, LineSegment} from "../primitives/PrimitiveImport.js";
+import Color from "../../color/Color.js";
 
 export default class ModelShading
 {

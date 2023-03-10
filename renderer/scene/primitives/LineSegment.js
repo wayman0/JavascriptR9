@@ -14,7 +14,8 @@
    list of that {@link renderer.scene.Model} object.
 */
 
-import Primitive  from "./Primitive.js";
+import {Primitive} from "./PrimitiveImport";
+
 
 export default class LineSegment extends Primitive
 {

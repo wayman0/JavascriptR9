@@ -59,7 +59,7 @@
    {@code Position}'s {@link Model} within the {@link Camera}'s view coordinate
    system.
 */
-import Scene from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Scene, Vector, Vertex} from "./SceneImport.js";
 
 export default class Position
 {

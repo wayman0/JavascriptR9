@@ -65,7 +65,7 @@
    cross the camera plane, {@code z = 0}.
 */
 
-import Scene from "./SceneImport.js";
+import {Matrix, Model, OrthoNorm, PerspNorm, Position, Vector, Vertex} from "./SceneImport.js";
 
 export default class Camera
 {
