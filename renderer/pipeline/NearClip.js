@@ -1,4 +1,5 @@
 import {NearLine, NearPoint, logPrimitive} from "./PipelineImport.js";
+import {Camera, Model, Primitive, LineSegment, Point} from "../scene/SceneImport.js";
 
 export var doNearClipping = true;
 export var nearDebug = false;
@@ -8,7 +9,7 @@ export function clip(model, camera)
     if(!doNearClipping)
         return model;
 
-    const model2 = new model(model.vertexList, 
+    const model2 = new Model(model.vertexList, 
                             model.primitiveList,
                             new Array(model.colorList),
                             model.name, 
@@ -36,7 +37,7 @@ export function clip(model, camera)
         }
     }
 
-    return new model(model2.vertexList, 
+    return new Model(model2.vertexList, 
                     newPrimitiveList, 
                     model2.colorList,
                     model2.name,
