@@ -1,3 +1,5 @@
+import {nearDebug, logMessage} from "./PipelineImport.js";
+
 export default function clip(model, ls, camera)
 {
     const n = camera.n;
@@ -10,14 +12,14 @@ export default function clip(model, ls, camera)
 
     if(z0 <= n && z1 <= n)
     {
-        if(Clip.debug)
+        if(nearDebug)
            logMessage("-- Near_Clip: Trivial accept.");
            
         return ls;
     }
     else if(z0 > n && z1 > n)
     {
-        if(Clip.debug)
+        if(nearDebug)
             logMessage("-- Near_Clip: Trivial delete");
 
         return undefined;
@@ -75,7 +77,7 @@ interpolateNewVertex(model, ls, n)
     else
         vNearIndex = 1;
 
-    if(Clip.debug)
+    if(nearDebug)
     {
         const vClipped = (0 == vNearIndex) ? "v0" : "v1";
 

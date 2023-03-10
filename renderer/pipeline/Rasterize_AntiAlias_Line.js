@@ -1,3 +1,5 @@
+import {rastDebug, doAntiAliasing, doGamma, logMessage, logPixel, logPixelsXAA, logPixelsYAA} from "./PipelineImport.js";
+
 export default function rasterize(model, ls, vp)
 {
     const bg = vp.bgColorVP;
@@ -19,7 +21,7 @@ export default function rasterize(model, ls, vp)
     x0 = .5 + w/2.001 * (v0.x + 1), x1 = .5 + w/2.001 * (v1.x + 1);
     y0 = .5 + h/2.001 * (v0.y + 1), y1 = .5 + h/2.001 * (v1.y + 1);
     
-    if(rasterize.debug)
+    if(rastDebug)
     {
         logMessage(("(x0_pp, y0_pp) = (%9.4f, %9.4f)", x0,y0));
         logMessage(("(x1_pp, y1_pp) = (%9.4f, %9.4f)", x1,y1));
@@ -33,7 +35,7 @@ export default function rasterize(model, ls, vp)
         const x0VP = Math.trunc(x0) -1;
         const y0VP = Math.trunc(y0);
 
-        if(rasterize.debug)
+        if(rastDebug)
             logPixel(x0, y0, x0VP, y0VP, r0, g0, b0, vp);
 
         vp.setPixelVP(x0VP, y0VP, new Color(r0, g0, b0, 255, model.colorList[cIndex0].isFloat()));
@@ -83,15 +85,15 @@ export default function rasterize(model, ls, vp)
     const slopeG = (g1 - g0)/denom;
     const slopeB = (b1 - b0)/denom;
 
-    if(rasterize.debug)
+    if(rastDebug)
     {
         const inverseSlope = (transposedLine) ? " (transposed, so 1/m = " + 1/m + ")" : "";
         logMessage("Slope m    = " + m + inverseSlope);
-         logMessage("Slope mRed = " + slopeR);
-         logMessage("Slope mGrn = " + slopeG);
-         logMessage("Slope mBlu = " + slopeB);
-         logMessage(("(x0_vp, y0_vp) = (%9.4f, %9.4f)", x0-1,h-y0));
-         logMessage(("(x1_vp, y1_vp) = (%9.4f, %9.4f)", x1-1,h-y1));
+        logMessage("Slope mRed = " + slopeR);
+        logMessage("Slope mGrn = " + slopeG);
+        logMessage("Slope mBlu = " + slopeB);
+        logMessage(("(x0_vp, y0_vp) = (%9.4f, %9.4f)", x0-1,h-y0));
+        logMessage(("(x1_vp, y1_vp) = (%9.4f, %9.4f)", x1-1,h-y1));
     }
 
     y = y0;
@@ -102,7 +104,7 @@ export default function rasterize(model, ls, vp)
         g = Math.abs(g0 + slopeG * (x - x0));
         b = Math.abs(b0 + slopeB * (x - x0));
         
-        if(rasterize.doAntiAliasing)
+        if(doAntiAliasing)
         {
             yLow = Math.trunc(y);
             yHi = yLow + 1;
@@ -120,7 +122,7 @@ export default function rasterize(model, ls, vp)
             gH = weight * g + (1-weight) * (bg.getGreen()/255);
             bH = weight * b + (1-weight) * (bg.getBlue()/255);
             
-            if(rasterize.doGamma)
+            if(doGamma)
             {
                 rL = Math.pow(rL, Color.GAMMA);
                 gL = Math.pow(gL, Color.GAMMA);
@@ -136,7 +138,7 @@ export default function rasterize(model, ls, vp)
                 const yVPLow = h-yLow;
                 const yVPHi = h-yHi;
 
-                if(rasterize.debug)
+                if(rastDebug)
                     logPixelsYAA(x, y, xVP, yVPLow, yVPHi,
                                 rL, gL, bL, rH, gH, bH, vp);
 
@@ -149,7 +151,7 @@ export default function rasterize(model, ls, vp)
                 const xVPHi = yHi -1;
                 const yVP = h-x;
 
-                if(rasterize.debug)
+                if(rastDebug)
                     logPixelsXAA(y, x, xVPLow, xVPHi, yVP, 
                                 rL, gL, bL, rH, gH, bH, vp);
 
@@ -159,7 +161,7 @@ export default function rasterize(model, ls, vp)
         }
         else
         {
-            if(rasterize.doGamma)
+            if(doGamma)
             {
                 r = Math.pow(r, Color.GAMMA);
                 g = Math.pow(g, Color.GAMMA);
@@ -171,7 +173,7 @@ export default function rasterize(model, ls, vp)
                 const xVp = x-1;
                 const yVP = h-Math.trunc(Math.round(y));
                 
-                if(rasterize.debug)
+                if(rastDebug)
                     logPixel(x, y, xVP, yVP, r, g, b, vp);
 
                 vp.setPixelVP(xVP, yVP, new Color(r, g, b, 255, (r < 1 && g < 1 && b < 1)));
@@ -181,7 +183,7 @@ export default function rasterize(model, ls, vp)
                 const xVP = Math.trunc(Math.round(y)) -1;
                 const yVP = h-x;
 
-                if(rasterize.debug)
+                if(rastDebug)
                     logPixel(y, x, xVP, yVP, r, g, b, vp);
 
                 vp.setPixelVP(xVP, yVP, new Color(r, g, b, 255, (r < 1 && g < 1 && b < 1)))
@@ -194,7 +196,7 @@ export default function rasterize(model, ls, vp)
         const xVP = Math.trunc(x1) - 1;
         const yVP = h - Math.trunc(y1);
 
-        if(rasterize.debug)
+        if(rastDebug)
             logPixel(x1, y1, xVP, yVP, r1, g1, b1, vp);
 
         vp.setPixelVP(xVP, yVP, new Color(r1, g1, b1, 255, (r1 < 1 && g1 < 1 && b1 < 1)));
@@ -204,7 +206,7 @@ export default function rasterize(model, ls, vp)
         const xVP = Math.trunc(y1) - 1;
         const yVP  = h - Math.trunc(x1);
 
-        if(rasterize.debug)
+        if(rastDebug)
             logPixel(y1, x1, xVP, yVP, r1, g1, b1, vp);
 
         vp.setPixelVP(xVp, yVP, new Color(r1, g1, b1, 255, (r1 < 1 && g1 < 1 && b1 < 1)))

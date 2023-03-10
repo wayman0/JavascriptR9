@@ -1,4 +1,6 @@
-export var debug = false;
+import {RastLine, RastPoint, logPrimitive} from "./PipelineImport.js";
+
+export var rastDebug = false;
 export var doAntiAliasing = false;
 export var doGamma = true;
 export var GAMMA = 2.2;
@@ -10,9 +12,9 @@ export function rasterize(model, vp)
         logPrimitive("6. Rasterize", model, p);
 
         if(p instanceof LineSegment)
-            Line.rasterize(model, p, vp);
+            RastLine(model, p, vp);
         else if(p instanceof Point)
-            Point.rasterize(model, p, vp);
+            RastPoint(model, p, vp);
         else
             console.log("Incorrect Primitive: " + p);
 

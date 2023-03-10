@@ -1,3 +1,5 @@
+import {rastDebug, doGamma, logMessage, logPixelMessage} from "./PipelineImport.js";
+
 export default function rasterize(model, pt, vp)
 {
     const CLIPPED = " : Clipped";
@@ -15,7 +17,7 @@ export default function rasterize(model, pt, vp)
     const c = model.colorList[cIndex].getRGBComponents();
     r = c[0], g = c[1], b = c[2];
 
-    if(rasterize.doGamma)
+    if(doGamma)
     {
         newC = (Color.applyGamma(model.colorList[cIndex])).getRGBComponents();
         
@@ -27,7 +29,7 @@ export default function rasterize(model, pt, vp)
     x = .5 + w/2.001 * (v.x + 1);
     y = .5 + h/2.001 * (v.y + 1);
 
-    if(rasterize.debug)
+    if(rastDebug)
         logMessage(("(x_pp, y_pp) = (%9.4f, %9.4f)", x, y));
 
     x = Math.round(x);
@@ -39,7 +41,7 @@ export default function rasterize(model, pt, vp)
     {
         for(let x_ = Math.trunc(x - radius); x_ <= Math.trunc(x + radius); ++x_)
         {
-            if(rasterize.debug)
+            if(rastDebug)
             {
                 clippedMessage;
 

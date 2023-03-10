@@ -1,8 +1,7 @@
-import * as Line from "./NearClip_Line.js";
-import * as Point from "./NearClip_Point.js"
+import {NearLine, NearPoint, logPrimitive} from "./PipelineImport.js";
 
 export var doNearClipping = true;
-export var debug = false;
+export var nearDebug = false;
 
 export function clip(model, camera)
 {
@@ -22,9 +21,9 @@ export function clip(model, camera)
         logPrimitive("3. Near_Clipping", model2, p);
 
         if(p instanceof LineSegment)
-            pClipped = Line.clip(model2, p, camera);
+            pClipped = NearLine(model2, p, camera);
         else
-            pClipped = Point.clip(model2, p, camera);
+            pClipped = NearPoint(model2, p, camera);
 
         if(pClipped != undefined)
         {

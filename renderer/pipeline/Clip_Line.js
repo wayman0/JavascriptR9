@@ -1,3 +1,5 @@
+import {clipDebug, logMessage} from "./PipelineImport.js";
+
 export default function clip(model, ls)
 {
     const vIndex0 = ls.vIndexList[0];
@@ -13,7 +15,7 @@ export default function clip(model, ls)
         || Math.abs(x1) > 1
         || Math.abs(y1) > 1) )
     {
-        if(Clip.debug)
+        if(clipDebug)
             logMessage("-- Trivial accept.");
 
         return ls;
@@ -23,7 +25,7 @@ export default function clip(model, ls)
              (y0 >  1 && y1 >  1) ||
              (y0 < -1 && y1 < -1))
     {
-        if(Clip.debug)
+        if(clipDebug)
             logMessage("-- Trivial delete.");
 
         return undefined;
@@ -165,7 +167,7 @@ clipOneTime(model, ls)
     cIndexNew = model.colorList.length;
     model.addColor(newColor);
         
-    if(Clip.debug)
+    if(clipDebug)
     {
         if(0 == vOutside)
             vOut = "v0";

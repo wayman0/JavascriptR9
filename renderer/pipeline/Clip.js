@@ -1,7 +1,6 @@
-import * as Line from "./Clip_Line.js";
-import * as Point from "./Clip_Point.js"
+import {LineClip, PointClip, logPrimitive} from "./PipelineImport.js";
 
-export var debug = false;
+export var clipDebug = false;
 
 export function clip(model)
 {
@@ -18,9 +17,9 @@ export function clip(model)
         logPrimitive("5. Clipping", model2, p);
 
         if(p instanceof LineSegment)
-            pClipped = Line.clip(model2, p);
+            pClipped = LineClip(model2, p);
         else
-            pClipped = Point.clip(model2, p);
+            pClipped = PointClip(model2, p);
 
         if(pClipped != undefined)
         {
