@@ -1,3 +1,5 @@
+import {Model, Vertex, Point, Camera} from "../scene/SceneImport.js";
+
 export default function clip(model, pt, camera)
 {
     const result = undefined;

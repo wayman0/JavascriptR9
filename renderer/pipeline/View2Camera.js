@@ -1,3 +1,5 @@
+import {Model, Camera, Vertex} from "../scene/SceneImport.js";
+
 export default function view2camera(model, camera)
 {
     const l = camera.left;
@@ -36,7 +38,7 @@ export default function view2camera(model, camera)
         newVertexList[x] = new Vertex(v_x, v_y, v_z);
     }
 
-    return new model(newVertexList, 
+    return new Model(newVertexList, 
                     model.primitiveList, 
                     model.colorList,
                     model.name, 

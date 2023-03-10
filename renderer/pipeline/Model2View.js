@@ -1,3 +1,5 @@
+import {Model, Position, Matrix, Vertex} from "../scene/SceneImport.js";
+
 export default function model2view(position, ctm)
 {
     const model = position.model;
@@ -6,7 +8,7 @@ export default function model2view(position, ctm)
     for(let x = 0; x < model.vertexList.length; x += 1)
         newVertexList[x] = ctm.times(model.vertexList[x]);
 
-    return new model(newVertexList, 
+    return new Model(newVertexList, 
                     model.primitiveList, 
                     model.colorList, 
                     position.name + "::" + model.name, 

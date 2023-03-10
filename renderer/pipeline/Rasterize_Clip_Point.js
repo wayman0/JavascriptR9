@@ -1,4 +1,7 @@
 import {rastDebug, doGamma, logMessage, logPixelMessage} from "./PipelineImport.js";
+import {Model, Point, LineSegment, Primitive} from "../scene/SceneImport.js";
+import {Viewport} from "../framebuffer/FramebufferImport.js";
+import Color from "../color/Color.js";
 
 export default function rasterize(model, pt, vp)
 {

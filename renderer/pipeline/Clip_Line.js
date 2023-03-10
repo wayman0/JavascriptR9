@@ -1,4 +1,6 @@
 import {clipDebug, logMessage} from "./PipelineImport.js";
+import {Model, Vertex, LineSegment} from "../scene/SceneImport.js";
+import Color from "../color/Color.js";
 
 export default function clip(model, ls)
 {

@@ -1,4 +1,6 @@
 import {nearDebug, logMessage} from "./PipelineImport.js";
+import {Model, Vertex, LineSegment, Camera} from "../scene/SceneImport.js";
+import Color from "../color/Color.js";
 
 export default function clip(model, ls, camera)
 {

@@ -1,3 +1,5 @@
+import {Model, Vertex, Camera} from "../scene/SceneImport.js";
+
 export default function project(model, camera)
 {
     const newVertexList = new Array(model.vertexList.length);
@@ -12,7 +14,7 @@ export default function project(model, camera)
             newVertexList[x] = new Vertex(v.x, v.y, 0);
     }
 
-    return new model(newVertexList, 
+    return new Model(newVertexList, 
                     model.primitiveList, 
                     model.colorList, 
                     model.name, 

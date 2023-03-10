@@ -1,4 +1,7 @@
 import {rastDebug, doAntiAliasing, doGamma, logMessage, logPixel, logPixelsXAA, logPixelsYAA} from "./PipelineImport.js";
+import {Model, LineClip} from "../scene/SceneImport.js";
+import {Viewport} from "../framebuffer/FramebufferImport.js";
+import Color from "../color/Color.js";
 
 export default function rasterize(model, ls, vp)
 {

@@ -1,4 +1,6 @@
 import {RastLine, RastPoint, logPrimitive} from "./PipelineImport.js";
+import {Model, LineSegment, Primitive, Point} from "../scene/SceneImport.js";
+import { Viewport} from "../framebuffer/FramebufferImport.js";
 
 export var rastDebug = false;
 export var doAntiAliasing = false;

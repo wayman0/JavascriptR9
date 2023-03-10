@@ -29,3 +29,4 @@ export {default as Position} from "./Position.js";
 export {default as Scene} from "./Scene.js";
 export {default as Vector} from "./Vector.js";
 export {default as Vertex} from "./Vertex.js";
+export * from "./primitives/PrimitiveImport.js";

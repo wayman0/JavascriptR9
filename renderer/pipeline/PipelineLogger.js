@@ -1,3 +1,6 @@
+import {Model, Vertex, Primitive, LineSegment, Point} from "../scene/SceneImport.js";
+import Color from "../color/Color.js";
+
 export var debugScene = false;
 export var debugPosition = false;
 
@@ -5,7 +8,7 @@ debug = debugScene || debugPosition;
 
 export function logMessage(message)
 {
-    if(debugScene || debugPosition)
+    if(debug)
         console.log(message);
 }
 
