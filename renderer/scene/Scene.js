@@ -18,8 +18,8 @@
    determines how much of the scene is actually visible (to the
    camera) and gets rendered into the framebuffer.
 */
-import Camera from "./Camera.js";
-import Position from "./Position.js";
+import Scene from "./SceneImport.js";
+
 export default class Scene
 {
     #positionList;

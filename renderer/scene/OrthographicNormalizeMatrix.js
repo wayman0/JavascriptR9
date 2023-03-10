@@ -47,7 +47,8 @@
    and {@code top = +1}.
 */
 
-import Matrix from "./Matrix.js";
+import Scene from "./SceneImport.js";
+
 export default class OrthographicNormalizeMatrix
 {
     static build(l, r, b, t)

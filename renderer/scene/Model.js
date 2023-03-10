@@ -65,8 +65,8 @@
               https://www.google.com/search?q=computer+graphics+wireframe&tbm=isch</a>
 */
 
-import Vertex from "./Vertex.js";
-import Primitive from "./primitives/Primitive.js";
+import Scene from "./SceneImport.js";
+
 import Color from "../color/Color.js";
 
 export default class Model

@@ -65,6 +65,8 @@
    cross the camera plane, {@code z = 0}.
 */
 
+import Scene from "./SceneImport.js";
+
 export default class Camera
 {
     perspective;

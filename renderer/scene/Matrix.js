@@ -20,8 +20,7 @@
    scaling. A 4-by-4 matrix can also represent a projection transformation.
 */
 
-import Vector from "./Vector.js";
-import Vertex from "./Vertex.js";
+import Scene from "./SceneImport.js";
 
 export default class Matrix
 {

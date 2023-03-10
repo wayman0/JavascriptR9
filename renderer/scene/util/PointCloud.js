@@ -4,7 +4,8 @@
  * See LICENSE for details.
 */
 
-import Model from "../Model";
+import Scene from "./SceneImport.js";
+import Util from "./UtilImport.js";
 
 /**
    Convert a {@link Model} object into a point cloud {@link Model}.

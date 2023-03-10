@@ -9,6 +9,9 @@
    and/or debugging a {@link Model}.
 */
 
+import Scene from "./SceneImport.js";
+import Util from "./UtilImport.js";
+
 export default class CheckModel
 {
     static check(model)

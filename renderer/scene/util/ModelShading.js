@@ -4,7 +4,8 @@
  * See LICENSE for details.
 */
 
-import Model from "../Model";
+import SceneImport from "./SceneImport.js";
+import UtilImport from "./UtilImport.js";
 
 /**
    This is a library of static methods that

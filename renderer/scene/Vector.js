@@ -15,8 +15,7 @@
    has its fourth coordinate set to 0.
 */
 
-import Vertex from "./Vertex.js";
-import Matrix from "./Matrix.js";
+import Scene from "./SceneImport.js";
 
 export default class Vector
 {

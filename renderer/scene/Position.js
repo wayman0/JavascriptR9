@@ -59,8 +59,7 @@
    {@code Position}'s {@link Model} within the {@link Camera}'s view coordinate
    system.
 */
-import Model from "./Model.js";
-import Matrix from "./Matrix.js";
+import Scene from "./SceneImport.js";
 
 export default class Position
 {
