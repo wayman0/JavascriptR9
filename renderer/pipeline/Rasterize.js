@@ -15,5 +15,7 @@ export default function rasterize(model, vp)
             Point.rasterize(model, p, vp);
         else
             console.log("Incorrect Primitive: " + p);
+
+            
     }
 }
