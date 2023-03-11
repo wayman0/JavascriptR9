@@ -54,7 +54,7 @@ export * from "./Clip.js";
 export {default as M2V} from "./Model2View.js";
 export {default as NearLine} from "./NearClip_Line.js";
 export {default as NearPoint} from "./NearClip_Point.js";
-export * from "./NearClip.js";
+export {doNearClipping, nearDebug, clip as NearClip} from "./NearClip.js";
 export * from "./Pipeline.js";
 export * from "./PipelineLogger.js";
 export {default as Project} from "./Project.js";
