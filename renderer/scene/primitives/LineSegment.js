@@ -14,8 +14,8 @@
    list of that {@link renderer.scene.Model} object.
 */
 
-import {Primitive} from "./PrimitiveImport";
-
+import Primitive from "./Primitive.js";
+// import {Primitive} from "./PrimitiveImport.js"; doesnt work gives me an error
 
 export default class LineSegment extends Primitive
 {
@@ -31,9 +31,6 @@ export default class LineSegment extends Primitive
      */
     constructor(vIndList = new Array(2), cIndList = new Array(2))
     {
-        if(!vIndList.isArray() || !cIndList.isArray())
-            throw new Error("Vertex and Color index lists must be array");
-
         if(vIndList.length != 2 || cIndList.length != 2)
             throw new Error("Need 2 points to make a line segment");
 
@@ -51,7 +48,7 @@ export default class LineSegment extends Primitive
      */
     static buildVertex(i0 = 0, i1 = 1)
     {
-        return this(new Array(i0, i1), new Array(i0, i1));
+        return new LineSegment(new Array(i0, i1), new Array(i0, i1));
     } 
 
     /**
@@ -66,7 +63,7 @@ export default class LineSegment extends Primitive
      */
     static buildVertexColor(i0 = 0, i1 = 1, c = 0)
     {
-        return this(new Array(i0, i1), new Array(c, c));
+        return new LineSegment(new Array(i0, i1), new Array(c, c));
     }
 
     /**
@@ -82,7 +79,7 @@ export default class LineSegment extends Primitive
      */
     static buildVertexColors(i0 = 0, i1 = 1, c0 = 0, c1 = 1)
     {
-        return this(new Array(i0, i1), new Array(c0, c1));
+        return new LineSegment(new Array(i0, i1), new Array(c0, c1));
     }
 
     /**
@@ -94,39 +91,5 @@ export default class LineSegment extends Primitive
     {
         return ("LineSegment: ([" + this.getVertexIndexList()[0] + ", " + this.getVertexIndexList()[1] + "], " 
                             + "[" + this.getColorIndexList()[0]  + ", " + this.getColorIndexList()[1] + "])");
-    }
-
-    /*
-    constructor(i0 = 0, i1 = i0, c0 = 0, c1 = c0)
-    {
-        if( typeof i0 != Number || typeof i1 != Number ||
-            typeof c0 != Number || typeof c1 != Number )
-                throw new Error("All parameters must be numerical");
-
-        super();
-
-        this.getVertexIndexList().push(i0);
-        this.getVertexIndexList().push(i1);
-        this.getColorIndexList().push(c0);
-        this.getColorIndexList().push(c1);
-    }
-
-    //need to think of better name
-    static buildUsingVIndexes(i0 = 0, i1 = 1)
-    {
-        return this(i0, i1, i0, i1);
-    }
-
-    // need to think of better name
-    static buildUsingColor(i0 = 0, i1 = 1, c = 0)
-    {
-        return this(i0, i1, c, c);
-    }
-
-    static buildUsingLists(vIndList = new Array(), cIndList = new Array())
-    {
-
-        
-    }
-    */
+    } 
 }

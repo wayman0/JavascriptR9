@@ -25,18 +25,19 @@ export default class Vector
 
    /**
     * Create a new {@code Vector} using the given x, y, z, and w coordinates
-    * If no w is given uses the default value of 0.
+    * If no w is given uses the default value of 1.
     * 
     * @param {@link Number} x x coordinate of the new {@code Vector}
     * @param {@link Number} y y coordinate of the new {@code Vector}
     * @param {@link Number} z z coordinate of the new {@code Vector}
     * @param {@link Number} w w coordinate of the new {@code Vector}
     */
-   constructor(x, y, z, w = 0.0)
+   constructor(x, y, z, w = 1) // should w be 1 or 0?
    {
-      if(typeof x != Number || typeof y != Number || 
-         typeof z != Number || typeof w != Number)
+      if(typeof x != "number" || typeof y != "number" || 
+         typeof z != "number" || typeof w != "number")
             throw new Error("All parameters must be numerical.");
+   
       this.x = x;
       this.y = y; 
       this.z = z; 
@@ -54,7 +55,7 @@ export default class Vector
       if(v instanceof Vertex == false)
          throw new Error("V is not a Vertex");
 
-      return this(v.x, v.y, v.z, v.w);
+      return new Vector(v.x(), v.y(), v.z(), v.w());
    }
 
    /**
@@ -82,7 +83,7 @@ export default class Vector
       if(v instanceof Vector == false)
          throw new Error("V is not a Vector");
       
-         return new Vector(this.y*v.z - this.z*v.y, thi.z*v.x - this.x*v.z, this.x*v.y - this.y*v.x);
+         return new Vector(this.y*v.z - this.z*v.y, this.z*v.x - this.x*v.z, this.x*v.y - this.y*v.x);
    }
 
    /**
@@ -93,10 +94,10 @@ export default class Vector
     */
    timesScalar(s)
    {
-      if(typeof s != Number)
+      if(typeof s != "number")
          throw new Error("S has to be numerical");
 
-      return new Vector(this.x + v.x, this.y + v.y, this.z + v.z, this.w + v.w);
+      return new Vector(this.x * s, this.y * s, this.z * s, this.w * s);
    }
 
    /**
@@ -137,7 +138,7 @@ export default class Vector
     */
    normalize()
    {
-      norm = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+      const norm = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
 
       return new Vector(this.x/norm, this.y/norm, this.z/norm);
    }
@@ -154,7 +155,7 @@ export default class Vector
       if(v instanceof Vertex == false)
          throw new Error("V is not a vertex");
 
-      return new Vertex(this.x + v.x, this.y + v.y, this.z + v.z);
+      return new Vertex(this.x + v.x(), this.y + v.y(), this.z + v.z());
    }
 
    /**
@@ -166,7 +167,7 @@ export default class Vector
     */
    timesEqualsScalar(s)
    {
-      if(typeof s != Number)
+      if(typeof s != "number")
          throw new Error("S is not a number");
 
       this.x *= s;
@@ -186,6 +187,9 @@ export default class Vector
     */
    timesEqualsMatrix(m)
    {
+      if(m instanceof Matrix == false)
+         throw new Error("M must be a Matrix");
+
       v1 = m.v1;
       v2 = m.v2;
       v3 = m.v3;
@@ -211,7 +215,7 @@ export default class Vector
     * @param {@code Vector} v the vector to add to this {@code Vector}
     * @returns a reference to this {@code Vector} for method chaining.
     */
-   plusEquals(v)
+   plusEqualsVector(v)
    {
       if(v instanceof Vector == false)
          throw new Error("V is not a vector");
@@ -231,7 +235,7 @@ export default class Vector
     * @param {@code Vector} v the vector to subtract form this {@code Vector}
     * @returns a reference to this {@code Vector} for method chaining.
     */
-   minusEquals(v)
+   minusEqualsVector(v)
    {
       if(v instanceof Vector == false)
          throw new Error("V is not a Vector");
@@ -254,7 +258,7 @@ export default class Vector
     */
    normalizeEquals()
    {
-      norm = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+      const norm = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
       
       this.x /= norm;
       this.y /= norm;
@@ -270,6 +274,81 @@ export default class Vector
     */
    toString()
    {
-        return "[x,y,z,w]=[" + x + ", " + y + ", " + z + ", " + w + "]";      
+        return "[x,y,z,w]=[" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + "]";      
+   }
+
+   static main()
+   {
+      console.log("Creating new Vector v1 = new Vector(1, 1, 1)");
+      const v1 = new Vector(1, 1, 1);
+
+      console.log("Creating Vector v2 from buildVertex(vertex1 = new Vertex(2, 2, 2))");
+      const vertex1 = new Vertex(2, 2, 2);
+      const v2 = Vector.buildVertex(vertex1);
+
+      console.log("");
+      console.log("Creating dotProdV = v1.dotProduct(v2): ")
+      const dotProdV = v1.dotProduct(v2);
+      console.log(dotProdV);
+
+      console.log("");
+      console.log("Creating crossProdV = v1.crossProduct(v2): ");
+      const crossProdV = v1.crossProduct(v2);
+      console.log(crossProdV.toString());
+
+      console.log("");
+      console.log("Creating timesNum = v1.timesScalar(5): ");
+      const timesNum = v1.timesScalar(5);
+      console.log(timesNum.toString());
+
+      console.log("");
+      console.log("Creating plusVect = v1.plusVector(v2): ");
+      const plusVect = v1.plusVector(v2);
+      console.log(plusVect.toString());
+
+      console.log("");
+      console.log("Creating minusVect = v1.minusVector(v2): ");
+      const minusVect = v1.minusVector(v2);
+      console.log(minusVect.toString());
+
+      console.log("");
+      console.log("Creating v1Norm = v1.normalize(): ");
+      const v1Norm = v1.normalize();
+      console.log(v1Norm.toString());
+
+      // note plusVert is a vertex not vector
+      console.log("");
+      console.log("Creating plusVert = v1.plusVertex(vertex1): ");
+      const plusVert = v1.plusVertex(vertex1);
+      console.log(plusVert.toString());
+
+      console.log("");
+      console.log("v1.timesEqualsScalar(2): ");
+      v1.timesEqualsScalar(2);
+      console.log(v1.toString());
+
+      console.log("");
+      console.log("v1.plusEqualsVector(v2): ");
+      v1.plusEqualsVector(v2);
+      console.log(v1.toString());
+
+      console.log("");
+      console.log("v1.minusEqualsVector(v2): ");
+      v1.minusEqualsVector(v2);
+      console.log(v1.toString());
+
+      console.log("");
+      console.log("v1.normalizeEquals(): ");
+      v1.normalizeEquals();
+      console.log(v1.toString());
+
+      /*
+      console.log("");
+      console.log("Creating timesEqMat = v1.timesEqualsMatrix(m = Matrix.identity()): ");
+      const m = Matrix.identity();
+      const timesEqMat = v1.timesEqualsMatrix(m);
+      console.log(timesEqMat.toString());
+      */
+
    }
 }

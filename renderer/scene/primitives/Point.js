@@ -13,7 +13,8 @@
    object.
 */
 
-import {Primitive} from "./PrimitiveImport";
+import Primitive from "./Primitive.js";
+// import {Primitive} from "./PrimitiveImport.js"; doesnt work gives me an error
 
 export default class Point extends Primitive
 {
@@ -39,7 +40,7 @@ export default class Point extends Primitive
      */
     constructor(vIndex = 0, cIndex = vIndex)
     {
-        return Primitive.buildIndices(vIndex, cIndex);
+        super([vIndex], [cIndex]);
     }
 
     /**

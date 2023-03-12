@@ -73,7 +73,7 @@ export default class Matrix
    static buildFromColummns(c1, c2, c3, c4)
    {
       Matrix.#instantiable = true;
-      return this(c1, c2, c3, c4);
+      return new Matrix(c1, c2, c3, c4);
    }
 
    /**
@@ -94,14 +94,14 @@ export default class Matrix
          r4 instanceof Vector == false)
             throw new Error("All parameters must be Vectors");
 
-      c1 = new Vector(r1.x, r2.x, r3.x, r4.x);
-      c2 = new Vector(r1.y, r2.y, r3.y, r4.y);
-      c3 = new Vector(r1.z, r2.z, r3.z, r4.z);
-      c4 = new Vector(r1.w, r2.w, r3.w, r4.w);
+      const c1 = new Vector(r1.x, r2.x, r3.x, r4.x);
+      const c2 = new Vector(r1.y, r2.y, r3.y, r4.y);
+      const c3 = new Vector(r1.z, r2.z, r3.z, r4.z);
+      const c4 = new Vector(r1.w, r2.w, r3.w, r4.w);
       
       Matrix.#instantiable = true;
 
-      return this(c1, c2, c3, c4);
+      return new Matrix(c1, c2, c3, c4);
    }
 
    /**
@@ -120,18 +120,18 @@ export default class Matrix
     * Construct a translation {@code Matrix} that translates by the
     * given amounts in the x, y, and z directions.
     * 
-    * @param {@link Number} x translation factor for the x direction. 
+    * @param {@link Number } x translation factor for the x direction. 
     * @param {@link Number} y translation factor for the y direction.
     * @param {@link Number} z translation factor for the z direction.
     * @returns a new translation {@code Matrix}
     */
    static translate(x, y, z)
    {
-      if(typeof x != Number || typeof y != Number || typeof z != Number)
+      if(typeof x != "number" || typeof y != "number" || typeof z != "number" )
          throw new Error("All parameters must be numerical");
 
       Matrix.#instantiable = true;
-      return this(new Vector(1, 0, 0, 0),
+      return new Matrix(new Vector(1, 0, 0, 0),
                   new Vector(0, 1, 0, 0),
                   new Vector(0, 0, 1, 0), 
                   new Vector(x, y, z, 1));
@@ -146,7 +146,7 @@ export default class Matrix
     */
    static scale(d)
    {
-      if(typeof d != Number)
+      if(typeof d != "number" )
          throw new Error("D must be numerical");
 
       return Matrix.scaleXYZ(d, d, d);
@@ -164,11 +164,11 @@ export default class Matrix
     */
    static scaleXYZ(x, y, z)
    {
-      if(typeof x != Number || typeof y != Number || typeof z != Number)
+      if(typeof x != "number" || typeof y != "number" || typeof z != "number" )
          throw new Error("All parameters must be numercial");
 
       Matrix.#instantiable = true;
-      return this(new Vector(x, 0, 0, 0), 
+      return new Matrix(new Vector(x, 0, 0, 0), 
                   new Vector(0, y, 0, 0,),
                   new Vector(0, 0, z, 0), 
                   new Vector(0, 0, 0, 1));
@@ -184,7 +184,7 @@ export default class Matrix
     */
    static rotateX(theta)
    {
-      if(typeof theta != Number)
+      if(typeof theta != "number" )
          throw new Error("Theta must be numerical");
 
       Matrix.#instantiable = true;
@@ -201,11 +201,11 @@ export default class Matrix
     */
    static rotateY(theta)
    {
-      if(typeof theta != Number)
+      if(typeof theta != "number" )
          throw new Error("Theta must be numerical");
 
       Matrix.#instantiable = true;
-      return Matrix.rotate(theta, 0, y, 0);
+      return Matrix.rotate(theta, 0, 1, 0);
    }
 
    /**
@@ -218,7 +218,7 @@ export default class Matrix
     */
    static rotateZ(theta)
    {
-      if(typeof theta != Number)
+      if(typeof theta != "number" )
          throw new Error("Theta must be numerical");
       
       Matrix.#instantiable = true;
@@ -243,20 +243,20 @@ export default class Matrix
     */
    static rotate(theta, x, y, z)
    {
-      if(typeof theta != Number || typeof x != Number ||
-         typeof y != Number || typeof z != Number)
+      if(typeof theta != "number" || typeof x != "number" ||
+         typeof y != "number" || typeof z != "number" )
             throw new Error("All parameters need to be numerical");
 
-      norm = Math.sqrt(x*x + y*y + z*z);
-      ux = x/norm;
-      uy = y/norm;
-      uz = z/norm;
+      const norm = Math.sqrt(x*x + y*y + z*z);
+      const ux = x/norm;
+      const uy = y/norm;
+      const uz = z/norm;
 
-      c = Math.cos( Math.PI/180 * theta);
-      s = Math.sin( Math.PI/180 * theta);
+      const c = Math.cos( Math.PI/180 * theta);
+      const s = Math.sin( Math.PI/180 * theta);
 
       Matrix.#instantiable = true;
-      return this(new Vector(ux*ux*(1-c)+c,      uy*ux*(1-c)+(uz*s), uz*ux*(1-c)-(uy*s), 0.0),
+      return new Matrix(new Vector(ux*ux*(1-c)+c,      uy*ux*(1-c)+(uz*s), uz*ux*(1-c)-(uy*s), 0.0),
                   new Vector(ux*uy*(1-c)-(uz*s), uy*uy*(1-c)+c,      uz*uy*(1-c)+(ux*s), 0.0),
                   new Vector(ux*uz*(1-c)+(uy*s), uy*uz*(1-c)-(ux*s), uz*uz*(1-c)+c,      0.0),
                   new Vector(0.0,                0.0,                0.0,                1.0));
@@ -271,11 +271,11 @@ export default class Matrix
     */
    timesScalar(s)
    {
-      if(typeof s != Number)
+      if(typeof s != "number" )
          throw new Error("S must be numerical");
 
       Matrix.#instantiable = true;
-      return this(this.v1.times(s), this.v2.times(s), this.v3.times(s), this.v4.times(s));
+      return new Matrix(this.v1.timesScalar(s), this.v2.timesScalar(s), this.v3.timesScalar(s), this.v4.timesScalar(s));
    }
 
    /**
@@ -289,10 +289,10 @@ export default class Matrix
       if(v instanceof Vertex == false)
          throw new Error("V must be a Vertex");
 
-      newX = this.v1.x * v.x + this.v2.x * v.y + this.v3.x * v.z + this.v4.x + v.w;
-      newY = this.v1.y * v.x + this.v2.y * v.y + this.v3.y * v.z + this.v4.y + v.w;
-      newZ = this.v1.z * v.x + this.v2.z * v.y + this.v3.z * v.z + this.v4.z + v.w;
-      newW = this.v1.w * v.x + this.v2.w * v.y + this.v3.w * v.z + this.v4.w + v.w;
+      const newX = this.v1.x * v.x() + this.v2.x * v.y() + this.v3.x * v.z() + this.v4.x + v.w();
+      const newY = this.v1.y * v.x() + this.v2.y * v.y() + this.v3.y * v.z() + this.v4.y + v.w();
+      const newZ = this.v1.z * v.x() + this.v2.z * v.y() + this.v3.z * v.z() + this.v4.z + v.w();
+      const newW = this.v1.w * v.x() + this.v2.w * v.y() + this.v3.w * v.z() + this.v4.w + v.w();
 
       return new Vertex(newX, newY, newZ, newW);
    }
@@ -308,12 +308,12 @@ export default class Matrix
       if(v instanceof Vector == false)
          throw new Error("V is not a Vector");
 
-         newX = this.v1.x * v.x + this.v2.x * v.y + this.v3.x * v.z + this.v4.x + v.w;
-         newY = this.v1.y * v.x + this.v2.y * v.y + this.v3.y * v.z + this.v4.y + v.w;
-         newZ = this.v1.z * v.x + this.v2.z * v.y + this.v3.z * v.z + this.v4.z + v.w;
-         newW = this.v1.w * v.x + this.v2.w * v.y + this.v3.w * v.z + this.v4.w + v.w;
+      const newX = this.v1.x * v.x + this.v2.x * v.y + this.v3.x * v.z + this.v4.x + v.w;
+      const newY = this.v1.y * v.x + this.v2.y * v.y + this.v3.y * v.z + this.v4.y + v.w;
+      const newZ = this.v1.z * v.x + this.v2.z * v.y + this.v3.z * v.z + this.v4.z + v.w;
+      const newW = this.v1.w * v.x + this.v2.w * v.y + this.v3.w * v.z + this.v4.w + v.w;
    
-         return new Vector(newX, newY, newZ, newW);
+      return new Vector(newX, newY, newZ, newW);
    }
 
    /**
@@ -328,8 +328,8 @@ export default class Matrix
          throw new Error("M is not a Matrix");
          
       Matrix.#instantiable = true;
-      return this(this.timesVector(m.v1), this.timesVector(m.v2), 
-                  this.timesVector(m.v3), this.timesVector(m.v4));
+      return new Matrix(this.timesVector(m.v1), this.timesVector(m.v2), 
+                        this.timesVector(m.v3), this.timesVector(m.v4));
    }
 
    /**
@@ -340,12 +340,12 @@ export default class Matrix
     */
    timesEqualsScalar(s)
    {
-      if(typeof s != Number)
+      if(typeof s != "number" )
          throw new Error("S is not numerical");
 
       this.v1.timesEqualsScalar(s);
       this.v2.timesEqualsScalar(s);
-      this.v3.timesEaualsScalar(s);
+      this.v3.timesEqualsScalar(s);
       this.v3.timesEqualsScalar(s);
 
       return this;
@@ -361,42 +361,42 @@ export default class Matrix
       if(m instanceof Matrix == false)
          throw new Error("M is not a Matrix");
 
+      let x = 0, y = 0, z = 0, w = 0;
       x = m.v1.x;
       y = m.v1.y;
       z = m.v1.z;
       w = m.v1.w;
-      x1 = this.v1.x * x + this.v2.x * y + this.v3.x * z + this.v4.x * w;
-      y1 = this.v1.y * x + this.v2.y * y + this.v3.y * z + this.v4.y * w;
-      z1 = this.v1.z * x + this.v2.z * y + this.v3.z * z + this.v4.z * w;
-      w1 = this.v1.w * x + this.v2.w * y + this.v3.w * z + this.v4.w * w;
+      const x1 = this.v1.x * x + this.v2.x * y + this.v3.x * z + this.v4.x * w;
+      const y1 = this.v1.y * x + this.v2.y * y + this.v3.y * z + this.v4.y * w;
+      const z1 = this.v1.z * x + this.v2.z * y + this.v3.z * z + this.v4.z * w;
+      const w1 = this.v1.w * x + this.v2.w * y + this.v3.w * z + this.v4.w * w;
       
       x = m.v2.x;
       y = m.v2.y;
       z = m.v2.z;
       w = m.v2.w;
-      x2 = this.v1.x * x + this.v2.x * y + this.v3.x * z + this.v4.x * w;
-      y2 = this.v1.y * x + this.v2.y * y + this.v3.y * z + this.v4.y * w;
-      z2 = this.v1.z * x + this.v2.z * y + this.v3.z * z + this.v4.z * w;
-      w2 = this.v1.w * x + this.v2.w * y + this.v3.w * z + this.v4.w * w;
+      const x2 = this.v1.x * x + this.v2.x * y + this.v3.x * z + this.v4.x * w;
+      const y2 = this.v1.y * x + this.v2.y * y + this.v3.y * z + this.v4.y * w;
+      const z2 = this.v1.z * x + this.v2.z * y + this.v3.z * z + this.v4.z * w;
+      const w2 = this.v1.w * x + this.v2.w * y + this.v3.w * z + this.v4.w * w;
       
       x = m.v3.x;
       y = m.v3.y;
       z = m.v3.z;
       w = m.v3.w;
-      x3 = this.v1.x * x + this.v2.x * y + this.v3.x * z + this.v4.x * w;
-      y3 = this.v1.y * x + this.v2.y * y + this.v3.y * z + this.v4.y * w;
-      z3 = this.v1.z * x + this.v2.z * y + this.v3.z * z + this.v4.z * w;
-      w3 = this.v1.w * x + this.v2.w * y + this.v3.w * z + this.v4.w * w;
+      const x3 = this.v1.x * x + this.v2.x * y + this.v3.x * z + this.v4.x * w;
+      const y3 = this.v1.y * x + this.v2.y * y + this.v3.y * z + this.v4.y * w;
+      const z3 = this.v1.z * x + this.v2.z * y + this.v3.z * z + this.v4.z * w;
+      const w3 = this.v1.w * x + this.v2.w * y + this.v3.w * z + this.v4.w * w;
       
       x = m.v4.x;
       y = m.v4.y;
       z = m.v4.z;
       w = m.v4.w;
-
-      x4 = this.v1.x * x + this.v2.x * y + this.v3.x * z + this.v4.x * w;
-      y4 = this.v1.y * x + this.v2.y * y + this.v3.y * z + this.v4.y * w;
-      z4 = this.v1.z * x + this.v2.z * y + this.v3.z * z + this.v4.z * w;
-      w4 = this.v1.w * x + this.v2.w * y + this.v3.w * z + this.v4.w * w;
+      const x4 = this.v1.x * x + this.v2.x * y + this.v3.x * z + this.v4.x * w;
+      const y4 = this.v1.y * x + this.v2.y * y + this.v3.y * z + this.v4.y * w;
+      const z4 = this.v1.z * x + this.v2.z * y + this.v3.z * z + this.v4.z * w;
+      const w4 = this.v1.w * x + this.v2.w * y + this.v3.w * z + this.v4.w * w;
       
       this.v1.x = x1;
       this.v1.y = y1;
@@ -429,6 +429,8 @@ export default class Matrix
     */
    multLeft(m)
    {
+      console.log(typeof m);
+
       if(m instanceof Matrix)
          throw new Error("M is not a  Matrix");
 
@@ -447,7 +449,7 @@ export default class Matrix
     */
    toString()
    {
-      result = "";
+      let result = "";
 
       result += "[[" + this.v1.x + " " + this.v2.x + " " + this.v3.x + " " + this.v4.x + "]\n";
       result += " [" + this.v1.y + " " + this.v2.y + " " + this.v3.y + " " + this.v4.y + "]\n";
@@ -455,5 +457,117 @@ export default class Matrix
       result += " [" + this.v1.w + " " + this.v2.w + " " + this.v3.w + " " + this.v4.w + "]]\n";
    
       return result;
+   }
+
+   static main()
+   {
+      console.log("Creating vector v1 = new Vector(1, 2, 3)");
+      console.log("Creating vector v2 = new Vector(4, 5, 6)");
+      console.log("Creating vector v3 = new Vector(7, 8, 9)");
+      console.log("Creating vector v4 = new Vector(10, 11, 12)");
+      const v1 = new Vector(1, 2, 3), v2 = new Vector(4, 5, 6);
+      const v3 = new Vector(7, 8, 9), v4 = new Vector(10, 11, 12);
+      
+      console.log("");
+      console.log("Creating m1 = buildColumns(v1, v2, v3, v4) : ");
+      const m1 = Matrix.buildFromColummns(v1, v2, v3, v4);
+      console.log(m1.toString());
+
+      console.log("");
+      console.log("Creating m2 = buildRows(v1, v2, v3, v4): ");
+      const m2 = Matrix.buildFromRows(v1, v2, v3, v4);
+      console.log(m2.toString());
+
+      console.log("");
+      console.log("Creating id = identity(): ");
+      const id = Matrix.identity();
+      console.log(id.toString());
+
+      console.log("");
+      console.log("Creating trans = translate(1, 1, 1): ");
+      const trans = Matrix.translate(1, 1, 1);
+      console.log(trans.toString());
+
+      console.log("");
+      console.log("Creating sc = scale(2): ");
+      const sc = Matrix.scale(2);
+      console.log(sc.toString());
+
+      console.log("");
+      console.log("Creating scXYZ = scale(3, 3, 3): ");
+      const scXYZ = Matrix.scaleXYZ(3, 3, 3);
+      console.log(scXYZ.toString());
+
+      console.log("");
+      console.log("Creating rotX = rotateX(90): ");
+      const rotX = Matrix.rotateZ(90);
+      console.log(rotX.toString());
+
+      console.log("");
+      console.log("Creating rotY = rotateY(90): ");
+      const rotY = Matrix.rotateY(90);
+      console.log(rotY.toString());
+
+      console.log("");
+      console.log("Creating rotZ = rotateZ(90): ");
+      const rotZ = Matrix.rotateZ(90);
+      console.log(rotZ.toString());
+
+      console.log("");
+      console.log("Creating rot = rotate(90, 1, 1, 1): ");
+      const rot = Matrix.rotate(90, 1, 1, 1);
+      console.log(rot.toString());
+
+      console.log("");
+      console.log("Creating timesSC = m1.timesScalar(5): ");
+      const timesSC = m1.timesScalar(5); 
+      console.log(timesSC.toString());
+
+      console.log("");
+      console.log("Creating timesVert = m1.timesVertex(new Vertex(10, 10, 10)): ");
+      const timesVert = m1.timesVertex(new Vertex(10, 10, 10)); 
+      console.log(timesVert.toString());
+
+      console.log("");
+      console.log("Creating timesVect = m1.timesVect(v1): ");
+      const timesVect = m1.timesVector(v1); 
+      console.log(timesVect.toString());
+
+
+      console.log("");
+      console.log("Outputing m1 and m2 to allow for checking of subsequent functions");
+      console.log(m1.toString());
+      console.log(m2.toString());
+
+
+      // this is wrong doesn't give right answer when checked using calculator
+      console.log("");
+      console.log("Creating timesMat = m1.timesMatrix(m2): ");
+      const timesMat = m1.timesMatrix(m2); 
+      console.log(timesMat.toString());
+
+
+      
+      //can comment out to allow for checking of m1.timesMatrix vs m1.mult
+
+      // this is wrong, v3 doesn't get multiplied right
+      console.log("");
+      console.log("m1.timesEqualsScalar(5): ");
+      m1.timesEqualsScalar(5);
+      console.log(m1.toString());
+      
+
+      console.log("");
+      console.log("m1.mult(m2): ");
+      m1.mult(m2);
+      console.log(m1.toString());
+
+      // this throws a m is not a matrix error but m1 is made using constructor
+      // it throws the error whether done before or after m1.mult(m2) so can't be
+      // that m1 got mutated.
+      console.log("");
+      console.log("m2.multLeft(m1): ");
+      m2.multLeft(m1);
+      console.log(m2.toString());
    }
 }

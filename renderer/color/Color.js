@@ -68,11 +68,11 @@ export default class Color
      */
     constructor(r = 0, g = 0, b = 0, a = 255, float = false)
     {
-        if(typeof r != Number || typeof g != Number || 
-            typeof b != Number || typeof a != Number)
+        if(typeof r != "number" || typeof g != "number" || 
+            typeof b != "number" || typeof a != "number")
                 throw new Error("All parameters must be numeric");
 
-        if(typeof float != Boolean)
+        if(typeof float != "boolean")
             throw new Error("float must be a boolean");
 
         if(float)
@@ -233,25 +233,26 @@ export default class Color
      * 
      * @returns {@code Color} the MUTATED calling color represented as a float.
      */
-    mutate2Float()
+    static mutate2Float(c)
     {
-        if(this.isFloat() == false)
-            this = new Color(this.getRed() / 255, this.getGreen() / 255, this.getBlue() /255, this.getAlpha()/255, true);
-        
-        return this;
+        if(c instanceof Color == false)
+            throw new Error("c is not a color");
+
+        if(c.isFloat() == false)
+            c = new Color(this.getRed() / 255, this.getGreen() / 255, this.getBlue() /255, this.getAlpha()/255, true);
     }
 
     /**
      * MUTATE the calling {@code Color} object to be the int representation of itself.
-     * 
-     * @returns {@code Color} the MUTATED calling color represented as an int
+     *
      */
-    mutate2Int()
+    static mutate2Int(c)
     {
-        if(this.isFloat())
-            this = new Color(this.getRed() * 255, this.getGreen() * 255, this.getBlue() * 255, this.getAlpha() * 255);
+        if(c instanceof Color)
+            throw new Error("c is not a color");
 
-        return this;
+        if(c.isFloat())
+            c = new Color(this.getRed() * 255, this.getGreen() * 255, this.getBlue() * 255, this.getAlpha() * 255);
     }
 
     getRed()
@@ -296,6 +297,11 @@ export default class Color
     getRGBColorComponents()
     {
         return this.#rgb;
+    }
+
+    toString()
+    {
+        return ("(r, g, b): (" + this.#rgb[0] + ", " + this.#rgb[1] + ", " + this.#rgb[2] + ")");
     }
 
     // Apply gamma-encoding (gamma-compression) to the colors.

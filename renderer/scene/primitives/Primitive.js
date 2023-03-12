@@ -58,17 +58,17 @@ export default class Primitive
      */
     constructor(vIndList = new Array(), cIndList = new Array())
     {
-        if(!vIndList.isArray() || !cIndList.isArray())
+        if(!Array.isArray(vIndList) || !Array.isArray(cIndList))
             throw new Error("Vertex and Color index lists must be Array types");
 
         // if the user pases an empty array have to make sure the check accounts for that
         // hence why making sure the data is okay to be undefined
         for(let x = 0; x < vIndList.length; x += 1)
-            if(typeof vIndList[x] != Number && typeof vIndList[x] != undefined)
+            if(typeof vIndList[x] != "number" && typeof vIndList[x] != undefined)
                 throw new Error("All Vertex indexes must be numerical");
 
         for(let y = 0; y < cIndList.length; y += 1)
-            if(typeof cIndList[y] != Number && typeof cIndList[y] != undefined)
+            if(typeof cIndList[y] != "number" && typeof cIndList[y] != undefined)
                 throw new Error("All Color indexes must be numerical");
 
         this.#vIndexList = vIndList;
@@ -90,12 +90,16 @@ export default class Primitive
      */
     static buildIndices(...indices)
     {
-        this();
+        let thisP = new Primitive();
 
         for(let i of indices)
-            this.addIndices(i, i);
-
-        return this;
+        {
+            if(typeof i == "number")
+                thisP.addIndices(i, i);
+            else
+                throw new Error("indice " + i + " must be numerical");
+        }    
+        return thisP;
     }
 
     addIndex(... indices)
@@ -106,7 +110,7 @@ export default class Primitive
 
     addIndices(vIndex = 0, cIndex = 0)
     {
-        if(typeof vIndex != Number || typeof cIndex != Number)
+        if(typeof vIndex != "number" || typeof cIndex != "number")
             throw new Error("Vertex and Color indexes must be numerical");
 
         this.#vIndexList[this.#vIndexList.length] = vIndex;
@@ -122,7 +126,7 @@ export default class Primitive
 
         for(let x = 0; x < cIndices.length; x += 1)
         {
-            if(typeof (cIndices[x]) != Number)
+            if(typeof (cIndices[x]) != "number")
             {
                 this.#cIndexList.length = origLength;
                 throw new Error("Color index " + x + " is not numerical");
@@ -136,7 +140,7 @@ export default class Primitive
 
     setColorIndex(cIndex = 0)
     {
-        if(typeof cIndex != Number)
+        if(typeof cIndex != "number")
             throw new Error("Color index is not numerical");
 
         for(let x = 0; x < this.#cIndexList.length; x += 1)

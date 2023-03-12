@@ -65,7 +65,7 @@
               https://www.google.com/search?q=computer+graphics+wireframe&tbm=isch</a>
 */
 
-import {Camera, Matrix, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
+import {Camera, Matrix, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex, Primitive, LineSegment, Point} from "./SceneImport.js";
 
 import Color from "../color/Color.js";
 
@@ -79,16 +79,17 @@ export default class Model
 
     constructor(vList= new Array(), pList= new Array(), cList = new Array(), name = "", vis = true)
     {
-        if(!vList.isArray() || !pList.isArray() || !cList.isArray())
+        if(!Array.isArray(vList) || !Array.isArray(pList) || !Array.isArray(cList))
             throw new Error("Vertex, Primitive, and Color List must be arrays");
 
-        if(name instanceof String == false)
+        if(typeof name != "string")
             throw new Error("Name must be a string");
 
-        if(typeof vis != Boolean)
+        if(typeof vis != "boolean")
             throw new Error("Visible is not a boolean");
 
-        const vertexLength = this.#vertexList.length;        
+        let vertexLength = 0;    
+        this.#vertexList = new Array();    
         for(let x = 0; x < vList.length; x += 1)
         {
             if(vList[x] instanceof Vertex == false)
@@ -97,10 +98,14 @@ export default class Model
                 throw new Error("Vertex List must contain Vertexes");
             }
             else
+            {
                 this.#vertexList.push(vList[x]);
+                vertexLength += 1;
+            }
         }
 
-        const primitiveLength = this.#primitiveList.length;
+        let primitiveLength = 0;
+        this.#primitiveList = new Array();
         for(let x = 0; x < pList.length; x += 1)
         {
             if(pList[x] instanceof Primitive == false)
@@ -109,10 +114,14 @@ export default class Model
                 throw new Error("Primitive List mut contain Primitives")
             }
             else
+            {
                 this.#primitiveList.push(pList[x]);
+                primitiveLength += 1;
+            }
         }
 
-        const colorLength = this.#colorList.length;
+        let colorLength = 0;
+        this.#colorList = new Array();
         for(let x = 0; x < cList.length; x += 1)
         {
             if(cList[x] instanceof Color == false)
@@ -121,20 +130,19 @@ export default class Model
                 throw new Error("Color List must only contain Colors");
             }
             else   
+            {
                 this.#colorList.push(cList[x]);
-
+                colorLength += 1;
+            }
         }
 
-        this.#vertexList.splice(vertexLength, this.#vertexList.length);
-        this.#primitiveList.splice(primitiveLength, this.#primitiveList.length);
-        this.#colorList.splice(colorLength, this.#colorList.length);
         this.#name = name;
         this.visible = vis;
     }
 
     static buildName(name = "")
     {
-        return this(new Array(), new Array(), new Array(), name);
+        return new Model(new Array(), new Array(), new Array(), name);
     }
 
     getVertexList()
@@ -167,7 +175,7 @@ export default class Model
 
     setName(name = "")
     {
-        if(name instanceof String == false)
+        if(typeof name != "string")
             throw new Error("Name must be a string");
 
         this.#name = name;
@@ -175,7 +183,7 @@ export default class Model
 
     getVertex(index = 0)
     {
-        if(typeof index != Number)
+        if(typeof index != "number" )
             throw new Error("Index must be numerical");
         else
             return this.#vertexList[index];
@@ -194,7 +202,7 @@ export default class Model
 
     getPrimitive(index = 0)
     {
-        if(typeof index != Number)
+        if(typeof index != "number" )
             throw new Error("Index must be numerical");
         else
             return this.#primitiveList[index];
@@ -213,7 +221,7 @@ export default class Model
 
     getColor(index = 0)
     {
-        if(typeof index != Number)
+        if(typeof index != "number")
             throw new Error("Index must be numerical");
         else
             return this.#colorList[index];
@@ -232,7 +240,7 @@ export default class Model
 
     toString()
     {
-        result = "";
+        let result = "";
         result += "Model: " + this.#name + "\n";
         result += "This Model's visibility is: " + this.visible + "\n";
         result += "Model has " + this.#vertexList.length + " vertices.\n";
@@ -261,4 +269,112 @@ export default class Model
         return result;
     }
 
+    static main()
+    {
+        console.log("Creating m1 = new Model(): ");
+        const m1 = new Model();
+        console.log(m1.toString());
+
+        console.log("");
+        console.log("Creating m2 = buildName('Model 2'): ");
+        const m2 = Model.buildName("Model 2");
+        console.log(m2.toString());
+
+        console.log("");
+        console.log("m1.getVertexList(): ");
+        console.log(m1.getVertexList());
+        
+        console.log("");
+        console.log("m1.vertexList(): ");
+        console.log(m1.vertexList());
+
+        console.log("");
+        console.log("m1.getPrimitiveList(): ");
+        console.log(m1.getPrimitiveList());
+
+        console.log("");
+        console.log("m1.primitiveList(): ");
+        console.log(m1.primitiveList());
+
+        console.log("");
+        console.log("m1.getColorList(): ");
+        console.log(m1.getColorList());
+
+        console.log("");
+        console.log("m1.colorList(): ");
+        console.log(m1.colorList());
+    
+        console.log("");
+        console.log("m1.getName(): ");
+        console.log(m1.getName());
+
+        console.log("");
+        console.log("m1.name(): ");
+        console.log(m1.name());
+
+        console.log("");
+        console.log("m1.setName('Model 1')");
+        m1.setName("Model 1");
+        console.log(m1.toString())
+
+        console.log("");
+        console.log("m1.addVertex(new Vertex(0, 0, 0): ");
+        m1.addVertex(new Vertex(0, 0, 0));
+        console.log(m1.toString());
+
+        console.log("");
+        console.log("m1.addVertex(new Vertex(1, 0, 0), new Vertex(-1, 0, 0), new Vertex(0, 1, 0), new Vertex(0, -1, 0)): ");
+        m1.addVertex(new Vertex(1, 0, 0),
+                    new Vertex(-1, 0, 0),
+                    new Vertex(0, 1, 0),
+                    new Vertex(0, -1, 0));
+        console.log(m1.toString());
+
+        console.log("");
+        console.log("m1.getVertex(0).toString(): ");
+        console.log(m1.getVertex(0).toString());
+
+        console.log("");
+        console.log("m1.getVertex(3).toString(): ");
+        console.log(m1.getVertex(3).toString());
+
+        console.log("");
+        console.log("m1.addColor(new Color(0, 0, 0)): ");
+        m1.addColor(new Color(0, 0, 0));
+        console.log(m1.toString());
+
+        console.log("");
+        console.log("m1.addColor(Color.blue, Color.red, Color.green, Color.yellow): ");
+        m1.addColor(Color.blue, Color.red, Color.green, Color.yellow);
+        console.log(m1.toString());
+
+        console.log("");
+        console.log("m1.getColor(0): ");
+        console.log(m1.getColor(0).toString());
+
+        console.log("");
+        console.log("m1.getColor(3): ");
+        console.log(m1.getColor(3).toString());
+
+        console.log("");
+        console.log("m1.addPrimitive(new Point(0, 0)")
+        m1.addPrimitive(new Point(0, 0));
+        console.log(m1.toString());
+
+        console.log("");
+        console.log("m1.addPrimitive(new ls(1, 3, 1, 3), new ls(1, 4, 1, 4), new ls(2, 3, 2, 3), new ls(2, 4, 2, 4)): ");
+        m1.addPrimitive(LineSegment.buildVertexColors(1, 3, 1, 3),
+                        LineSegment.buildVertexColors(1, 4, 1, 4),
+                        LineSegment.buildVertexColors(2, 3, 2, 3),
+                        LineSegment.buildVertexColors(2, 4, 2, 4));
+        console.log(m1.toString());
+
+        console.log("");
+        console.log("m1.getPrimitive(0): ");
+        console.log(m1.getPrimitive(0).toString());
+
+        console.log("");
+        console.log("m1.getPrimitive(3): ");
+        console.log(m1.getPrimitive(3).toString());
+    }
 }

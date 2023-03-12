@@ -45,10 +45,10 @@ export default class Vertex
       @param z  z-coordinate of the new {@code Vertex}
       @param w  w-coordinate of the new {@code Vertex}
    */
-    constructor(x, y, z, w = 1.0)
+    constructor(x, y, z, w = 1.0) // should w default be 1 or 0?
     {
-        if( typeof x != Number || typeof y != Number ||
-            typeof z != Number || typeof w != Number)
+        if( typeof x != "number" || typeof y != "number" ||
+            typeof z != "number" || typeof w != "number")
                 throw new Error("All parameters must be numerical");
 
         this.#x = x; 
@@ -87,13 +87,12 @@ export default class Vertex
     
     //could we create an anonymous function 
     //pointed to by a variable named x
-    //to replicate in java vertex1.x?
-
-    x = () => {return this.#x};
-    y = () => {return this.#y};
-    z = () => {return this.#z};
-    w = () => {return this.#w};
-    
+    //to replicate in java vertex1.x;    
+    // when using need to call with ()
+    x = () => this.#x;
+    y = () => this.#y;
+    z = () => this.#z;
+    w = () => this.#w;
 
    /**
     * For debugging.
@@ -102,7 +101,53 @@ export default class Vertex
     */
    toString()
    {
-        return "(x,y,z,w)=(" + x + ", " + y + ", " + z + ", " + w + ")";      
+        return "(x,y,z,w)=(" + this.#x + ", " + this.#y + ", " + this.#z + ", " + this.#w + ")";      
+   }
+
+   static main()
+   {
+        console.log("Creating vertex v1 = 1, 1, 1, 1");
+        const v1 = new Vertex(1, 1, 1);
+
+        console.log("Checking functions of v1");
+
+        console.log("")
+        console.log("v1.x: ");
+        console.log(v1.x);
+        console.log("v1.x(): ");
+        console.log(v1.x());
+        console.log("v1.getX(): ");
+        console.log(v1.getX());
+
+        console.log("");
+        console.log("v1.y: ");
+        console.log(v1.y);
+        console.log("v1.y(): ");
+        console.log(v1.y());
+        console.log("v1.getY(): ");
+        console.log(v1.getY());
+
+        console.log("");
+        console.log("v1.z: ");
+        console.log(v1.z);
+        console.log("v1.z(): ");
+        console.log(v1.z());
+        console.log("v1.getZ(): ");
+        console.log(v1.getZ());
+
+        console.log("");
+        console.log("v1.w: ");
+        console.log(v1.w);
+        console.log("v1.w(): ");
+        console.log(v1.w());
+        console.log("v1.getW(): ");
+        console.log(v1.getW());
+
+        console.log("");
+        console.log("v1: ");
+        console.log(v1);
+        console.log("v1.toString(): ");
+        console.log(v1.toString());
    }
 }
 
