@@ -70,7 +70,7 @@ export default class Position
    visible;
    debug;
 
-   constructor(model, matrix = Matrix.identity(), name = "", nestedPositions = new Array(), visible = true, debug = false)
+   constructor(model = new Model(), matrix = Matrix.identity(), name = "", nestedPositions = new Array(), visible = true, debug = false)
    {
       if(model instanceof Model == false)
          throw new Error("Model has to be a model");
@@ -78,16 +78,17 @@ export default class Position
       if(matrix instanceof Matrix == false)
          throw new Error("Matrix has to be a Matrix");
 
-      if(name instanceof String == false)
+      if(typeof name != "string")
          throw new Error("Name has to be a string");
 
-      if(!nestedPositions.isArray())
+      if(!Array.isArray(nestedPositions))
          throw new Error("Nested Positions has to be an array");
 
-      if(typeof visible != Boolean || typeof debug != boolean)
+      if(typeof visible != "boolean" || typeof debug != "boolean")
          throw new Error("Visible and Debug must be booleans");
 
-      const nestedLength = nestedPositions.length;
+      let nestedLength = 0;
+      this.#nestedPositions = new Array();
       for(let x = 0; x < nestedPositions.length; x += 1)
       {
          if(nestedPositions[x] instanceof Position == false)
@@ -96,30 +97,32 @@ export default class Position
             throw new Error("Nested Position must be a Position");
          }
          else  
+         {
             this.#nestedPositions.push(nestedPositions[x]);
+            nestedLength += 1;
+         }
       }
 
-      this.#model = mode;
+      this.#model = model;
       this.#matrix = matrix;
       this.#name = name;
-      this.#nestedPositions.splice(nestedLength, this.#nestedPositions.length);
       this.visible = visible;
       this.debug = debug;
    }
 
    static buildFromModel(model)
    {
-      return this(model, Matrix.identity(), model.getName());
+      return new Position(model, Matrix.identity(), model.getName());
    }
 
    static buildFromName(name)
    {
-      return this(new Model(), Matrix.identity(), name);
+      return new Position(new Model(), Matrix.identity(), name);
    }
 
    static buildFromModelName(model, name)
    {
-      return this(model, Matrix.identity(), name);
+      return new Position(model, Matrix.identity(), name);
    }
 
    getName()
@@ -174,9 +177,10 @@ export default class Position
    }
 
    nestedPositions = () => {return this.#nestedPositions;}
+
    setNestedPosition(index, position)
    {
-      if(typeof index != Number)
+      if(typeof index != "number")
          throw new Error("Index must be numerical");
 
       if(position instanceof Position == false)
@@ -187,9 +191,8 @@ export default class Position
 
    addNestedPosition(... pArray)
    {
-      const nestedLength = this.#nestedPositions.length;
-
-      for(p of pArray)
+      let nestedLength = this.#nestedPositions.length;
+      for(let p of pArray)
       {
          if(p instanceof Position == false)
          {
@@ -197,15 +200,16 @@ export default class Position
             throw new Error("Can only add Positions");
          }
          else
+         {
             this.#nestedPositions.push(p);
+            nestedLength += 1;
+         }
       }
-
-      this.#nestedPositions.splice(nestedLength, this.#nestedPositions.length);
    }
 
    translation(dx, dy, dz)
    {
-      if(typeof dx != Number || typeof dy != Number || typeof dz != Number)
+      if(typeof dx != "number" || typeof dy != "number" || typeof dz != "number")
          throw new Error("dx, dy, and dz must be numerical");
 
       this.#matrix = Matrix.translate(dx, dy, dz);
@@ -213,18 +217,200 @@ export default class Position
 
    toString()
    {
-      result = "";
+      let result = "";
       result += "Position: " + this.#name + "\n";
       result += "This Position's visibility is: " + this.visible + "\n";
       result += "This Position's Matrix is\n";
-      result += this.#matrix + "\n";
+      result += this.#matrix.toString() + "\n";
       result += "This Position's Model is\n";
-      result += (null == model) ? "null\n" : model;
-      result += "This Position has " + nestedPositions.length + " nested Positions\n";
+      result += (null == this.#model || undefined == this.#model) ? "null\n" : this.#model.toString();
+      result += "This Position has " + this.#nestedPositions.length + " nested Positions\n";
+
       for (let p of this.#nestedPositions)
-      {
          result += p.toString();
-      }
+      
       return result;
+   }
+
+   static main()
+   {
+      
+      console.log("Creating p1 = new Position.");
+      console.log("Creating p2 = Position.buildFromModel(new Model())");
+      console.log("Creating p3 = Position.buildFromName('p2')");
+      console.log("Creating p4 = Position.buildFromModelName(new Model(), 'p4')");
+      const p1 = new Position();
+      const p2 = Position.buildFromModel(new Model());
+      const p3 = Position.buildFromName("p3");
+      const p4 = Position.buildFromModelName(new Model(), "p4");
+
+      console.log("");
+      console.log("p1: ");
+      console.log(p1.toString());
+
+      
+      console.log("");
+      console.log("p2: ");
+      console.log(p2.toString());
+
+      
+      console.log("");
+      console.log("p3: ");
+      console.log(p3.toString());
+
+      
+      console.log("");
+      console.log("p4: ");
+      console.log(p4.toString());
+
+//    ------------------------------------------------------
+
+      console.log("");
+      console.log("p1.getName(): ");
+      console.log(p1.getName());
+
+      console.log("");
+      console.log("p1.name()");
+      console.log(p1.name());
+
+      console.log("");
+      console.log("p2.getName(): ");
+      console.log(p2.getName());
+
+      console.log("");
+      console.log("p2.name()");
+      console.log(p2.name());
+
+      console.log("");
+      console.log("p3.getName(): ");
+      console.log(p3.getName());
+
+      console.log("");
+      console.log("p3.name()");
+      console.log(p3.name());
+
+      console.log("");
+      console.log("p4.getName(): ");
+      console.log(p4.getName());
+
+      console.log("");
+      console.log("p4.name()");
+      console.log(p4.name());
+
+//    ----------------------------------------------------
+      // outputs function data instead of model.toString
+      console.log("");
+      console.log("p1.getModel(): ");
+      console.log(p1.getModel().toString());
+
+      console.log("");
+      console.log("p1.model()");
+      console.log(p1.model().toString());
+
+      console.log("");
+      console.log("p2.getModel(): ");
+      console.log(p2.getModel().toString());
+
+      console.log("");
+      console.log("p2.model()");
+      console.log(p2.model().toString());
+
+      console.log("");
+      console.log("p3.getModel(): ");
+      console.log(p3.getModel().toString());
+
+      console.log("");
+      console.log("p3.model()");
+      console.log(p3.model().toString());
+
+      console.log("");
+      console.log("p4.getModel(): ");
+      console.log(p4.getModel().toString());
+
+      console.log("");
+      console.log("p4.model()");
+      console.log(p4.model().toString());
+//    ---------------------------------------------------
+
+      console.log("");
+      console.log("p1.setModel(new Model()): ");
+      p1.setModel(new Model());
+      console.log(p1.toString());
+
+      console.log("");
+      console.log("p3.setModel(new Model()): ");
+      p3.setModel(new Model());
+      console.log(p3.toString());
+
+// _--------------------------------------------------
+
+      console.log("");
+      console.log("p1.getMatrix(): ");
+      console.log(p1.getMatrix());
+
+      console.log("");
+      console.log("p1.matrix()");
+      console.log(p1.matrix());
+
+      console.log("");
+      console.log("p2.getMatrix(): ");
+      console.log(p2.getMatrix());
+
+      console.log("");
+      console.log("p2.matrix()");
+      console.log(p2.matrix());
+
+      console.log("");
+      console.log("p3.getMatrix(): ");
+      console.log(p3.getMatrix());
+
+      console.log("");
+      console.log("p3.matrix()");
+      console.log(p3.matrix());
+
+      console.log("");
+      console.log("p4.getMatrix(): ");
+      console.log(p4.getMatrix());
+
+      console.log("");
+      console.log("p4.matrix()");
+      console.log(p4.matrix());
+
+// --------------------------------------------------
+
+      console.log("");
+      console.log("p1.setMatrix(Matrix.translate(1, 1, 1)): ");
+      p1.setMatrix(Matrix.translate(1, 1, 1));
+      console.log(p1.toString());
+
+      console.log("");
+      console.log("p1.matrix2Identity(): ");
+      p1.matrix2Identity();
+      console.log(p1.toString());
+
+// -----------------------------------------------------
+
+      console.log("");
+      console.log("p1.getNestedPositions(): ");
+      console.log(p1.getNestedPositions());
+
+      console.log("");
+      console.log("p1.nestedPositions(): ");
+      console.log(p1.nestedPositions());
+
+      console.log("");
+      console.log("p1.addNestedPosition(p2): ");
+      p1.addNestedPosition(p2);
+      console.log(p1.toString());
+
+      console.log("");
+      console.log("p1.addNestedPosition(p3, p4): ");
+      p1.addNestedPosition(p3, p4);
+      console.log(p1.toString());
+
+      console.log("");
+      console.log("p1.setNestedPosition(0, p4)");
+      p1.setNestedPosition(0, p4);
+      console.log(p1.toString());
    }
 }

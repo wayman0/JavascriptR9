@@ -4,6 +4,6 @@ import * as sp from "./SceneImport.js";
 //sp.Vector.main();     //works
 //sp.Matrix.main();     //testing
 //sp.Model.main();      //works
-//sp.Camera.main();     //testing
+//sp.Camera.main();     //works
 //sp.Position.main();   //testing
 //sp.scene.main();      //testing

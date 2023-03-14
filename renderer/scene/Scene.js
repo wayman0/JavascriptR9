@@ -19,6 +19,8 @@
    camera) and gets rendered into the framebuffer.
 */
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Vector, Vertex} from "./SceneImport.js";
+// for testing purposes
+import Color from "../color/Color.js";
 
 export default class Scene
 {
@@ -32,17 +34,18 @@ export default class Scene
         if(camera instanceof Camera == false)
             throw new Error("Camera must be a camera");
 
-        if(positionList.isArray())
+        if(Array.isArray(positionList))
             throw new Error("Position List must be an array");
         
-        if(name instanceof String)
+        if(typeof name != "string")
             throw new Error("Name must be a String");
         
-        if(typeof debug != Boolean)
+        if(typeof debug != "boolean")
             throw new Error("Debug must be a boolean");
 
-        const posLength = this.#positionList.length;
-        for(let x = 0; x < positionList; x += 1)
+        let posLength = 0;
+        this.#positionList = new Array();
+        for(let x = 0; x < positionList.length; x += 1)
         {
             if(positionList[x] instanceof Position == false)
             {
@@ -50,27 +53,30 @@ export default class Scene
                 throw new Error("Position List can only contain Positions");
             }
             else
+            {
                 this.#positionList.push(positionList[x]);
-
+                posLength += 1;
+            }
         }
+
         this.#camera = camera;
         this.#name = name;
-        this.#positionList.splice(posLength, this.#positionList.length);
         this.debug = debug;
     }
 
     static buildFromName(name)
     {
-        return this(new Camera(), new Array(), name);
+        return new Scene(new Camera(), new Array(), name);
     }
 
     static buildFromCamera(cam)
     {
-        return this(cam, new Array());
+        return new Scene(cam, new Array());
     }
+
     static buildFromCameraName(cam, name)
     {
-        return this(cam, new Array(), name);
+        return new Scene(cam, new Array(), name);
     }
 
     getName()
@@ -175,5 +181,50 @@ export default class Scene
         }
 
         return result;
+    }
+
+    static main()
+    {
+        const line = new Model();
+        line.addColor(Color.orange);
+        line.addVertex(new Vertex(-1, 0, 0),
+                        new Vertex(1, 0, 0));
+        line.addPrimitive(new LineSegment(0, 1, 0));
+        line.setName("Line Model");
+
+        const pos1 = new Position(line);
+        pos1.setName("Pos 1");
+        
+        const cam = new Camera();
+    
+        console.log("Creating scene1 = new Scene()");
+        console.log("Creating scene2 = Scene.buildFromCamera(cam = new Camera)");
+        console.log("Creating scene3 = Scene.buildFromName('scene 3')");
+        console.log("Creating scene4 = Scene.buildFromCameraName(new Camera, 'Scene 4')");
+        const scene1 = new Scene();
+        const scene2 = Scene.buildFromCamera(cam);
+        const scene3 = Scene.buildFromName("Scene 3");
+        const scene4 = Scene.buildFromCameraName(cam, "Scene 4");
+
+        console.log("");
+        console.log("Scene1: ");
+        console.log(scene1.toString());
+        
+        console.log("");
+        console.log("scene 2: ");
+        console.log(scene2.toString());
+
+        console.log("");
+        console.log("Scene 3: ");
+        console.log(scene3.toString());
+
+        console.log("");
+        console.log("Scene 4: ");
+        console.log(scene4.toString());
+
+        
+
+        
+
     }
 }
