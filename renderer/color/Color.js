@@ -207,7 +207,7 @@ export default class Color
         if(color.isFloat())
             return Color.buildColor(color);
         
-        return (this(color.getRed()/255, color.getGreen()/255, color.getBlue()/255, color.getAlpha(), true));        
+        return (new Color(color.getRed()/255, color.getGreen()/255, color.getBlue()/255, color.getAlpha(), true));        
     }
 
     /**
@@ -225,7 +225,7 @@ export default class Color
         if(color.isFloat() == false)
             return Color.buildColor(color);
         
-        return (this(color.getRed() * 255, color.getGreen() * 255, color.getBlue() * 255), color.getAlpha() * 255);
+        return (new Color(color.getRed() * 255, color.getGreen() * 255, color.getBlue() * 255), color.getAlpha() * 255);
     }
 
     /**
@@ -294,7 +294,7 @@ export default class Color
         return this.#float;
     }
 
-    getRGBColorComponents()
+    getRGBComponents()
     {
         return this.#rgb;
     }

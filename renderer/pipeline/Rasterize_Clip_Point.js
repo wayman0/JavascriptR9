@@ -8,7 +8,7 @@ export default function rasterize(model, pt, vp)
     const CLIPPED = " : Clipped";
     const NOT_CLIPPED = "";
 
-    const bg = vp.bgColorVP;
+    const bg = vp.bgColorVP.convert2Float();
 
     const w = vp.width;
     const h = vp.height;
@@ -17,7 +17,7 @@ export default function rasterize(model, pt, vp)
     const v = model.vertexList[vIndex];
 
     const cIndex = pt.cIndexList[0];
-    const c = model.colorList[cIndex].getRGBComponents();
+    const c = model.colorList[cIndex].convert2Float().getRGBComponents();
     r = c[0], g = c[1], b = c[2];
 
     if(doGamma)
@@ -56,7 +56,8 @@ export default function rasterize(model, pt, vp)
                 logPixelMessage(clippedMessage, x, y, x_-1, h -y_, r, g, b, vp);
 
                 if(x_ > 0 && x_ <= w && y_ > 0 && y_ <= h)
-                    vp.setPixelVP(x_-1, h-y_, new Color(r, g, b, 255, true));
+                    // have to check if the color is in int or float representation
+                    vp.setPixelVP(x_-1, h-y_, new Color(r, g, b, 255, (r <= 1 && g <= 1 && b <= 1)));
             }
         }
     }
