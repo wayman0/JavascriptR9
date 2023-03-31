@@ -10,4 +10,4 @@ import * as fb from "./framebuffer/FramebufferImport.js";
 //sp.Scene.main();      //works
 
 //fb.FrameBuffer.main() // works
-fb.Viewport.main()    // testing
+//fb.Viewport.main()    // works
