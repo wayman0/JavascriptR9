@@ -49,8 +49,8 @@ export default class Viewport
      */
     constructor(width, height, parent, upperLeftX = 0, upperLeftY = 0, color = Color.Black)
     {
-        if( typeof upperLeftX != Number || typeof upperLeftY != Number ||
-            typeof width != Number || typeof height != number)
+        if( typeof upperLeftX != "number" || typeof upperLeftY != "number" ||
+            typeof width != "number" || typeof height != "number")
                 throw new Error("upperLeftX, upperLeftY, width, height must be numerical");
         
         if(parent instanceof FrameBuffer == false)
@@ -78,15 +78,15 @@ export default class Viewport
         if(parent instanceof FrameBuffer == false)
             throw new Error("Parent is required and must be a FrameBuffer");
 
-        this(parent.getWidthFB(), parent.getHeightFB(), parent, 0, 0, parent.getBackgroundColorFB());
+        const vp = new Viewport(parent.getWidthFB(), parent.getHeightFB(), parent, 0, 0, parent.getBackgroundColorFB());
 
         for(let x = 0; x < parent.getWidthFB(); x += 1)
         {
             for(let y = 0; y < parent.getHeightFB(); y += 1)
-                this.setPixelVP(x, y, parent.getPixelFB(x, y));
+                vp.setPixelVP(x, y, parent.getPixelFB(x, y));
         }
 
-        return this;
+        return vp;
     }
 
     /**
@@ -102,7 +102,7 @@ export default class Viewport
      */
     static buildFB(source, parent, upperLeftX = 0, upperLeftY = 0)
     {
-        if(typeof upperLeftX != Number || typeof upperLeftY != Number)
+        if(typeof upperLeftX != "number" || typeof upperLeftY != "number")
             throw new Error("UpperLeftX and UpperleftY must be numerical.");
 
         if(source instanceof FrameBuffer == false)
@@ -111,15 +111,15 @@ export default class Viewport
         if(parent instanceof FrameBuffer == false)
             throw new Error("Parent is required and must be a framebuffer");
 
-        this(source.getWidthFB(), source.getHeightFB(), parent, upperLeftX, upperLeftY, source.getBackgroundColorFB());
+        const vp = new Viewport(source.getWidthFB(), source.getHeightFB(), parent, upperLeftX, upperLeftY, source.getBackgroundColorFB());
 
         for(let x = 0; x < source.getWidthFB(); x += 1)
         {
             for(let y = 0; y < source.getHeightFB(); y += 1)
-                this.setPixelVP(x, y, source.getPixelFB(x, y));
+                vp.setPixelVP(x, y, source.getPixelFB(x, y));
         }
 
-        return this;
+        return vp;
     }
 
     /**
@@ -135,7 +135,7 @@ export default class Viewport
      */
     static buildVP(source, parent, upperLeftX = 0, upperLeftY = 0)
     {
-        if(typeof upperLeftX != Number || typeof upperLeftY != Number)
+        if(typeof upperLeftX != "number" || typeof upperLeftY != "number")
             throw new Error("UpperLeftX and UpperleftY must be numerical.");
 
         if(source instanceof Viewport == false)
@@ -144,15 +144,15 @@ export default class Viewport
         if(parent instanceof FrameBuffer == false)
             throw new Error("Parent is required and must be a framebuffer");
 
-        this(source.getWidthVP(), source.getHeightVP(), parent, upperLeftX, upperLeftY, source.getBackgroundColorVP());
+        const vp = new Viewport(source.getWidthVP(), source.getHeightVP(), parent, upperLeftX, upperLeftY, source.getBackgroundColorVP());
 
         for(let x = 0; x < source.getWidthVP(); x += 1)
         {
             for(let y = 0; y < source.getHeightVP(); y += 1)
-                this.setPixelVP(x, y, source.getPixelVP(x, y));
+                vp.setPixelVP(x, y, source.getPixelVP(x, y));
         }
 
-        return this;
+        return vp;
     }
 
     /**
@@ -168,6 +168,10 @@ export default class Viewport
      */
     setViewport(width, height, upperLeftX = 0, upperLeftY = 0)
     {
+        if(typeof width != "number" || typeof height != "number" ||
+            typeof upperLeftX != "number" || typeof upperLeftY != "number")
+                throw new Error("All parameters must be numerical.");
+
         upperLeftX = Math.round(upperLeftX);
         upperLeftY = Math.round(upperLeftY);
         width = Math.round(width);
@@ -190,6 +194,7 @@ export default class Viewport
     }
 
     framebuffer = () => {return this.#parent}
+
     parent = () => {return this.#parent}
 
     /**
@@ -210,7 +215,7 @@ export default class Viewport
      */
     getHeightVP()
     {
-        return vp_lr_y - vp_ul_y;
+        return this.#vp_lr_y - this.#vp_ul_y;
     }
 
     height = () => {return this.#vp_lr_y - this.#vp_ul_y;}
@@ -264,7 +269,7 @@ export default class Viewport
      */
     clearVP(color)
     {
-        if(color instanceof Color)
+        if(color instanceof Color == false)
             throw new Error("Color is not of type Color");
 
         for(let x = 0; x < this.getWidthVP(); x += 1)
@@ -285,7 +290,7 @@ export default class Viewport
      */
     getPixelVP(x, y)
     {
-        if(typeof x != Number || typeof y != Number)
+        if(typeof x != "number" || typeof y != "number")
             throw new Error("X and Y must be numerical");
 
         x = Math.round(x);
@@ -305,7 +310,7 @@ export default class Viewport
      */
     setPixelVP(x, y, color = Color.black)
     {
-        if(typeof x != Number || typeof y != Number)
+        if(typeof x != "number" || typeof y != "number")
             throw new Error("X and Y must be numerical");
 
         if(color instanceof Color == false)
@@ -337,10 +342,123 @@ export default class Viewport
     */
     dumpVP2File(filename)
     {
-        if(filename instanceof String == false)
+        if(typeof filename != "string")
             throw new Error("Filename must be a String");
 
         this.#parent.dumpPixels2File(this.#vp_ul_x, this.#vp_ul_y, this.#vp_lr_x, this.#vp_lr_y, filename);
     }
 
+    /**
+      For debugging very small {@code Viewport} objects.
+
+      @return a string representation of this {@code Viewport}
+   */
+    toString() 
+    {
+        let result = "Viewport [w = " + this.getWidthVP() + ", h = " + this.getHeightVP() + "]\n";
+          
+        for(let y = 0; y < this.getHeightVP(); ++y) 
+        {
+            for (let x = 0; x < this.getWidthVP(); ++x) 
+            {
+                const color = this.getPixelVP(x, y);
+                result += color.getRed() + " " + color.getGreen() + " " + color.getBlue() + " " + color.getAlpha() + " | ";
+            }
+            result += "\n";
+        }
+        return result;
+    } 
+
+    static main()
+    {
+        const fb = new FrameBuffer(10, 10);
+        
+        console.log("creating vp1 = new VP(3, 3, fb = new FrameBuffer(10, 10), 4, 4, color.orange)");
+        const vp1 = new Viewport(3, 3, fb, 4, 4, Color.orange);
+        
+        console.log("creating vp2 = VP.buildParent()");
+        const vp2 = Viewport.buildParent(fb);
+
+        console.log("creating vp3 = vP.buildFB");
+        const vp3 = Viewport.buildFB(new FrameBuffer(5, 5), fb, 2, 2);
+
+        console.log("creating vp4 = vp.buildVP");
+        const vp4 = Viewport.buildVP(vp1, fb, 0, 0);
+
+        console.log("");
+        console.log("vp1.getFramebuffer()");
+        console.log(vp1.getFrameBuffer().toString());
+
+        console.log("");
+        console.log("vp2.framebuffer()");
+        console.log(vp2.framebuffer().toString());
+
+        console.log("");
+        console.log("vp3.parent()");
+        console.log(vp3.parent().toString());
+
+        console.log("");
+        console.log("vp1.getWidthVP()");
+        console.log(vp1.getWidthVP());
+
+        console.log("");
+        console.log("vp1.getHeightVP()");
+        console.log(vp1.getHeightVP());
+
+        console.log("");
+        console.log("vp4.width()");
+        console.log(vp4.width());
+
+        console.log("");
+        console.log("vp4.height()");
+        console.log(vp4.height());
+
+        console.log("");
+        console.log("vp2.getBackGroundColorVP()");
+        console.log(vp2.getBackgroundColorVP().toString());
+
+        console.log("");
+        console.log("vp3.bgColorVP()");
+        console.log(vp3.bgColorVP().toString());
+
+        console.log("");
+        console.log("vp3.setBackGroundColorVP(Color.Green");
+        vp3.setBackgroundColorVP(Color.Green);
+        console.log(vp3.toString());
+
+        console.log("");
+        console.log("vp3.clearVPDefault()");
+        vp3.clearVPDefault();
+        console.log(vp3.toString());
+        
+        console.log("");
+        console.log("vp2.setPixelVP(1, 1, Color.PINK)");
+        vp2.setPixelVP(1, 1, Color.Pink);
+        console.log(vp2.toString());
+
+        console.log("");
+        console.log("vp2.getPixelVP(1, 1");
+        console.log(vp2.getPixelVP(1, 1).toString());
+
+        console.log("");
+        console.log("vp1.dumpVP2File(VP1.ppm)");
+        vp1.dumpVP2File("VP1.ppm");
+
+        console.log("");
+        console.log("vp2.dumpVP2File(VP2.ppm)");
+        vp2.dumpVP2File("VP2.ppm");
+
+        console.log("");
+        console.log("vp3.dumpVP2File(VP3.ppm)");
+        vp3.dumpVP2File("VP3.ppm");
+
+        console.log("");
+        console.log("vp4.dumpVP2File(VP4.ppm)");
+        vp4.dumpVP2File("VP4.ppm");
+
+        console.log("");
+        console.log("vp1.convertVP2FB()");
+        console.log(vp1.convertVP2FB().toString());
+
+    }
 }

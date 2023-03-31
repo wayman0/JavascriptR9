@@ -43,7 +43,7 @@ export default class FrameBuffer
      */
     constructor(width, height, color = Color.Black)
     {
-        if(typeof width != Number || typeof height != Number)
+        if(typeof width != "number" || typeof height != "number")
             throw new Error("Width and Height must be numerical");
 
         if(color instanceof Color == false)
@@ -55,7 +55,7 @@ export default class FrameBuffer
         this.#pixelBuffer = new Array(this.#width * this.#height);
         this.#vp = Viewport.buildParent(this);
 
-        clearFB(this.#bgColorFB);
+        this.clearFB(this.#bgColorFB);
     }
 
     /**
@@ -69,15 +69,15 @@ export default class FrameBuffer
         if(source instanceof FrameBuffer == false)
             throw new Error("Source is not instance of FrameBuffer");
 
-        this(source.getWidthFB(), source.getHeightFB(), source.getBackgroundColorFB());
+        const fb = new FrameBuffer(source.getWidthFB(), source.getHeightFB(), source.getBackgroundColorFB());
 
-        for(let x = 0; x < this.getWidthFB(); x += 1)
+        for(let x = 0; x < source.getWidthFB(); x += 1)
         {
-            for(let y = 0; y < this.getHeightFB(); y += 1)
-                this.setPixelFB(x, y, this.getPixelFB(x, y));
+            for(let y = 0; y < source.getHeightFB(); y += 1)
+                fb.setPixelFB(x, y, source.getPixelFB(x, y));
         }
 
-        return this;
+        return fb;
     }
 
     /**
@@ -91,15 +91,15 @@ export default class FrameBuffer
         if(source instanceof Viewport == false)
             throw new Error("Source is not instance of Viewport");
 
-        this(source.getWidthVP(), source.getHeightVP(), source.getBackgroundColorVP());
+        const fb = new FrameBuffer(source.getWidthVP(), source.getHeightVP(), source.getBackgroundColorVP());
 
-        for(let x = 0; x < this.getWidthVP(); x += 1)
+        for(let x = 0; x < source.getWidthVP(); x += 1)
         {
-            for(let y = 0; y < this.getHeightVP(); y += 1)
-                this.setPixelFB(x, y, this.getPixelVP(x, y));
+            for(let y = 0; y < source.getHeightVP(); y += 1)
+                fb.setPixelFB(x, y, source.getPixelVP(x, y));
         }   
         
-        return this;
+        return fb;
     }
 
     /**
@@ -185,10 +185,10 @@ export default class FrameBuffer
      */
     setViewport(width, height, upperLeftX = 0, upperLeftY = 0)
     {
-        if( typeof upperLeftX != Number || 
-            typeof UpperLeftY != Number ||
-            typeof width      != Number ||
-            typeof height     != Number)
+        if( typeof upperLeftX != "number" || 
+            typeof upperLeftY != "number" ||
+            typeof width      != "number" ||
+            typeof height     != "number")
                 throw new Error("All Parameters must be Numerical");
 
         this.#vp.setViewport(width, height, upperLeftX, upperLeftY);
@@ -200,7 +200,7 @@ export default class FrameBuffer
      */
     clearFBDefault()
     {
-        clearFB(this.getBackgroundColorFB());
+        this.clearFB(this.getBackgroundColorFB());
     }
     
     /**
@@ -230,6 +230,9 @@ export default class FrameBuffer
      */
     getPixelFB(x, y)
     {
+        if(typeof x != "number" || typeof y != "number")
+            throw new Error("x and y must be numerical");
+
         x = Math.round(x);
         y = Math.round(y);
 
@@ -253,7 +256,7 @@ export default class FrameBuffer
      */
     setPixelFB(x, y, color = Color.Black)
     {
-        if(typeof x != Number || typeof y != Number)
+        if(typeof x != "number" || typeof y != "number")
             throw new Error("X and Y must be Numerical");
 
         if(color instanceof Color == false)
@@ -264,7 +267,7 @@ export default class FrameBuffer
 
         const index = y * this.getWidthFB() + x;
 
-        if(index >+ this.#pixelBuffer.length)
+        if(index >= this.#pixelBuffer.length)
             throw new Error("FrameBuffer: Bad pixel coordinate " + 
                             "(" + x + ", " + y + ") " + 
                             "[w= " + this.getWidthFB() + ", h= " + this.getHeightFB() + "]");
@@ -300,8 +303,8 @@ export default class FrameBuffer
         {
             for(let y = 0; y < this.getHeightFB(); y += 1)
             {
-                origColor = this.getPixelFB(x, y);
-                newColor  = new Color(origColor.getRed(), 0, 0);
+                const origColor = this.getPixelFB(x, y);
+                const  newColor  = new Color(origColor.getRed(), 0, 0);
 
                 newFB.setPixelFB(x, y, newColor);
             }
@@ -323,8 +326,8 @@ export default class FrameBuffer
         {
             for(let y = 0; y < this.getHeightFB(); y += 1)
             {
-                origColor = this.getPixelFB(x, y);
-                newColor  = new Color(0, origColor.getGreen(), 0);
+                const origColor = this.getPixelFB(x, y);
+                const newColor  = new Color(0, origColor.getGreen(), 0);
 
                 newFB.setPixelFB(x, y, newColor);
             }
@@ -346,8 +349,8 @@ export default class FrameBuffer
         {
             for(let y = 0; y < this.getHeightFB(); y += 1)
             {
-                origColor = this.getPixelFB(x, y);
-                newColor  = new Color(0, 0, origColor.getBlue());
+                const origColor = this.getPixelFB(x, y);
+                const newColor  = new Color(0, 0, origColor.getBlue());
 
                 newFB.setPixelFB(x, y, newColor);
             }
@@ -370,7 +373,7 @@ export default class FrameBuffer
             for (let x = 0; x < this.getWidthFB(); ++x) 
             {
                 const color = this.getPixelFB(x, y);
-                result += color.getRed() + " " + color.getGreen() + " " + color.getBlue() + " " + color.getGamma() + " | ";
+                result += color.getRed() + " " + color.getGreen() + " " + color.getBlue() + " " + color.getAlpha() + " | ";
             }
             result += "\n";
         }
@@ -387,7 +390,7 @@ export default class FrameBuffer
     */
     dumpFB2File(filename) 
     {
-        if(filename instanceof String == false)
+        if(typeof filename != "string")
             throw new Error("Filename must be a string");
 
         this.dumpPixels2File(0, 0, this.getWidthFB(), this.getHeightFB(), filename);
@@ -411,10 +414,11 @@ export default class FrameBuffer
     */
     dumpPixels2File(upperLeftX, upperLeftY, lowerRightX, lowerRightY, filename) 
     {
-        if( typeof upperLeftX != Number || typeof upperLeftY != Number ||
-            typeof lowerRightX != Number || typeof lowerRightY != Number)
+        if( typeof upperLeftX != "number" || typeof upperLeftY != "number" ||
+            typeof lowerRightX != "number" || typeof lowerRightY != "number")
                 throw new Error("upperLeftX, upperLeftY, lowerRightX, lowerRightY must be numerical");
-        if(filename instanceof String == false)
+                
+        if(typeof filename != "string")
             throw new Error("Filename must be a String");
             
         let pWidth  = lowerRightX - upperLeftX;
@@ -429,15 +433,15 @@ export default class FrameBuffer
 
         let tempPB = new Uint8ClampedArray(pWidth * pHeight * 3);
         let tempIndex = 0;
-        for (let y = upperLeftY; y < lowerRightY; y++) 
+        for (let y = upperLeftY; y < lowerRightY; y += 1) 
         {
-            for (let x = upperLeftX; x < lowerRightX; x++) 
+            for (let x = upperLeftX; x < lowerRightX; x += 1) 
             {
                 const index = y * this.getWidthFB() + x;
 
-                tempPB[tempIndex+0] = this.pixel_buffer[index].getRed();
-                tempPB[tempIndex+1] = this.pixel_buffer[index].getGreen();
-                tempPB[tempIndex+2] = this.pixel_buffer[index].getBlue();
+                tempPB[tempIndex+0] = this.#pixelBuffer[index].getRed();
+                tempPB[tempIndex+1] = this.#pixelBuffer[index].getGreen();
+                tempPB[tempIndex+2] = this.#pixelBuffer[index].getBlue();
                 tempIndex+=3;
             }
         }
@@ -449,6 +453,110 @@ export default class FrameBuffer
             fs.appendFileSync(filename, Buffer.from(tempPB),
                      err => {if (err) throw err;});
         });
+    }
+
+    static main()
+    {
+        console.log("Making Framebuffer 1 = new FrameBuffer(10, 10)");
+        const fb1 = new FrameBuffer(10, 10);
+        
+        console.log("");
+        console.log("Making fb2 = FB.buildFB(fb1)");
+        const fb2 = FrameBuffer.buildFB(fb1);
+
+        console.log("");
+        console.log("Making fb3 = FB.buildVP(new VP(3, 3, fb1, 0, 0, Color.blue))");
+        const vp1 = new Viewport(3, 3, fb1, 0, 0, Color.magenta);
+        const fb3 = FrameBuffer.buildVP(vp1);
+
+        console.log("");
+        console.log("fb1.getWidth(): ");
+        console.log(fb1.getWidthFB());
+
+        console.log("");
+        console.log("fb1.getHeight()");
+        console.log(fb1.getHeightFB());
+
+        console.log("");
+        console.log("fb2.width(): ");
+        console.log(fb2.width());
+
+        console.log("");
+        console.log("fb2.height()");
+        console.log(fb2.height());
+
+        console.log("");
+        console.log("fb3.getBAckgroundColor()");
+        console.log(fb3.getBackgroundColorFB().toString());
+
+        console.log("");
+        console.log("fb3.bgColor()");
+        console.log(fb3.bgColorFB().toString());
+
+        console.log("");
+        console.log("fb2.setVP(2, 2, 1, 1)");
+        fb2.setViewport(2, 2, 1, 1);
+        console.log(fb2.toString());
+
+        console.log("");
+        console.log("fb2.getViewport()");
+        console.log(fb2.getViewport().toString());
+
+        console.log("");
+        console.log("fb1.setViewportDefault()");
+        fb1.setViewportDefault();
+        console.log(fb1.toString());
+
+        console.log("");
+        console.log("fb1.getViewport()");
+        console.log(fb1.getViewport().toString());
+
+        console.log("");
+        console.log("fb2.vp() to see if fb2 feels fb1's viewport change since fb2 made from fb1");
+        console.log(fb2.vp().toString());
+
+        console.log("");
+        console.log("fb2.setBackgroundColor(color.red)");
+        fb2.setBackgroundColorFB(Color.red);
+        console.log(fb2.toString());
+
+        console.log("");
+        console.log("fb2.clearFBDefault()");
+        fb2.clearFBDefault();
+        console.log(fb2.toString());
+
+        console.log("");
+        console.log("fb1.setPixel(9, 9, Color.yellow");
+        fb1.setPixelFB(9, 9, Color.yellow);
+        console.log(fb1.toString());
+
+        console.log("");
+        console.log("fb1.getPixel(9, 9)");
+        console.log(fb1.getPixelFB(9, 9).toString());
+
+        console.log("");
+        console.log("fb1.dumpFB2File(FB1.ppm)");
+        fb1.dumpFB2File("FB1.ppm");
+
+        console.log("")
+        console.log("fb2.dumpFB2File(fb2.ppm");
+        fb2.dumpFB2File("FB2.ppm");
+
+        console.log("");
+        console.log('fb3.dumpfb2file(fb3.ppm)');
+        fb3.dumpFB2File("FB3.ppm");
+
+        console.log("");
+        console.log("fb1.convertRed2FB().dumpfb2file(fb1-red.ppm");
+        fb1.convertRed2FB().dumpFB2File("FB1-RED.ppm");
+        
+        console.log("");
+        console.log("fb2.convertGreen2FB().dumpfb2file(fb2-green.ppm");
+        fb2.convertGreen2FB().dumpFB2File("FB2-GREEN.ppm");
+
+        console.log("");
+        console.log("fb3.convertblue2FB().dumpfb2file(fb3-blue.ppm");
+        fb3.convertBlue2FB().dumpFB2File("FB3-BLUE.ppm");
     }
 }
 

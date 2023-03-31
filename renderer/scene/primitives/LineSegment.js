@@ -31,6 +31,9 @@ export default class LineSegment extends Primitive
      */
     constructor(vIndList = new Array(2), cIndList = new Array(2))
     {
+        if(Array.isArray(vIndList) == false || Array.isArray(cIndList) == false)
+            throw new Error("Vertex Index List and Color Index List must be an array. ");
+
         if(vIndList.length != 2 || cIndList.length != 2)
             throw new Error("Need 2 points to make a line segment");
 
