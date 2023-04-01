@@ -151,9 +151,10 @@ export function keyPressed(e)
     setTransformations(c);
     displayMatrix(c);
     displayCamera(c);
-    displayWindow(c);
-
-    setUpViewing();
+    
+    // these two depend on implementation in html
+    //displayWindow(c);
+    //setUpViewing();
 }
 
 export function setTransformations(c)
@@ -207,3 +208,60 @@ export function setTransformations(c)
                            .mult(Matrix.scale(scale));
 }
 
+export function displayMatrix(c)
+{
+    if(showMatrix && 
+        (  'm' == c || '=' == c || 's' == c 
+        || 'x' == c || 'y' == c || 'z' == c 
+        || 'u' == c || 'v' == c || 'w' == c 
+        || 'X' == c || 'Y' == c || 'Z' == c 
+        || 'U' == c || 'V' == c || 'W' == c
+        || 'S' == c))
+    {
+        console.log("xRot = % .5f, yRot = % .5f, zRot = % .5\n", 
+                    xRotation, yRotation, zRotation);
+        console.log(scene.getPosition(currentModel).getMatrix().toString());
+    }
+}
+
+export function displayCamera(c)
+{
+    if(showCamera && 
+        ('M' == c || 'p' == c ||
+         'n' == c || 'N' == c ||
+         'f' == c || 'F' == c ||
+         'r' == c || 'R' == c ||
+         ('b' == c && doNearClipping) ))
+            console.log(scene.getCamera().toString());
+}
+
+export function printHelpMessage()
+{
+    console.log("Use the 'd/D' keys to toggle debugging information on and off for the current model.");
+    console.log("Use the '1' and '2' keys to switch between the two renderers.");
+    console.log("Use the '/' and '?' keys to cycle forwards and backwards through the models.");
+    console.log("Use the '>/<' and shift keys to increase and decrease the mesh divisions in each direction.");
+    console.log("Use the 'p' key to toggle between parallel and orthographic projection.");
+    console.log("Use the x/X, y/Y, z/Z, keys to translate the model along the x, y, z axes.");
+    console.log("Use the u/U, v/V, w/W, keys to rotate the model around the x, y, z axes.");
+    console.log("Use the s/S keys to scale the size of the model.");
+    console.log("Use the 'm' key to toggle the display of matrix information.");
+    console.log("Use the '=' key to reset the model matrix.");
+    console.log("Use the 'c' key to change the random solid model color.");
+    console.log("Use the 'C' key to randomly change model's colors.");
+    console.log("Use the 'e' key to change the random solid edge colors.");
+    console.log("Use the 'E' key to change the random edge colors.");
+    console.log("Use the 'Alt-e' key combination to change the random vertex colors.");
+    console.log("Use the 'a' key to toggle anti-aliasing on and off.");
+    console.log("Use the 'g' key to toggle gamma correction on and off.");
+    console.log("Use the 'b' key to toggle near plane clipping on and off.");
+    console.log("Use the n/N keys to move the camera's near plane.");
+    console.log("Use the f/F keys to change the camera's field-of-view (keep AR constant).");
+    console.log("Use the r/R keys to change the camera's aspect ratio (keep fov constant).");
+    console.log("Use the 'l' key to toggle letterboxing viewport on and off.");
+    console.log("Use the 'M' key to toggle showing the Camera data.");
+    console.log("Use the 'k' key to show window data.");
+    console.log("Use the 'P' key to convert the current model to a point cloud.");
+    console.log("Use the '+' key to save a \"screenshot\" of the framebuffer.");
+    console.log("Use the 'h' key to redisplay this help message.");
+}
