@@ -1,29 +1,53 @@
-import {Scene, Camera, Matrix, Model, Position, Vertex} from "../renderer/scene/SceneImport.js";
+import {Scene, Matrix, Model, Position, Vertex} from "../renderer/scene/SceneImport.js";
+import {FrameBuffer, Viewport} from "../renderer/framebuffer/FramebufferImport.js";
+import {renderFB} from "../renderer/pipeline/PipelineImport.js";
 import {LineSegment} from "../renderer/scene/primitives/PrimitiveImport.js";
-
 import Color from "../renderer/color/Color.js";
 
-import {showCamera, showMatrix, showWindow, pushback, scene, keyPressed, 
-        setTransformations, displayCamera, displayMatrix, printHelpMessage} from "./InteractiveAbstractClient_R9.js";
-
-lsModel = Model.buildName("Line Segment Model");
+let lsModel = Model.buildName("Line Segment Model");
 lsModel.addVertex(  new Vertex(-1, 0, 0), 
                     new Vertex(1, 0, 0));
 lsModel.addColor(Color.red, Color.blue);
 lsModel.addPrimitive(LineSegment.buildVertexColors(0, 1, 0, 1));
 
-lsPosit = Position.buildFromModelName(lsModel, "Line Segment Position");
-lsPosit.setMatrix(Matrix.translate(0, 0, pushback));
+let lsPosit = Position.buildFromModelName(lsModel, "Line Segment Position");
 
-scene = Scene.buildFromName("Line Segment Scene");
+let scene = Scene.buildFromName("Line Segment Scene");
 scene.addPosition(lsPosit);
 
-showCamera = true;
-showMatrix = true;
+let fb = new FrameBuffer(500, 500);
 
-printHelpMessage();
+// translate the linesegment from the bottom left to the top right
+for(let x = -1; x < 1; x += .1)
+{
+    for(let y = -1; y < 1; y += .1)
+    {
+        lsPosit.setMatrix(Matrix.translate(x, y, -1));
+        renderFB(scene, fb);
+        fb.dumpFB2File("LineSegment--Translate(" + x + ", " + y + ", " + "-1).ppm");
+    }
+}
 
-const width = 512;
-const height = 512;
+//rotate the linesegment around the x axis
+for(let x = -90; x < 90; x += 5)
+{
+    lsPosit.setMatrix(Matrix.rotateX(x));
+    renderFB(scene, fb);
+    fb.dumpFB2File("LineSegment--RotateX(" + x + ").ppm");
+}
 
+// rotate the linesegment around the y axis;
+for(let x = -90; x < 90; x += 5)
+{
+    lsPosit.setMatrix(Matrix.rotateY(x));
+    renderFB(scene, fb);
+    fb.dumpFB2File("LineSegment--RotateY(" + x + ").ppm");
+}
 
+// rotate the linesegment around the z axis;
+for(let x = -90; x < 90; x += 5)
+{
+    lsPosit.setMatrix(Matrix.rotateZ(x));
+    renderFB(scene, fb);
+    fb.dumpFB2File("LineSegment--RotateZ(" + x + ").ppm");
+}

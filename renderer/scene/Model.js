@@ -79,8 +79,15 @@ export default class Model
 
     constructor(vList= new Array(), pList= new Array(), cList = new Array(), name = "", vis = true)
     {
-        if(!Array.isArray(vList) || !Array.isArray(pList) || !Array.isArray(cList))
-            throw new Error("Vertex, Primitive, and Color List must be arrays");
+        if( Array.isArray(vList) == false)
+            throw new Error("Vertex list must be array");
+
+        if(Array.isArray(pList) == false)
+            throw new Error("Primitive list must be array");
+        
+        if(Array.isArray(cList) == false)
+            throw new Error("Color List must be array");
+        
 
         if(typeof name != "string")
             throw new Error("Name must be a string");
@@ -89,7 +96,7 @@ export default class Model
             throw new Error("Visible is not a boolean");
 
         let vertexLength = 0;    
-        this.#vertexList = new Array();    
+        this.#vertexList = new Array()   
         for(let x = 0; x < vList.length; x += 1)
         {
             if(vList[x] instanceof Vertex == false)

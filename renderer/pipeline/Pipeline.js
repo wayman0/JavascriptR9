@@ -1,7 +1,7 @@
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex, Primitive, LineSegment, Point} from "../scene/SceneImport.js";
-import {CheckModel} from "../scene/util/CheckModel.js";
+import {check} from "../scene/util/UtilImport.js";
 import {FrameBuffer, Viewport} from "../framebuffer/FramebufferImport.js";
-import {Clip, M2V, NearClip, Project, Rasterize, V2C, debugPosition, debugScene, logMessage, logVertexList, logColorList, logPrimitiveList} from "./PipelineImport.js";
+import {clip, M2V, NearClip, Project, rasterize, V2C, debugPosition, debugScene, logMessage, logVertexList, logColorList, logPrimitiveList} from "./PipelineImport.js";
 import Color from "../color/Color.js";
 
 export var DEFAULT_COLOR = Color.white;
@@ -11,7 +11,7 @@ export function renderFB(scene, fb)
     if(fb instanceof FrameBuffer == false)
         throw new Error("FB must be a framebuffer");
 
-    renderFB(scene, fb.vp);
+    render(scene, fb.vp());
 }
 
 export function render(scene, vp)
@@ -22,13 +22,15 @@ export function render(scene, vp)
     if(vp instanceof Viewport == false)
         throw new Error("VP must be a Viewport data type");
 
-    debugScene = scene.debug;
+    //TypeError: Assignment to constant variable.
+    //debugScene = scene.debug;
 
     logMessage("/n== Begin Renderering of Scene (Pipeline1): " + scene.name + " ==");
 
-    for(const position of scene.positionList)
+    for(const position of scene.positionList())
     {
-        debugPosition = position.debug;
+        //TypeError: Assignment to constant variable.
+        //debugPosition = position.debug;
 
         if(position.visible)
             renderPosition(scene, position, Matrix.identity(), vp);
@@ -39,7 +41,7 @@ export function render(scene, vp)
     logMessage("== End Rendering of Scene (Pipeline 1) == ");
 }
 
-renderPosition(scene, position, ctm, vp)
+function renderPosition(scene, position, ctm, vp)
 {
     if(position.getModel() != null && position.getModel() != undefined)
         logMessage("==== Render Position: " + position.getName() + " ====");
@@ -48,13 +50,13 @@ renderPosition(scene, position, ctm, vp)
     
     logMessage("---- Transformation matrix:\n" + position.getMatrix());
 
-    const ctm2 = ctm.times(position.getMatrix());
+    const ctm2 = ctm.timesMatrix(position.getMatrix());
 
     if(position.getModel() != null && position.getModel() != undefined && position.getModel().visible)
     {
         logMessage("====== Render model: " + position.getModel().name + " ======");
 
-        CheckModel.check(position.getModel());
+        check(position.getModel());
 
         if( position.getModel().colorList.length == 0 &&
             !position.getModel().vertexList.length == 0)
@@ -83,12 +85,12 @@ renderPosition(scene, position, ctm, vp)
         const model4 = Project(model3, scene.getCamera());
         logVertexList("4. Projected  ", model4);
 
-        model5 = Clip(model4);
+        model5 = clip(model4);
         logVertexList("5. Clipped    ", model5);
         logColorList("5. Clipped    ", model5);
         logPrimitiveList("5. Clipped    ", model5);
 
-        Rasterize(model5, vp);
+        rasterize(model5, vp);
         logMessage("====== End Model: " + position.getModel().getName() + " =====");
     }
     else

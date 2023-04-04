@@ -1,10 +1,10 @@
 import {Model, Vertex, Primitive, LineSegment, Point} from "../scene/SceneImport.js";
 import Color from "../color/Color.js";
 
-export var debugScene = false;
-export var debugPosition = false;
+export let debugScene = false;
+export let debugPosition = false;
 
-debug = debugScene || debugPosition;
+let debug = debugScene || debugPosition;
 
 export function logMessage(message)
 {

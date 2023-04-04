@@ -9,78 +9,69 @@
    and/or debugging a {@link Model}.
 */
 
-import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "../SceneImport.js";
 import {Primitive, Point, LineSegment} from "../primitives/PrimitiveImport.js";
 
-export default class CheckModel
+export function check(model)
 {
-    static check(model)
-    {
-        if(model instanceof Model == false)
-            throw new Error("Model is not a Model");
-        
-        error = false;
-
-        if(model.getVertexList().length == 0 && model.getPrimitiveList().length != 0)
-        {   
-            console.log("***WARNING: This model does not have any vertices.");
-            error = true;
-        }
-        
-        if(model.getVertexList().length != 0 && model.getPrimitiveList().length == 0)
-        {
-            console.log("***WARNING: This model does not have any primitives");
-            error = true;
-        }
-
-        if(model.getVertexList().length != 0 && model.getColorList().length == 0)
-        {
-            console.log("***WARNING: This model does not have any colors.");
-            error = true;
-        }
-
-        if(error)
-            console.log(model);
+    if(model instanceof Model == false)
+        throw new Error("Model is not a Model");
+    
+    let error = false;
+    if(model.getVertexList().length == 0 && model.getPrimitiveList().length != 0)
+    {   
+        console.log("***WARNING: This model does not have any vertices.");
+        error = true;
     }
-
-    static checkPrimitives(model)
+    
+    if(model.getVertexList().length != 0 && model.getPrimitiveList().length == 0)
     {
-        if(model instanceof Model == false)
-            throw new Error("Model must be a Model");
-
-        const numberOfVertices = model.getVertexList().length;
-        result = true;
-        
-        for(let p of model.getPrimitiveList())
-        {
-            for(let i = 0; i < p.getVertexIndexList().length; ++i)
-            {
-                if(i >= numberOfVertices)
-                {
-                    console.log("This Primitve has invalid Vertex index: " + i);
-                    console.log(p);
-                    result = false;
-                }
-            }
-        }
-
-        const numberOfColors = model.getColorList().length;
-        for(p of model.getPrimitiveList())
-        {
-            for(i = 0; i < p.getColorIndexList().length; ++ i)
-            {
-                if(i >= numberOfColors)
-                {
-                    console.log("This Primitve has invalid Color index: " + i);
-                    console.log(p);
-                    result = false;
-                }
-            }
-        }
-        
-        return result;
+        console.log("***WARNING: This model does not have any primitives");
+        error = true;
     }
-
-    // should we make a constructor and then create a private instantiable boolean
-    // like in Matrix or just not make a constructor?
+    if(model.getVertexList().length != 0 && model.getColorList().length == 0)
+    {
+        console.log("***WARNING: This model does not have any colors.");
+        error = true;
+    }
+    if(error)
+        console.log(model);
 }
+
+export function checkPrimitives(model)
+{
+    if(model instanceof Model == false)
+        throw new Error("Model must be a Model");
+    const numberOfVertices = model.getVertexList().length;
+    result = true;
+    
+    for(let p of model.getPrimitiveList())
+    {
+        for(let i = 0; i < p.getVertexIndexList().length; ++i)
+        {
+            if(i >= numberOfVertices)
+            {
+                console.log("This Primitve has invalid Vertex index: " + i);
+                console.log(p);
+                result = false;
+            }
+        }
+    }
+    const numberOfColors = model.getColorList().length;
+    for(p of model.getPrimitiveList())
+    {
+        for(i = 0; i < p.getColorIndexList().length; ++ i)
+        {
+            if(i >= numberOfColors)
+            {
+                console.log("This Primitve has invalid Color index: " + i);
+                console.log(p);
+                result = false;
+            }
+        }
+    }
+    
+    return result;
+}
+
+

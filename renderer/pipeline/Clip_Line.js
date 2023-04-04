@@ -36,7 +36,7 @@ export default function clip(model, ls)
         return clip(model, clipOneTime(model, ls));
 }
 
-clipOneTime(model, ls)
+function clipOneTime(model, ls)
 {
     const vIndex0 = ls.vertexIndexList[0];
     const vIndex1 = ls.vertexIndexList[1];
@@ -189,6 +189,8 @@ clipOneTime(model, ls)
                                             r + ", " + g + ", " + b + ">");
 
     }
+
+    let newLS = undefined;
 
     if(1 == vOutside)
             newLS = new LineSegment(vIndex0, vIndexNew,

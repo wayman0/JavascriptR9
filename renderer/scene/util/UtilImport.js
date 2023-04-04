@@ -9,7 +9,6 @@ export var MeshMaker;
 export var PointCloud;
 export var ModelShading;
 */
-export {default as CheckModel} from "./CheckModel";
-export {default as MeshMaker} from "./MeshMaker.js";
-export {default as ModelShading} from "./ModelShading.js";
-export {default as PointCloud} from "./PointCloud.js";
+export {check, checkPrimitives} from "./CheckModel.js";
+export {setColor, setRandomColor, setRandomVertexColor, setRainbowPrimitiveColors, setRandomPrimitiveColor, randomColor} from "./ModelShading.js";
+export {make} from "./PointCloud.js";

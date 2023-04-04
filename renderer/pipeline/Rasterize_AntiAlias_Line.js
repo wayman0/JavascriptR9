@@ -1,5 +1,5 @@
 import {rastDebug, doAntiAliasing, doGamma, logMessage, logPixel, logPixelsXAA, logPixelsYAA} from "./PipelineImport.js";
-import {Model, LineClip} from "../scene/SceneImport.js";
+import {Model, LineSegment} from "../scene/SceneImport.js";
 import {Viewport} from "../framebuffer/FramebufferImport.js";
 import Color from "../color/Color.js";
 

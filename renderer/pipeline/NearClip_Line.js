@@ -30,7 +30,7 @@ export default function clip(model, ls, camera)
         return interpolateNewVertex(model, ls, n);
 }
 
-interpolateNewVertex(model, ls, n)
+function interpolateNewVertex(model, ls, n)
 {
     const vInd0 = ls.vIndexList[0];
     const v0 = model.vertexList[vInd0];
