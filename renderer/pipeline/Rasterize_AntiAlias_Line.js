@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {rastDebug, doAntiAliasing, doGamma, logMessage, logPixel, logPixelsXAA, logPixelsYAA} from "./PipelineImport.js";
 import {Model, LineSegment} from "../scene/SceneImport.js";
 import {Viewport} from "../framebuffer/FramebufferImport.js";
@@ -221,4 +222,9 @@ export default function rasterize(model, ls, vp)
                 // have to check if the color is in int or float representation
         vp.setPixelVP(xVp, yVP, new Color(r1, g1, b1, 255, (r1 <= 1 && g1 <= 1 && b1 <= 1)))
     }
+=======
+export default function rasterize(model, ls, vp)
+{
+    const bg = vp.bgColorVP;
+>>>>>>> f18eccc9d44d49cd6196c7d07c30815826c751f9
 }

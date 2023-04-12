@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {Model, Position, Matrix, Vertex} from "../scene/SceneImport.js";
 
 export default function model2view(position, ctm)
@@ -19,4 +20,21 @@ export default function model2view(position, ctm)
                     model.visible);
 }
 
+=======
+export default function model2view(position, ctm)
+{
+    const model = position.model;
+    let newVertexList = new Arrray(model.vertexList.length);
+
+    for(let x = 0; x < model.vertexList.length; x += 1)
+        newVertexList[x] = ctm.times(model.vertexList[x]);
+
+    return new model(newVertexList, 
+                    model.primitiveList, 
+                    model.colorList, 
+                    position.name + "::" + model.name, 
+                    model.visible);
+}
+
+>>>>>>> f18eccc9d44d49cd6196c7d07c30815826c751f9
     
