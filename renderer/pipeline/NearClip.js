@@ -43,3 +43,13 @@ export function clip(model, camera)
                     model2.name(),
                     model2.visibe);
 }
+
+export function setDoNearClipping(val)
+{
+    doNearClipping = val;
+}
+
+export function setNearDebug(val)
+{
+    nearDebug = val;
+}

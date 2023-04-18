@@ -6,6 +6,17 @@ export let debugPosition = false;
 
 let debug = debugScene || debugPosition;
 
+
+export function setDebugScene(val)
+{
+    debugScene = val;
+}
+
+export function setDebugPosition(val)
+{
+    debugPosition = val;
+}
+
 export function logMessage(message)
 {
     if(debug)

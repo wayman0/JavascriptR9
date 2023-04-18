@@ -23,3 +23,18 @@ export function rasterize(model, vp)
             
     }
 }
+
+export function setRastDebug(val)
+{
+    rastDebug = val;
+}
+
+export function setDoAntiAliasing(val)
+{
+    doAntiAliasing = val;
+}
+
+export function setDoGamma(val)
+{
+    doGamma = val;
+}

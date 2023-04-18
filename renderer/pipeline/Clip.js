@@ -39,3 +39,8 @@ export function clip(model)
                     model2.name,
                     model2.visibe);
 }
+
+export function setClipDebug(val)
+{
+    clipDebug = val;
+}
