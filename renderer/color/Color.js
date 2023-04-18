@@ -182,12 +182,12 @@ export default class Color
         if(!(c1Weight >= 0 && c1Weight <= 1))
             throw new Error("c1Weight has to be in the range 0 to 1 inclusive");
 
-        floatC1 = Color.convert2Float(c1);
-        floatC2 = Color.convert2Float(c2);
+        const floatC1 = Color.convert2Float(c1);
+        const floatC2 = Color.convert2Float(c2);
 
-        newR = c1Weight * floatC1.getRed() + (1-c1Weight) * floatC2.getRed();
-        newG = c1Weight * floatC1.getGreen() + (1-c1Weight) * floatC2.getGreen();
-        newB = c1Weight * floatC1.getBlue() + (1-c1Weight) * floatC2.getBlue();
+        const newR = c1Weight * floatC1.getRed() + (1-c1Weight) * floatC2.getRed();
+        const newG = c1Weight * floatC1.getGreen() + (1-c1Weight) * floatC2.getGreen();
+        const newB = c1Weight * floatC1.getBlue() + (1-c1Weight) * floatC2.getBlue();
         
         return new Color(newR, newG, newB, 1, true);
     }
@@ -207,7 +207,7 @@ export default class Color
         if(color.isFloat())
             return Color.buildColor(color);
         
-        return (new Color(color.getRed()/255, color.getGreen()/255, color.getBlue()/255, color.getAlpha(), true));        
+        return (new Color(color.getRed()/255, color.getGreen()/255, color.getBlue()/255, color.getAlpha()/255, true));        
     }
 
     /**
@@ -219,13 +219,13 @@ export default class Color
      */
     static convert2Int(color)
     {
-        if(color instanceof Color)
+        if(color instanceof Color == false)
             throw new Error("Color is not of type Color");
         
         if(color.isFloat() == false)
             return Color.buildColor(color);
         
-        return (new Color(color.getRed() * 255, color.getGreen() * 255, color.getBlue() * 255), color.getAlpha() * 255);
+        return (new Color(color.getRed() * 255, color.getGreen() * 255, color.getBlue() * 255, color.getAlpha() * 255, false));
     }
 
     /**
@@ -248,11 +248,11 @@ export default class Color
      */
     static mutate2Int(c)
     {
-        if(c instanceof Color)
+        if(c instanceof Color == false)
             throw new Error("c is not a color");
 
         if(c.isFloat())
-            c = new Color(this.getRed() * 255, this.getGreen() * 255, this.getBlue() * 255, this.getAlpha() * 255);
+            c = new Color(c.getRed() * 255, c.getGreen() * 255, c.getBlue() * 255, c.getAlpha() * 255, false);
     }
 
     getRed()
@@ -302,6 +302,63 @@ export default class Color
     toString()
     {
         return ("(r, g, b): (" + this.#rgb[0] + ", " + this.#rgb[1] + ", " + this.#rgb[2] + ")");
+    }
+
+    static main()
+    {
+        console.log("Making color1 = new Color(0, 0, 0, 100)");
+        let color1 = new Color(0, 0, 0, 100);
+        console.log(color1.toString());
+
+        console.log("Making color2 = new Color(1, 1, 1, 1, true)");
+        let color2 = new Color(1, 1, 1, 1, true);
+        console.log(color2.toString());
+
+        console.log("Making color3 = Color.buildAlpha(color1, 255)");
+        let color3 = Color.buildAlpha(color1, 255);
+        console.log(color3.toString());
+
+        console.log("Making color4 = Color.buildColor(color2)");
+        let color4 = Color.buildColor(color2);
+        console.log(color4.toString());
+
+        console.log("Making color5 = Color.blendColor(color2, color3)");
+        let color5 = Color.blendColor(color2, color3);
+        console.log(color5.toString());
+
+        console.log("Making color6 = Color.blendColorWeight(color3, .9)");
+        let color6 = Color.blendColorWeight(color2, color3, .9);
+        console.log(color6.toString());
+
+        console.log("Making color7 = Color.convert2Int(color2)");
+        let color7 = Color.convert2Int(color2);
+        console.log(color7.toString());
+
+        console.log("Making color8 = Color.convert2Float(color3)");
+        let color8 = Color.convert2Float(color3);
+        console.log(color8.toString());
+
+        console.log("Checking color2.isFloat()");
+        console.log(color2.isFloat());
+
+        console.log("Mutating color2 to be an int");
+        Color.mutate2Int(color2);
+        console.log(color2.toString());
+
+        console.log("Calling color2.isFloat()");
+        console.log(color2.isFloat());
+
+        console.log("calling color3.isFloat()");
+        console.log(color3.isFloat());
+
+        console.log("Mutating color3 to be a float");
+        Color.mutate2Int(color3);
+        console.log(color3.toString());
+
+        console.log("calling color3.isFloat())");
+        console.log(color3.isFloat());
+
+
     }
 
     // Apply gamma-encoding (gamma-compression) to the colors.

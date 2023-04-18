@@ -32,7 +32,7 @@ export default class Vector
     * @param {@link Number} z z coordinate of the new {@code Vector}
     * @param {@link Number} w w coordinate of the new {@code Vector}
     */
-   constructor(x, y, z, w = 1) // should w be 1 or 0?
+   constructor(x, y, z, w = 0) // should w be 1 or 0?
    {
       if(typeof x != "number" || typeof y != "number" || 
          typeof z != "number" || typeof w != "number")
@@ -190,15 +190,15 @@ export default class Vector
       if(m instanceof Matrix == false)
          throw new Error("M must be a Matrix");
 
-      v1 = m.v1;
-      v2 = m.v2;
-      v3 = m.v3;
-      v4 = m.v4;
+      const v1 = m.v1;
+      const v2 = m.v2;
+      const v3 = m.v3;
+      const v4 = m.v4;
 
-      newX = v1.x * this.x + v2.x * this.y + v3.x * this.z + v4.x * this.w;
-      newY = v1.y * this.x + v2.y * this.y + v3.y * this.z + v4.y * this.w;
-      newZ = v1.z * this.x + v2.z * this.y + v3.z * this.z + v4.z * this.w;
-      newW = v1.w * this.x + v2.w * this.y + v3.w * this.z + v4.w * this.w;
+      const newX = v1.x * this.x + v2.x * this.y + v3.x * this.z + v4.x * this.w;
+      const newY = v1.y * this.x + v2.y * this.y + v3.y * this.z + v4.y * this.w;
+      const newZ = v1.z * this.x + v2.z * this.y + v3.z * this.z + v4.z * this.w;
+      const newW = v1.w * this.x + v2.w * this.y + v3.w * this.z + v4.w * this.w;
    
       this.x = newX;
       this.y = newY;

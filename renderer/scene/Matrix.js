@@ -289,10 +289,10 @@ export default class Matrix
       if(v instanceof Vertex == false)
          throw new Error("V must be a Vertex");
 
-      const newX = this.v1.x * v.x() + this.v2.x * v.y() + this.v3.x * v.z() + this.v4.x + v.w();
-      const newY = this.v1.y * v.x() + this.v2.y * v.y() + this.v3.y * v.z() + this.v4.y + v.w();
-      const newZ = this.v1.z * v.x() + this.v2.z * v.y() + this.v3.z * v.z() + this.v4.z + v.w();
-      const newW = this.v1.w * v.x() + this.v2.w * v.y() + this.v3.w * v.z() + this.v4.w + v.w();
+      const newX = this.v1.x * v.x() + this.v2.x * v.y() + this.v3.x * v.z() + this.v4.x * v.w();
+      const newY = this.v1.y * v.x() + this.v2.y * v.y() + this.v3.y * v.z() + this.v4.y * v.w();
+      const newZ = this.v1.z * v.x() + this.v2.z * v.y() + this.v3.z * v.z() + this.v4.z * v.w();
+      const newW = this.v1.w * v.x() + this.v2.w * v.y() + this.v3.w * v.z() + this.v4.w * v.w();
 
       return new Vertex(newX, newY, newZ, newW);
    }
@@ -308,10 +308,10 @@ export default class Matrix
       if(v instanceof Vector == false)
          throw new Error("V is not a Vector");
 
-      const newX = this.v1.x * v.x + this.v2.x * v.y + this.v3.x * v.z + this.v4.x + v.w;
-      const newY = this.v1.y * v.x + this.v2.y * v.y + this.v3.y * v.z + this.v4.y + v.w;
-      const newZ = this.v1.z * v.x + this.v2.z * v.y + this.v3.z * v.z + this.v4.z + v.w;
-      const newW = this.v1.w * v.x + this.v2.w * v.y + this.v3.w * v.z + this.v4.w + v.w;
+      const newX = this.v1.x * v.x + this.v2.x * v.y + this.v3.x * v.z + this.v4.x * v.w;
+      const newY = this.v1.y * v.x + this.v2.y * v.y + this.v3.y * v.z + this.v4.y * v.w;
+      const newZ = this.v1.z * v.x + this.v2.z * v.y + this.v3.z * v.z + this.v4.z * v.w;
+      const newW = this.v1.w * v.x + this.v2.w * v.y + this.v3.w * v.z + this.v4.w * v.w;
    
       return new Vector(newX, newY, newZ, newW);
    }
@@ -346,7 +346,7 @@ export default class Matrix
       this.v1.timesEqualsScalar(s);
       this.v2.timesEqualsScalar(s);
       this.v3.timesEqualsScalar(s);
-      this.v3.timesEqualsScalar(s);
+      this.v4.timesEqualsScalar(s);
 
       return this;
    }
@@ -431,13 +431,13 @@ export default class Matrix
    {
       console.log(typeof m);
 
-      if(m instanceof Matrix)
+      if(m instanceof Matrix == false)
          throw new Error("M is not a  Matrix");
 
       this.v1.timesEqualsMatrix(m);
       this.v2.timesEqualsMatrix(m);
       this.v3.timesEqualsMatrix(m);
-      this.v4.timesEaualsMatrix(m);
+      this.v4.timesEqualsMatrix(m);
 
       return this;
    }
