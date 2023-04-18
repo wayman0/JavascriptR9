@@ -8,15 +8,6 @@ export default function clip(model, ls)
     const vIndex1 = ls.vIndexList()[1];
     const v0 = model.vertexList()[vIndex0];
     const v1 = model.vertexList()[vIndex1];
-
-    console.log(ls.vIndexList())
-    console.log(ls.vIndexList()[0])
-    console.log(vIndex0)
-    console.log(model.vertexList())
-    console.log(model.vertexList()[vIndex0])
-    console.log(v0);
-    console.log(v0.x());
-
     const x0 = v0.x(), y0 = v0.y();
     const x1 = v1.x(), y1 = v1.y();
 
@@ -46,8 +37,8 @@ export default function clip(model, ls)
 
 function clipOneTime(model, ls)
 {
-    const vIndex0 = ls.vertexIndexList()[0];
-    const vIndex1 = ls.vertexIndexList()[1];
+    const vIndex0 = ls.vIndexList()[0];
+    const vIndex1 = ls.vIndexList()[1];
     const vertex0 = model.vertexList()[vIndex0];
     const vertex1 = model.vertexList()[vIndex1];
 
@@ -155,12 +146,13 @@ function clipOneTime(model, ls)
     vIndexNew = model.vertexList().length;
     model.addVertex(newVertex);
 
-    let cIndexI = ls.colorIndexList()[1-vOutside];
-    let cIndexO = ls.colorIndexList()[vOutside];
+    let cIndexI = ls.cIndexList()[1-vOutside];
+    let cIndexO = ls.cIndexList()[vOutside];
     let cI = model.colorList()[cIndexI].getRGBComponents();
-    let cO = model.colorList()[cIndexO].getRGBomponents();
+    let cO = model.colorList()[cIndexO].getRGBComponents();
 
-        // since t is already a float we dont need to cast it
+    // since t is already a float we dont need to cast it
+    let t_ = undefined;    
     if(t > 1)
         t_ = 1/t;
     else
@@ -169,9 +161,11 @@ function clipOneTime(model, ls)
     // this looks like blending code, 
     // can we just use a blend function in
     // the color class?
-    let r = (1-t_) * c0[0] + t_ * cI[0];
-    let g = (1-t_) * c0[1] + t_ * cI[1];
-    let b = (1-t_) * c0[2] + t_ * cI[2];
+    let r = (1-t_) * cO[0] + t_ * cI[0];
+    let g = (1-t_) * cO[1] + t_ * cI[1];
+    let b = (1-t_) * cO[2] + t_ * cI[2];
+
+    console.log("r: " + r + "g: " + g + "b: " + b);
 
     let newColor = new Color(r, g, b);
     let cIndexNew = model.colorList().length;
@@ -201,11 +195,9 @@ function clipOneTime(model, ls)
     let newLS = undefined;
 
     if(1 == vOutside)
-            newLS = new LineSegment(vIndex0, vIndexNew,
-                                    cIndexI, cIndexNew);
+            newLS = LineSegment.buildVertexColors(vIndex0, vIndexNew, cIndexI, cIndexNew);
     else
-            newLS = new LineSegment(vIndexNew, vIndex1, 
-                                    cIndexNew, cIndexI);
+            newLS = LineSegment.buildVertexColors(vIndexNew, vIndex1, cIndexNew, cIndexI);
 
     return newLS;
 }

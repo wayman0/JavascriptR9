@@ -77,10 +77,16 @@ export default class Color
 
         if(float)
         {
-            if(!(r >= 0 && r <= 1) || !(g >= 0 && g <= 1) || !(b >= 0 && b <= 1) || !(a >=0 && a <= 1))
-                throw new Error("Float data must be between 0 and 1 inclusive");
+            if(!(r >= 0 && r <= 1))
+                throw new Error("R Float data must be between 0 and 1 inclusive"); 
+            if(!(g >= 0 && g <= 1))
+                throw new Error("G Float data must be between 0 and 1 inclusive");
+            if(!(b >= 0 && b <= 1))
+                throw new Error("B Float data must be between 0 and 1 inclusive");
+            if(!(a >=0 && a <= 1))
+                throw new Error("Alpha Float data must be between 0 and 1 inclusive" + a);
             
-            a = a/255;
+            
         }
         else
         {

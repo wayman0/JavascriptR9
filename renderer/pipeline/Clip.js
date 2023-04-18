@@ -41,7 +41,7 @@ export function clip(model)
     }
 
     return new Model(model2.vertexList(), 
-                    newPrimitiveList(), 
+                    newPrimitiveList, 
                     model2.colorList(),
                     model2.name(),
                     model2.visibe);

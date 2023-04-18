@@ -101,7 +101,7 @@ function renderPosition(scene, position, ctm, vp)
             logMessage("====== Missing model ======");
     }
 
-    for(const p of position.nestedPositions)
+    for(const p of position.nestedPositions())
     {
         if(p.visible)
             renderPosition(scene, p, ctm2, vp);

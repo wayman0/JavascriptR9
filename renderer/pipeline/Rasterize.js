@@ -9,7 +9,7 @@ export var GAMMA = 2.2;
 
 export function rasterize(model, vp)
 {
-    for(const p of model.primitiveList)
+    for(const p of model.primitiveList())
     {
         logPrimitive("6. Rasterize", model, p);
 

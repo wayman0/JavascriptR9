@@ -8,7 +8,6 @@ export default function model2view(position, ctm)
     for(let x = 0; x < model.vertexList().length; x += 1)
         newVertexList[x] = ctm.timesVertex(model.vertexList()[x]);
 
-        console.log("M2V: " + newVertexList)
     return new Model(newVertexList, 
                     model.primitiveList(), 
                     model.colorList(), 
