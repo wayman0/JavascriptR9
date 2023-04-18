@@ -9,9 +9,15 @@ export function clip(model, camera)
     if(!doNearClipping)
         return model;
 
+    // have to implement this way because if pass new array(model.colorList()) get an error
+    // if pass the reference to model.colorList() can mutate the color list
+    const newColorList = new Array();
+    for(let x = 0; x < model.colorList().length; x += 1)
+        newColorList[x] = model.colorList()[x];
+
     const model2 = new Model(model.vertexList(), 
                             model.primitiveList(),
-                            new Array(model.colorList()),
+                            newColorList,
                             model.name(), 
                             model.visible);
 
@@ -21,6 +27,7 @@ export function clip(model, camera)
     {
         logPrimitive("3. Near_Clipping", model2, p);
 
+        let pClipped = undefined;
         if(p instanceof LineSegment)
             pClipped = NearLine(model2, p, camera);
         else

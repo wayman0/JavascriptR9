@@ -72,20 +72,20 @@ function renderPosition(scene, position, ctm, vp)
         const model1 = M2V(position, ctm2);
         logVertexList("1. View      ", model1);
         
-        const model2 = V2C(model1, scene.camera);
+        const model2 = V2C(model1, scene.camera());
         logVertexList("2. Camera    ", model2);
         logColorList("2. Camera    ", model2);
         logPrimitiveList("2. Camera    ", model2);
 
-        const model3 = NearClip(model2, scene.camera);
+        const model3 = NearClip(model2, scene.camera());
         logVertexList("3. NearClipped", model3);
         logColorList("3. NearClipped", model3);
         logPrimitiveList("3. NearClipped", model3);
 
-        const model4 = Project(model3, scene.getCamera());
+        const model4 = Project(model3, scene.camera());
         logVertexList("4. Projected  ", model4);
 
-        model5 = clip(model4);
+        const model5 = clip(model4);
         logVertexList("5. Clipped    ", model5);
         logColorList("5. Clipped    ", model5);
         logPrimitiveList("5. Clipped    ", model5);

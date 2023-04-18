@@ -40,6 +40,7 @@ export default function view2camera(model, camera)
         newVertexList[x] = new Vertex(v_x, v_y, v_z);
     }
 
+    console.log("V2C" + newVertexList)
     return new Model(newVertexList, 
                     model.primitiveList(), 
                     model.colorList(),

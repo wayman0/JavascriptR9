@@ -5,12 +5,12 @@ import Color from "../color/Color.js";
 export default function clip(model, ls, camera)
 {
     const n = camera.n;
-    const vInd0 = ls.vIndexList[0];
-    const vInd1 = ls.vIndexList[1];
-    const v0 = model.vertexList[vInd0];
-    const v1 = model.vertexList[vInd1];
-    const z0 = v0.z;
-    const z1 = v1.z;
+    const vInd0 = ls.vIndexList()[0];
+    const vInd1 = ls.vIndexList()[1];
+    const v0 = model.vertexList()[vInd0];
+    const v1 = model.vertexList()[vInd1];
+    const z0 = v0.z();
+    const z1 = v1.z();
 
     if(z0 <= n && z1 <= n)
     {
@@ -38,7 +38,7 @@ function interpolateNewVertex(model, ls, n)
     const v0y = v0.y();
     const v0z = v0.z();
     const cInd0 = ls.cIndexList()[0];
-    const c0 = model.colorList()[cInd0].getRGBColorComponents();
+    const c0 = model.colorList()[cInd0].getRGBComponents();
 
     const vInd1 = ls.vIndexList()[1];
     const v1 = model.vertexList()[vInd1];
@@ -46,15 +46,17 @@ function interpolateNewVertex(model, ls, n)
     const v1y = v1.y();
     const v1z = v1.z();
     const cInd1 = ls.cIndexList()[1];
-    const c1 = model.colorList()[cInd1].getRGBColorComponents();
+    const c1 = model.colorList()[cInd1].getRGBComponents();
 
     const t = (n-v1z)/(v0z-v1z);
+    console.log("N: " + n);
+    console.log("t: " + t);
     
     const x = (1-t) * v1x + t * v0x;
     const y = (1-t) * v1y + t * v0y;
     const z = n;
 
-    t_ = undefined;
+    let t_ = undefined;
 
     if(t > 1)
         t_ = 1/t;
@@ -66,8 +68,9 @@ function interpolateNewVertex(model, ls, n)
     const g = (1-t_) * c1[1] + t_ * c0[1];
     const b = (1-t_) * c1[2] + t_ * c0[2];
     
+    console.log(x + " " + y + " " + z );
     const newVertex = new Vertex(x, y, z);
-    const vIndexNew = model.vertexList.length;
+    const vIndexNew = model.vertexList().length;
     model.vertexList().push(newVertex);
 
     const newColor = new Color(r, g, b);
@@ -102,9 +105,9 @@ function interpolateNewVertex(model, ls, n)
         const result = undefined;
 
         if(0 == vNearIndex)
-            result = new LineSegment(vIndexNew, vIndex1, cIndexNew, cIndex1)
+            result = new LineSegment(vIndexNew, vInd1, cIndexNew, cInd1)
         else
-            result = new LineSegment(vIndex0, vIndexNew, cIndex0, cIndexNew);
+            result = new LineSegment(vInd0, vIndexNew, cInd0, cIndexNew);
 
         return result;
 }
