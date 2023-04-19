@@ -27,25 +27,36 @@
    {@code Vertex} object, instead of mutating it.
 */
 
+// @ts-check
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector} from "./SceneImport.js";
 
 export default class Vertex
 {
-    #x;
-    #y;
-    #z;
-    #w;
+    /**
+     * @typedef {Vertex}
+     * @memberof module:Vertex
+     * @name Vertex
+     * @property {number} x
+     * @property {number} y
+     * @property {number} z
+     * @property {number} w
+    */
+
+    /** @type {number} #x the x value of this vector*/ #x;
+    /** @type {number} #y the y value of this vector*/ #y;
+    /** @type {number} #z the z value of this vector*/ #z;
+    /** @type {number} #w the w value of this vector*/ #w;
 
     /**
       Construct a new {@code Vertex} with the given homogeneous coordinates.
       Uses the default value of 1 for w if not given.
 
-      @param x  x-coordinate of the new {@code Vertex}
-      @param y  y-coordinate of the new {@code Vertex}
-      @param z  z-coordinate of the new {@code Vertex}
-      @param w  w-coordinate of the new {@code Vertex}
+      @param {number} x  x-coordinate of the new {@code Vertex}
+      @param {number} y  y-coordinate of the new {@code Vertex}
+      @param {number} z  z-coordinate of the new {@code Vertex}
+      @param {number} w  w-coordinate of the new {@code Vertex}
    */
-    constructor(x, y, z, w = 1.0) // should w default be 1 or 0?
+    constructor(x, y, z, w = 1.0) 
     {
         if( typeof x != "number" || typeof y != "number" ||
             typeof z != "number" || typeof w != "number")
@@ -57,46 +68,62 @@ export default class Vertex
         this.#w = w;
     }
 
+    /**
+     * @returns {number} the x value of this {@code Vertex}
+     */
     getX()
     {
         return this.#x;
     }
 
-    x = () => {return this.#x;}
-
+    /**
+     * @returns {number} the x value of this {@code Vertex}
+     */
     get x() { return this.#x;}
 
+    /**
+     * @returns {number} the y value of this {@code Vertex}
+     */
     getY()
     {
         return this.#y;
     }
 
-    y = () => {return this.#y;}
-
+    /**
+     * @returns {number} the y value of this {@code Vertex}
+     */
     get y() { return this.#y;}
 
+    /**
+     * @returns {number} the z value of this {@code Vertex}
+     */    
     getZ()
     {
         return this.#z;
     }
 
-    z = () => {return this.#z;}
-
+    /**
+     * @returns {number} the z value of this {@code Vertex}
+     */
     get z() { return this.#z;}
 
+    /**
+     * @returns {number} the w value of this {@code Vertex}
+     */
     getW()
     {
         return this.#w;
     }
 
-    w = () => {return this.#w;}
-    
-    get w() {return this.#w;}
+    /**
+     * @returns {number} the x value of this {@code Vertex}
+     */
+    get w() {return this.#w}
 
    /**
     * For debugging.
     * 
-    * @returns the {@link String} representation of this {@code Vertex}
+    * @returns {string} the string representation of this {@code Vertex}
     */
    toString()
    {
@@ -113,32 +140,24 @@ export default class Vertex
         console.log("")
         console.log("v1.x: ");
         console.log(v1.x);
-        console.log("v1.x(): ");
-        console.log(v1.x());
         console.log("v1.getX(): ");
         console.log(v1.getX());
 
         console.log("");
         console.log("v1.y: ");
         console.log(v1.y);
-        console.log("v1.y(): ");
-        console.log(v1.y());
         console.log("v1.getY(): ");
         console.log(v1.getY());
 
         console.log("");
         console.log("v1.z: ");
         console.log(v1.z);
-        console.log("v1.z(): ");
-        console.log(v1.z());
         console.log("v1.getZ(): ");
         console.log(v1.getZ());
 
         console.log("");
         console.log("v1.w: ");
         console.log(v1.w);
-        console.log("v1.w(): ");
-        console.log(v1.w());
         console.log("v1.getW(): ");
         console.log(v1.getW());
 

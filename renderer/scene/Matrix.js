@@ -19,16 +19,26 @@
    The most common transformations are translation, rotation, and
    scaling. A 4-by-4 matrix can also represent a projection transformation.
 */
-
+//@ts-check
 import {Camera, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
 
 export default class Matrix
 {
-   v1;
-   v2;
-   v3;
-   v4;
-   static #instantiable = false;
+   /**
+    * @typedef {Matrix}
+    * @memberof module:Matrix
+    * @name Matrix
+    * @property {Vector} v1 the first column of this matrix 
+    * @property {Vector} v2 the second column of this matrix
+    * @property {Vector} v3 the third column of this matrix
+    * @property {Vector} v4 the fourth column of this matrix
+    */
+
+   /** @type {Vector} v1 the first column vector of this matrix*/ v1;
+   /** @type {Vector} v2 the second column vector of this matrix*/ v2;
+   /** @type {Vector} v3 the third column vector of this matrix*/ v3;
+   /** @type {Vector} v4 the fourth column vector of this matrix*/ v4;
+   /** @type {boolean} #instantiable, allows private constructor*/ static #instantiable = false;
 
    /**
     * Construct an arbitrary 4x4 {@code Matrix} with the given column {@link Vector}s
@@ -36,10 +46,10 @@ export default class Matrix
     * NOTE: Use the Static Factory method to create a matrix.  
     * This is for internal use only.
     * 
-    * @param {@link Vector} v1 1st column for the new {@code Matrix}
-    * @param {@link Vector} v2 2nd column for the new {@code Matrix}
-    * @param {@link Vector} v3 3rd column for the new {@code Matrix}
-    * @param {@link Vector} v4 4th column for the new {@code Matrix}
+    * @param {{x: number, y: number, z: number, w: number;}} v1 1st column for the new {@code Matrix}
+    * @param {Vector} v2 2nd column for the new {@code Matrix}
+    * @param {Vector} v3 3rd column for the new {@code Matrix}
+    * @param {Vector} v4 4th column for the new {@code Matrix}
     */
    constructor(v1, v2, v3, v4)
    {
@@ -423,9 +433,10 @@ export default class Matrix
 
    /**
     * Mutate this {@code Matrix} to contain the product of m * this
-    * 
-    * @param {@code Matrix} m the matrix to be multiplied on the left of this {@code Matrix}
+    * @param {} 
+    * @code Matrix} m the matrix to be multiplied on the left of this {@code Matrix}
     * @returns a reference to this multiplied {@code Matrix} for method chaining
+    * @param {Matrix} m
     */
    multLeft(m)
    {

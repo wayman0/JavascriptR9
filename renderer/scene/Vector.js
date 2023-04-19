@@ -15,22 +15,33 @@
    has its fourth coordinate set to 0.
 */
 
+// @ts-check
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vertex} from "./SceneImport.js";
 export default class Vector
 {
-   x;
-   y;
-   z;
-   w;
+   /**
+    * @typedef {Vector}
+    * @memberof module:Vector
+    * @name Vector
+    * @property {number} x
+    * @property {number} y
+    * @property {number} z
+    * @property {number} w
+   */
+
+   /** @type {number} x the x value of this Vector*/ x;
+   /** @type {number} y the y value of this Vector*/ y;
+   /** @type {number} z the z value of this Vector*/ z;
+   /** @type {number} w the w value of this Vector*/ w;
 
    /**
     * Create a new {@code Vector} using the given x, y, z, and w coordinates
     * If no w is given uses the default value of 1.
     * 
-    * @param {@link Number} x x coordinate of the new {@code Vector}
-    * @param {@link Number} y y coordinate of the new {@code Vector}
-    * @param {@link Number} z z coordinate of the new {@code Vector}
-    * @param {@link Number} w w coordinate of the new {@code Vector}
+    * @param {number} x x coordinate of the new {@code Vector}
+    * @param {number} y y coordinate of the new {@code Vector}
+    * @param {number} z z coordinate of the new {@code Vector}
+    * @param {number} [w=0] w coordinate of the new {@code Vector}
     */
    constructor(x, y, z, w = 0) // should w be 1 or 0?
    {
@@ -44,25 +55,27 @@ export default class Vector
       this.w = w;
    }
 
+   // if do @param {{x: number, y: number, z: number, w: number;}} v the ...
+   // when the function is hovered over it gives the object structure and then says its 
+   // type is a Vector instead of vertex, how do I fix this?
    /**
-    * Create a new {@code Vector} from a {@link Vertex}
-    * 
-    * @param {@link Vertex} v the vertex to convert into a {@code Vector}
-    * @returns the new {@code Vector} created from a {@link Vertex}
+    * Create a new {@this Vector} from a {@link Vertex}
+    * @param {Vertex} v the vertex to convert into a {@code Vector}
+    * @returns the new {@code Vector} created from a {@link Vertex }
     */
    static buildVertex(v)
    {
       if(v instanceof Vertex == false)
          throw new Error("V is not a Vertex");
 
-      return new Vector(v.x(), v.y(), v.z(), v.w());
+      return new Vector(v.x, v.y, v.z, v.w);
    }
 
    /**
     * The dot-product of two {@code Vector}s which returns a scalar
+    * @param {{x: number, y: number, z: number, w: number;}} v the vector to multiply with this {@code Vector}
+    * @returns  {number} that is the dot product of this {@code Vector} and @param {Vector} v
     * 
-    * @param {@code Vector} v the vector to multiply with this {@code Vector}
-    * @returns a number that is the dot product of this {@code Vector} and v
     */
    dotProduct(v)
    {
@@ -73,10 +86,9 @@ export default class Vector
    }
 
    /**
-    * The cross produce of two {@code Vector}s returns a (new) {@code Vector}
-    * 
-    * @param {@code Vector} v the vector to mutliply with this {@code Vector}
-    * @returns the new {@code Vector} that is the cross product of this {@code Vector} and v
+    * The cross product of two {@code Vector}s returns a (new) {@code Vector}
+    * @param {{x: number, y: number, z: number, w: number;}} v the vector to mutliply with this {@code Vector}
+    * @returns  {Vector} the new {@code Vector} that is the cross product of this {@code Vector} and @param {Vector} v
     */
    crossProduct(v)
    {
@@ -89,8 +101,8 @@ export default class Vector
    /**
     * A scalar times a {@code Vector} returns a (new) {@code Vector}
     * 
-    * @param {@link Number} s the number to multiply this {@code Vector} by 
-    * @returns a new {@code Vector} that is the scalar times this {@code Vector}
+    * @param {number} s the number to multiply this {@code Vector} by 
+    * @returns {Vector} a new {@code Vector} that is the scalar times this {@code Vector}
     */
    timesScalar(s)
    {
@@ -102,9 +114,8 @@ export default class Vector
 
    /**
     * A {@code Vector} plus a {@code Vector} returns a (new) {@code Vector}
-    * 
-    * @param {@code Vector} v the vector to add to this {@code Vector} 
-    * @returns a new {@code Vector} object that is the sum of this {@code Vector} and v
+    * @param {{x: number, y: number, z: number, w: number;}} v the vector to add to this {@code Vector}
+    * @returns {Vector} a new {@code Vector} object that is the sum of this {@code Vector} and v
     */
    plusVector(v)
    {
@@ -116,9 +127,8 @@ export default class Vector
 
    /**
     * A {@code Vector} minus a {@code Vector} returns a (new) {@code Vector}
-    * 
-    * @param {@code Vector} v the vector to subtract from this {@code Vector}
-    * @returns a new {@code Vector} that is this {@code Vector} minus v
+    * @param {{x: number, y: number, z: number, w: number;}} v the vector to subtract from this {@code Vector}
+    * @returns {Vector} a new {@code Vector} that is this {@code Vector} minus v
     */
    minusVector(v)
    {
@@ -134,7 +144,7 @@ export default class Vector
     * That is, return the {@code Vector} with length 1 that 
     * points in the same direction as this {@code Vector}
     * 
-    * @returns a new {@code Vector} that has length one and has the same direction of this {@code Vector}
+    * @returns {Vector}a new {@code Vector} that has length one and has the same direction of this {@code Vector}
     */
    normalize()
    {
@@ -144,26 +154,25 @@ export default class Vector
    }
 
    /**
-    * A {@code Vector} plus a {@link Vertex} returns a new {@link Vertex}
+    * A {@code Vector} plus a {@link Vertex } returns a new {@link Vertex }
     * The vector translates the vertex to a new location.
-    * 
-    * @param {@link Vertex} v the vertex to add to this {@code Vector} 
-    * @returns a new {@link Vertex} that is the translation of {@code v} by this {@code Vector}
+    * @param {{x: number, y: number, z: number, w: number;}} v the vertex to add to this {@code Vector}
+    * @returns {Vertex} a new {@link Vertex } that is the translation of {@code v} by this {@code Vector}
     */
    plusVertex(v)
    {
       if(v instanceof Vertex == false)
          throw new Error("V is not a vertex");
 
-      return new Vertex(this.x + v.x(), this.y + v.y(), this.z + v.z());
+      return new Vertex(this.x + v.x, this.y + v.y, this.z + v.z);
    }
 
    /**
     * MUTATE this {@code Vector} to contain the product of {@code Vector}
     * with the scalar {@code s}
     * 
-    * @param {@link Number} s the number to multiply this {@code Vector} by 
-    * @returns a reference to this {@code Vector} for method chaining.
+    * @param {number} s the number to multiply this {@code Vector} by 
+    * @returns {Vector} a reference to this {@code Vector} for method chaining.
     */
    timesEqualsScalar(s)
    {
@@ -178,12 +187,14 @@ export default class Vector
       return this;
    }
 
+   // when the function is hovered over it says that the matrix m is of type vector 
+   // after it gives the object structure 
+
    /**
     * MUTATE this {@code Vector} to contain the product of this {@code Vector} 
-    * with the {@link Matrix} {@code m}
-    * 
-    * @param {@link Matrix} m the matrix to multiply this {@code Vector} by 
-    * @returns a reference to this {@code Vector} for method chaining.
+    * with the {@link Matrix } m
+    * @param {{ v1: Vector, v2: Vector, v3: Vector, v4: Vector; }} m the matrix to multiply this {@code Vector} by
+    * @returns {Vector} a reference to this {@code Vector} for method chaining.
     */
    timesEqualsMatrix(m)
    {
@@ -208,12 +219,12 @@ export default class Vector
       return this;
    }
 
+   // if no return type is given assumes the object vector is of type this
    /**
     * MUTATE this {@code Vector} to contain the sum of this {@code Vector}
     * with the {@code Vector} {@code v}
-    * 
-    * @param {@code Vector} v the vector to add to this {@code Vector}
-    * @returns a reference to this {@code Vector} for method chaining.
+    * @param {{x: number, y: number, z: number, w: number;}} v the vector to add to this {@code Vector}
+    * @returns {Vector} a reference to this {@code Vector} for method chaining.
     */
    plusEqualsVector(v)
    {
@@ -231,9 +242,8 @@ export default class Vector
    /**
     * MUTATE this {@code Vector} to contain the differenceo of this {@code Vector}
     * with the {@code Vector} {@code v}
-    * 
-    * @param {@code Vector} v the vector to subtract form this {@code Vector}
-    * @returns a reference to this {@code Vector} for method chaining.
+    * @param {{x: number, y: number, z: number, w: number;}} v the vector to subtract form this {@code Vector}
+    * @returns {Vector} a reference to this {@code Vector} for method chaining.
     */
    minusEqualsVector(v)
    {
@@ -254,7 +264,7 @@ export default class Vector
     * <p>
     * that is mutate this {@code Vector} to have length 1
     * 
-    * @returns a reference to this {@code Vector} for method chaining 
+    * @returns {Vector} a reference to this {@code Vector} for method chaining 
     */
    normalizeEquals()
    {
@@ -270,7 +280,7 @@ export default class Vector
    /**
     * For debugging.
     * 
-    * @returns the {@link String} representation of this {@code Vector}
+    * @returns {string} the string representation of this {@code Vector}
     */
    toString()
    {
