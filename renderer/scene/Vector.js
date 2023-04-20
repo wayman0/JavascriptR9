@@ -19,16 +19,6 @@
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vertex} from "./SceneImport.js";
 export default class Vector
 {
-   /**
-    * @typedef {Vector}
-    * @memberof module:Vector
-    * @name Vector
-    * @property {number} x
-    * @property {number} y
-    * @property {number} z
-    * @property {number} w
-   */
-
    /** @type {number} x the x value of this Vector*/ x;
    /** @type {number} y the y value of this Vector*/ y;
    /** @type {number} z the z value of this Vector*/ z;

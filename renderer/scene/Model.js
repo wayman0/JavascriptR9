@@ -65,18 +65,28 @@
               https://www.google.com/search?q=computer+graphics+wireframe&tbm=isch</a>
 */
 
+//@ts-check
 import {Camera, Matrix, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex, Primitive, LineSegment, Point} from "./SceneImport.js";
 
 import Color from "../color/Color.js";
 
 export default class Model
 {
-    #vertexList;
-    #primitiveList;
-    #colorList;
-    #name;
-    visible;
+    /**@type {Vertex[]} #vertexList the array of vertexes for this model */#vertexList;
+    /**@type {Primitive[]} #primitiveList the array of primitives for this model */#primitiveList;
+    /**@type {Color[]} #colorList the array of colors for this model */#colorList;
+    /**@type {string} #name the name for this model */#name;
+    /**@type {boolean} visible whether or not this model should be "seen" */visible;
 
+    /**
+     * Construct a {@code Model} with all the given data. 
+     * 
+     * @param {Vertex[]} [vList=new Array()] an array of {@link Vertex}s for this model
+     * @param {Primitive[]} [pList=new Array()] an array of {@link Primitive}s for this model
+     * @param {Color[]} [cList=new Array()] an array of {@link Color}s for this model
+     * @param {string} [name=""] the name for this model
+     * @param {boolean} [vis=true] whether this model should be seen by the renderer
+     */
     constructor(vList= new Array(), pList= new Array(), cList = new Array(), name = "", vis = true)
     {
         if( Array.isArray(vList) == false)
@@ -88,7 +98,6 @@ export default class Model
         if(Array.isArray(cList) == false)
             throw new Error("Color List must be array");
         
-
         if(typeof name != "string")
             throw new Error("Name must be a string");
 
@@ -147,39 +156,72 @@ export default class Model
         this.visible = vis;
     }
 
+    /**
+     * Create an empty model with the given name
+     * 
+     * @param {string} [name=""] the name of the model
+     * @returns {Model} an empty model with the specified name
+     */
     static buildName(name = "")
     {
         return new Model(new Array(), new Array(), new Array(), name);
     }
 
+    /**
+     * @returns {Vertex[]} returns a reference to this models array of vertexes
+     */
     getVertexList()
     {
         return this.#vertexList;
     }
 
-    vertexList = () => {return this.#vertexList;}
+    /**
+     * @returns {Vertex[]} returns a reference to this models array of vertexes
+     */
+    get vertexList() {return this.#vertexList;}
 
+    /**
+     * @returns {Primitive[]} returns a reference to this models array of primitives
+     */
     getPrimitiveList()
     {
         return this.#primitiveList;
     }
 
-    primitiveList = () => {return this.#primitiveList;}
+    /**
+     * @returns {Primitive[]} returns a reference to this models array of primitives
+     */
+    get primitiveList() {return this.#primitiveList;}
 
+    /**
+     * @returns {Color[]} returns a reference to this models array of colors
+     */
     getColorList()
     {
         return this.#colorList;
     }
     
-    colorList = () => {return this.#colorList;}
+    /**
+     * @returns {Color[]} returns a reference to this models array of colors
+     */
+    get colorList() {return this.#colorList;}
     
+    /**
+     * @returns {string} returns a reference to this models name
+     */
     getName()
     {
         return this.#name;
     }
 
-    name = () => {return this.#name;}
+    /**
+     * @returns {string} returns a reference to this models name
+     */
+    get name() {return this.#name;}
 
+    /**
+     * @param {string} name the new name for this model
+     */
     setName(name = "")
     {
         if(typeof name != "string")
@@ -188,6 +230,23 @@ export default class Model
         this.#name = name;
     }
 
+    /**
+     * @param {string} n the new name for this model
+     */
+    set name(n)
+    {
+        if(typeof n != "string")
+            throw new Error("Name must be a string");
+
+        this.#name = n;
+    }
+
+    /**
+     * Get the {@link Vertex} at the specified index in this models vertexList
+     * 
+     * @param {number} [index=0] the index into this models vertexList
+     * @returns {Vertex} the vertex at the specified index
+     */
     getVertex(index = 0)
     {
         if(typeof index != "number" )
@@ -196,6 +255,10 @@ export default class Model
             return this.#vertexList[index];
     }
     
+    /**
+     * Add the vertex(s) to this models vertex list
+     * @param  {...Vertex} vArray the vertexes to be added to the model
+     */
     addVertex(... vArray)
     {
         for(let v of vArray)
@@ -207,6 +270,12 @@ export default class Model
         }
     }
 
+     /**
+     * Get the {@link Primitive} at the specified index in this models primitive list
+     * 
+     * @param {number} [index=0] the index into this models primitive list
+     * @returns {Primitive} the primitive at the specified index
+     */
     getPrimitive(index = 0)
     {
         if(typeof index != "number" )
@@ -215,6 +284,10 @@ export default class Model
             return this.#primitiveList[index];
     }
 
+    /**
+     * Add the primitive(s) to this models primitive list
+     * @param  {...Primitive} pArray the primitives to be added to the model
+     */
     addPrimitive(... pArray)
     {
         for(let p of pArray)
@@ -226,6 +299,12 @@ export default class Model
         }
     }
 
+     /**
+     * Get the {@link Color} at the specified index in this models color list
+     * 
+     * @param {number} [index=0] the index into this models colorlist 
+     * @returns {Color} the color at the specified index
+     */
     getColor(index = 0)
     {
         if(typeof index != "number")
@@ -234,6 +313,10 @@ export default class Model
             return this.#colorList[index];
     }
 
+    /**
+     * Add the color(s) to this models color list
+     * @param  {...Color} cArray the Colors to be added to the model
+     */
     addColor(... cArray)
     {
         for(let c of cArray)
@@ -245,6 +328,10 @@ export default class Model
         }
     }
 
+    /**
+     * For debugging.
+     * @returns {string} the string representation of this model
+     */
     toString()
     {
         let result = "";
@@ -276,6 +363,9 @@ export default class Model
         return result;
     }
 
+    /**
+     * Method for testing the class
+     */
     static main()
     {
         console.log("Creating m1 = new Model(): ");
@@ -293,7 +383,7 @@ export default class Model
         
         console.log("");
         console.log("m1.vertexList(): ");
-        console.log(m1.vertexList());
+        console.log(m1.vertexList);
 
         console.log("");
         console.log("m1.getPrimitiveList(): ");
@@ -301,7 +391,7 @@ export default class Model
 
         console.log("");
         console.log("m1.primitiveList(): ");
-        console.log(m1.primitiveList());
+        console.log(m1.primitiveList);
 
         console.log("");
         console.log("m1.getColorList(): ");
@@ -309,7 +399,7 @@ export default class Model
 
         console.log("");
         console.log("m1.colorList(): ");
-        console.log(m1.colorList());
+        console.log(m1.colorList);
     
         console.log("");
         console.log("m1.getName(): ");
@@ -317,7 +407,7 @@ export default class Model
 
         console.log("");
         console.log("m1.name(): ");
-        console.log(m1.name());
+        console.log(m1.name);
 
         console.log("");
         console.log("m1.setName('Model 1')");

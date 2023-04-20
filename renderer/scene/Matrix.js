@@ -24,16 +24,6 @@ import {Camera, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} fr
 
 export default class Matrix
 {
-   /**
-    * @typedef {Matrix}
-    * @memberof module:Matrix
-    * @name Matrix
-    * @property {Vector} v1 the first column of this matrix 
-    * @property {Vector} v2 the second column of this matrix
-    * @property {Vector} v3 the third column of this matrix
-    * @property {Vector} v4 the fourth column of this matrix
-    */
-
    /** @type {Vector} v1 the first column vector of this matrix*/ v1;
    /** @type {Vector} v2 the second column vector of this matrix*/ v2;
    /** @type {Vector} v3 the third column vector of this matrix*/ v3;
@@ -46,7 +36,7 @@ export default class Matrix
     * NOTE: Use the Static Factory method to create a matrix.  
     * This is for internal use only.
     * 
-    * @param {{x: number, y: number, z: number, w: number;}} v1 1st column for the new {@code Matrix}
+    * @param {Vector} v1 1st column for the new {@code Matrix}
     * @param {Vector} v2 2nd column for the new {@code Matrix}
     * @param {Vector} v3 3rd column for the new {@code Matrix}
     * @param {Vector} v4 4th column for the new {@code Matrix}
@@ -74,11 +64,11 @@ export default class Matrix
     * This is a static Factory method
     * 
     * Construct a 4x4 {@code Matrix} using the given column {@link Vector}s
-    * @param {@link Vector} c1 1st column for the new {@code Matrix}
-    * @param {@link Vector} c2 2nd column for the new {@code Matrix}
-    * @param {@link Vector} c3 3rd column for the new {@code Matrix}
-    * @param {@link Vector} c4 4th column for the new {@code Matrix}
-    * @returns a new {@code Matrix} made from c1, c2, c3, c4
+    * @param {Vector} c1 1st column for the new {@code Matrix}
+    * @param {Vector} c2 2nd column for the new {@code Matrix}
+    * @param {Vector} c3 3rd column for the new {@code Matrix}
+    * @param {Vector} c4 4th column for the new {@code Matrix}
+    * @returns {Matrix} a new {@code Matrix} made from c1, c2, c3, c4
     */
    static buildFromColummns(c1, c2, c3, c4)
    {
@@ -90,11 +80,11 @@ export default class Matrix
     * This is a static factory method.
     * 
     * Construct a 4x4 {@code Matrix} using the given row {@link Vector}s
-    * @param {@link Vector} r1 1st row for the new {@code Matrix}
-    * @param {@link Vector} r2 2nd row for the new {@code Matrix}
-    * @param {@link Vector} r3 3rd row for the new {@code Matrix}
-    * @param {@link Vector} r4 4th row for the new {@code Matrix}
-    * @returns a new {@code Matrix} made from r1, r2, r3, r4
+    * @param {Vector} r1 1st row for the new {@code Matrix}
+    * @param {Vector} r2 2nd row for the new {@code Matrix}
+    * @param {Vector} r3 3rd row for the new {@code Matrix}
+    * @param {Vector} r4 4th row for the new {@code Matrix}
+    * @returns {Matrix} a new {@code Matrix} made from r1, r2, r3, r4
     */
    static buildFromRows(r1, r2, r3, r4)
    {
@@ -118,7 +108,7 @@ export default class Matrix
     * this is a static factory method.
     * Construct an identity {@code Matrix}
     * 
-    * @returns an identity {@code Matrix} 
+    * @returns {Matrix} an identity {@code Matrix} 
     */
    static identity()
    {
@@ -130,10 +120,10 @@ export default class Matrix
     * Construct a translation {@code Matrix} that translates by the
     * given amounts in the x, y, and z directions.
     * 
-    * @param {@link Number } x translation factor for the x direction. 
-    * @param {@link Number} y translation factor for the y direction.
-    * @param {@link Number} z translation factor for the z direction.
-    * @returns a new translation {@code Matrix}
+    * @param {number } x translation factor for the x direction. 
+    * @param {number} y translation factor for the y direction.
+    * @param {number} z translation factor for the z direction.
+    * @returns {Matrix} a new translation {@code Matrix}
     */
    static translate(x, y, z)
    {
@@ -150,9 +140,8 @@ export default class Matrix
    /**
     * this is a static Factory method.
     * Construct a diagonal {@code Matrix} with the given number on the diagonal.
-    * 
-    * @param {@link Number} d the diagonal value for the new {@code Matrix}
-    * @returns a new scale {@code Matrix}
+    * @param {number} d the diagonal value for the new {@code Matrix}
+    * @returns {Matrix} a new scale {@code Matrix}
     */
    static scale(d)
    {
@@ -167,10 +156,10 @@ export default class Matrix
     * Construct a diagonal {@code Matrix} that scales in the 
     * x, y, and z directions by the given values.
     * 
-    * @param {@link Number} x scale factor for the x direction
-    * @param {@link Number} y scale factor for the y direction
-    * @param {@link Number} z scale factor for the z direction
-    * @returns a new scaling {@code Matrix}
+    * @param {number} x scale factor for the x direction
+    * @param {number} y scale factor for the y direction
+    * @param {number} z scale factor for the z direction
+    * @returns {Matrix} a new scaling {@code Matrix}
     */
    static scaleXYZ(x, y, z)
    {
@@ -189,8 +178,8 @@ export default class Matrix
     * Construct a rotation {@code Matrix} that rotates around
     * the x axis by the given angle theta.
     * 
-    * @param {@link Number} theta angle in degrees to rotate around the x axis by
-    * @returns a new rotation {@code Matrix}
+    * @param {number} theta angle in degrees to rotate around the x axis by
+    * @returns {Matrix} a new rotation {@code Matrix}
     */
    static rotateX(theta)
    {
@@ -206,8 +195,8 @@ export default class Matrix
     * Construct a rotation {@code Matrix} that rotates around
     * the y axis by the given angle theta.
     * 
-    * @param {@link Number} theta angle in degrees to rotate around the y axis by
-    * @returns a new rotation {@code Matrix}
+    * @param {number} theta angle in degrees to rotate around the y axis by
+    * @returns {Matrix} a new rotation {@code Matrix}
     */
    static rotateY(theta)
    {
@@ -223,8 +212,8 @@ export default class Matrix
     * Construct a rotation {@code Matrix} that rotates around
     * the z axis by the given angle theta.
     * 
-    * @param {@link Number} theta angle in degrees to rotate around the z axis by
-    * @returns a new rotation {@code Matrix}
+    * @param {number} theta angle in degrees to rotate around the z axis by
+    * @returns {Matrix} a new rotation {@code Matrix}
     */
    static rotateZ(theta)
    {
@@ -245,11 +234,11 @@ export default class Matrix
       <a href="https://www.opengl.org/sdk/docs/man2/xhtml/glRotate.xml" target="_top">
                https://www.opengl.org/sdk/docs/man2/xhtml/glRotate.xml</a>
 
-    * @param {@link Number} theta angle in degrees to rotate around the axis vector by
-    * @param {@link Number} x the x component of the axis vector to rotate around
-    * @param {@link Number} y the y component of the axis vector to rotate around
-    * @param {@link Number} z the z component of the axis vector to rotate around
-    * @returns a new rotation {@code Matrix}
+    * @param {number} theta angle in degrees to rotate around the axis vector by
+    * @param {number} x the x component of the axis vector to rotate around
+    * @param {number} y the y component of the axis vector to rotate around
+    * @param {number} z the z component of the axis vector to rotate around
+    * @returns {Matrix} a new rotation {@code Matrix}
     */
    static rotate(theta, x, y, z)
    {
@@ -276,8 +265,8 @@ export default class Matrix
    /**
     * A scalar times this {@code Matrix} returns a new {@code Matrix}
     * 
-    * @param {@link Number} s scalar value to multiply this {@code Matrix} by 
-    * @returns a new scaled {@code Matrix} = this * s
+    * @param {number} s scalar value to multiply this {@code Matrix} by 
+    * @returns {Matrix} a new scaled {@code Matrix} = this * s
     */
    timesScalar(s)
    {
@@ -291,18 +280,18 @@ export default class Matrix
    /**
     * This {@code Matrix} times a {@link Vertex} returns a new {@link Vertex}
     * 
-    * @param {@link Vertex} v the vertex to be multiplied by this {@code Matrix} 
-    * @returns a new {@link Vertex} = this * v
+    * @param {Vertex} v the vertex to be multiplied by this {@code Matrix} 
+    * @returns {Vertex}  a new {@link Vertex} = this * v
     */
    timesVertex(v)
    {
       if(v instanceof Vertex == false)
          throw new Error("V must be a Vertex");
 
-      const newX = this.v1.x * v.x() + this.v2.x * v.y() + this.v3.x * v.z() + this.v4.x * v.w();
-      const newY = this.v1.y * v.x() + this.v2.y * v.y() + this.v3.y * v.z() + this.v4.y * v.w();
-      const newZ = this.v1.z * v.x() + this.v2.z * v.y() + this.v3.z * v.z() + this.v4.z * v.w();
-      const newW = this.v1.w * v.x() + this.v2.w * v.y() + this.v3.w * v.z() + this.v4.w * v.w();
+      const newX = this.v1.x * v.x + this.v2.x * v.y + this.v3.x * v.z + this.v4.x * v.w;
+      const newY = this.v1.y * v.x + this.v2.y * v.y + this.v3.y * v.z + this.v4.y * v.w;
+      const newZ = this.v1.z * v.x + this.v2.z * v.y + this.v3.z * v.z + this.v4.z * v.w;
+      const newW = this.v1.w * v.x + this.v2.w * v.y + this.v3.w * v.z + this.v4.w * v.w;
 
       return new Vertex(newX, newY, newZ, newW);
    }
@@ -310,8 +299,8 @@ export default class Matrix
    /**
     * This {@code Matrix} times a {@link Vector} returns a new {@link Vector}
     * 
-    * @param {@link Vector} v the vector to be multiplied by this {@code Matrix} 
-    * @returns a new {@link Vector} = this * v
+    * @param {Vector} v the vector to be multiplied by this {@code Matrix} 
+    * @returns {Vector}  a new {@link Vector} = this * v
     */
    timesVector(v)
    {
@@ -329,8 +318,8 @@ export default class Matrix
    /**
     * this {@code Matrix} times {@code Matrix} returns a new {@code Matrix}
     * 
-    * @param {@code Matrix} m the matrix to be multiplied on the right of this {@code Matrix}
-    * @returns a new {@code Matrix} = this * m
+    * @param {Matrix} m the matrix to be multiplied on the right of this {@code Matrix}
+    * @returns {Matrix}  a new {@code Matrix} = this * m
     */
    timesMatrix(m)
    {
@@ -345,8 +334,8 @@ export default class Matrix
    /**
     * Mutate this {@code Matrix} to contain the product of this * s
     * 
-    * @param {@link Number} s the number to scale this {@code Matrix} by 
-    * @returns a reference to this scaled {@code Matrix}
+    * @param {number} s the number to scale this {@code Matrix} by 
+    * @returns {Matrix}  a reference to this scaled {@code Matrix}
     */
    timesEqualsScalar(s)
    {
@@ -363,8 +352,8 @@ export default class Matrix
 
    /**
     * Mutate this {@code Matrix} to contain the product of this * m
-    * @param {@code Matrix} m the matrix to be multiplied on the right of this {@code Matrix} 
-    * @returns a reference to this multiplied {@code Matrix} to facilitate chaining methods
+    * @param {Matrix} m the matrix to be multiplied on the right of this {@link Matrix} 
+    * @returns {Matrix}  a reference to this multiplied {@ Matrix} to facilitate chaining methods
     */
    mult(m)
    {
@@ -433,15 +422,11 @@ export default class Matrix
 
    /**
     * Mutate this {@code Matrix} to contain the product of m * this
-    * @param {} 
-    * @code Matrix} m the matrix to be multiplied on the left of this {@code Matrix}
-    * @returns a reference to this multiplied {@code Matrix} for method chaining
-    * @param {Matrix} m
+    * @param {Matrix} m the matrix to be multiplied on the left of this {@code Matrix}
+    * @returns {Matrix}  a reference to this multiplied {@code Matrix} for method chaining
     */
    multLeft(m)
    {
-      console.log(typeof m);
-
       if(m instanceof Matrix == false)
          throw new Error("M is not a  Matrix");
 
@@ -470,6 +455,9 @@ export default class Matrix
       return result;
    }
 
+   /**
+    * Static function used to test methods.
+    */
    static main()
    {
       console.log("Creating vector v1 = new Vector(1, 2, 3)");

@@ -32,16 +32,6 @@ import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector} fr
 
 export default class Vertex
 {
-    /**
-     * @typedef {Vertex}
-     * @memberof module:Vertex
-     * @name Vertex
-     * @property {number} x
-     * @property {number} y
-     * @property {number} z
-     * @property {number} w
-    */
-
     /** @type {number} #x the x value of this vector*/ #x;
     /** @type {number} #y the y value of this vector*/ #y;
     /** @type {number} #z the z value of this vector*/ #z;
