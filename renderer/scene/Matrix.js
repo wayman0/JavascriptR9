@@ -70,7 +70,7 @@ export default class Matrix
     * @param {Vector} c4 4th column for the new {@code Matrix}
     * @returns {Matrix} a new {@code Matrix} made from c1, c2, c3, c4
     */
-   static buildFromColummns(c1, c2, c3, c4)
+   static buildFromColumns(c1, c2, c3, c4)
    {
       Matrix.#instantiable = true;
       return new Matrix(c1, c2, c3, c4);
@@ -441,7 +441,7 @@ export default class Matrix
    /**
     * For debugging.
     * 
-    * @returns {@link String} representation of this {@code Matrix} 
+    * @returns {string} representation of this {@code Matrix} 
     */
    toString()
    {
@@ -469,7 +469,7 @@ export default class Matrix
       
       console.log("");
       console.log("Creating m1 = buildColumns(v1, v2, v3, v4) : ");
-      const m1 = Matrix.buildFromColummns(v1, v2, v3, v4);
+      const m1 = Matrix.buildFromColumns(v1, v2, v3, v4);
       console.log(m1.toString());
 
       console.log("");

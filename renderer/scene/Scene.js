@@ -18,17 +18,26 @@
    determines how much of the scene is actually visible (to the
    camera) and gets rendered into the framebuffer.
 */
+
+//@ts-check
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Vector, Vertex, LineSegment} from "./SceneImport.js";
 // for testing purposes
 import Color from "../color/Color.js";
 
 export default class Scene
 {
-    #positionList;
-    #camera;
-    #name;
-    debug = false;
+    /**@type {Position[]} the array of positions in this scene*/ #positionList;
+    /**@type {Camera} the camera for this scene*/ #camera;
+    /**@type {string} the name of this scene*/#name;
+    /**@type {boolean} whether to debug this scene */ debug = false;
 
+    /**
+     * Create a scene with the given data
+     * @param {Camera} [camera=new Camera()] the camera for this scene
+     * @param {Position[]} [positionList=new Array()] the array of positions in this scene
+     * @param {string} [name=""] the name for this scene
+     * @param {boolean} [debug=false] whether to debug this scene
+     */
     constructor(camera = new Camera(), positionList = new Array(), name = "", debug = false)
     {
         if(camera instanceof Camera == false)
@@ -64,39 +73,68 @@ export default class Scene
         this.debug = debug;
     }
 
+    /**
+     * Build a Scene with the given name and default camera and empty position list
+     * @param {string} name
+     */
     static buildFromName(name)
     {
         return new Scene(new Camera(), new Array(), name);
     }
 
+    /**
+     * Build a scene with the given camera and empty position list
+     * @param {Camera} cam
+     */
     static buildFromCamera(cam)
     {
-        return new Scene(cam, new Array());
+        return new Scene(cam);
     }
 
+    /**
+     * Build a Scene with the given camera and name with an empty position list
+     * @param {Camera} cam
+     * @param {string} name
+     */
     static buildFromCameraName(cam, name)
     {
         return new Scene(cam, new Array(), name);
     }
 
+    /**
+     * Get the name of this scene
+     * @returns {string} this scenes name
+     */
     getName()
     {
         return this.#name;
     }
 
-    name = () => {return this.#name;}
-
+    /**
+     * Get the name of this scene
+     * @returns {string} this scenes name
+     */
     get name() {return this.#name;}
 
+    /**
+     * Get the camera for this scene
+     * @returns {Camera} this scenes camera
+     */
     getCamera()
     {
         return this.#camera;
     }
-
-    camera = () => {return this.#camera;}
     
+    /**
+     * Get the camera for this scene
+     * @returns {Camera} this scenes camera
+     */
     get camera() {return this.#camera;}
 
+    /**
+     * Set this scenes camera to be the given camera
+     * @param {Camera} camera the new camera for this scene
+     */
     setCamera(camera)
     {
         if(camera instanceof Camera == false)
@@ -105,6 +143,10 @@ export default class Scene
         this.#camera = camera;
     }
 
+    /**
+     * Set this scenes camera to be the given camera
+     * @param {Camera} cam the new camera for this scene
+     */
     set camera(cam)
     {
         if(cam instanceof Camera == false)
@@ -113,15 +155,26 @@ export default class Scene
         this.#camera = cam;
     }
 
+    /**
+     * Get the array of positions for this scene
+     * @returns {Position[]} this scenes array of positions
+     */
     getPositionList()
     {
         return this.#positionList;
     }
-    
-    positionList = () => {return this.#positionList;}
-    
+      
+    /**
+     * Get the array of positions for this scene
+     * @returns {Position[]} this scenes array of positions
+     */
     get positionList() {return this.#positionList;}
 
+    /**
+     * Get the position at the specified index
+     * @param {number} index the index of the position to be returned
+     * @returns {Position} the position at the given index
+     */
     getPosition(index)
     {
         if(typeof index != "number")
@@ -130,6 +183,11 @@ export default class Scene
         return this.#positionList[index];
     }
 
+    /**
+     * Set the position at the specified index to be the specified position
+     * @param {number} index the index of the position to be set
+     * @param {Position} position the position that will be set at the given index
+     */
     setPosition(index, position)
     {
         if(typeof index != "number")
@@ -141,6 +199,10 @@ export default class Scene
         this.#positionList[index] = position;
     }
 
+    /**
+     * Add the given positions to this scenes array of positions
+     * @param {Position[]} pArray the positions to be added to the scene
+     */
     addPosition(... pArray)
     {
         for(let pos of pArray)
@@ -152,6 +214,12 @@ export default class Scene
         }
     }
 
+    /**
+     * Get the first model with the given name in this scenes 
+     * array of positions
+     * @param {string} name the name of the model to be gotten
+     * @returns {Model | undefined} the model with the specified name or undefined if unfound
+     */
     getModelByName(name)
     {
         if(typeof name != "string")
@@ -166,6 +234,12 @@ export default class Scene
         return undefined;
     }
 
+    /**
+     * Get the first Position with the given model name in 
+     * this scenes array of positions
+     * @param {string} name the name of the model 
+     * @returns {Position | undefined} returns the position containing the specified model name or undefined if unfound
+     */
     getPositionByModelName(name)
     {
         if(typeof name != "string")
@@ -180,6 +254,10 @@ export default class Scene
         return undefined;
     }
 
+    /**
+     * For debugging.
+     * @returns {string} a string representation of this scene
+     */
     toString()
     {
         let result = "";
@@ -202,6 +280,9 @@ export default class Scene
         return result;
     }
 
+    /**
+     * For Testing.
+     */
     static main()
     {
         const line = new Model();
@@ -245,9 +326,6 @@ export default class Scene
         console.log("Scene1.getName(): ");
         console.log(scene1.getName());
 
-        console.log("");
-        console.log("scene1.name() ");
-        console.log(scene1.name());
 
         console.log("");
         console.log("scene1.name");
@@ -258,10 +336,6 @@ export default class Scene
         console.log(scene2.getCamera());
 
         console.log("");
-        console.log("scene2.camera()")
-        console.log(scene2.camera());
-
-        console.log("");
         console.log("scene2.camera");
         console.log(scene2.camera);
         
@@ -269,9 +343,6 @@ export default class Scene
         console.log("scene3.getPositionList() ");
         console.log(scene3.getPositionList());
         
-        console.log("");
-        console.log("scene3.positionList()");
-        console.log(scene3.positionList());
 
         console.log("");
         console.log("scene3.positionList");
@@ -311,14 +382,14 @@ export default class Scene
 
         console.log("");
         console.log("scene4.getModelByName(Line Model)")
-        console.log(scene4.getModelByName("Line Model").toString());
+        console.log(scene4.getModelByName("Line Model")?.toString());
 
         console.log("");
         console.log("scene4.getPositionByModelName(Pos 1)");
-        console.log(scene4.getPositionByModelName("Pos 1"));
+        console.log(scene4.getPositionByModelName("Pos 1")?.toString());
 
         console.log("");
         console.log("scene4.getPositionByModelName(Line Model)");
-        console.log(scene4.getPositionByModelName("Line Model").toString());
+        console.log(scene4.getPositionByModelName("Line Model")?.toString());
     }
 }

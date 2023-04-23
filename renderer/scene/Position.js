@@ -59,17 +59,28 @@
    {@code Position}'s {@link Model} within the {@link Camera}'s view coordinate
    system.
 */
+//@ts-check
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Scene, Vector, Vertex} from "./SceneImport.js";
 
 export default class Position
 {
-   #model;
-   #matrix;
-   #name;
-   #nestedPositions;
-   visible;
-   debug;
+   /**@type {Model} this positions model*/ #model;
+   /**@type {Matrix} this positions matrix*/#matrix;
+   /**@type {string} this positions string*/#name;
+   /**@type {Position[]} an array of positions*/#nestedPositions;
+   /**@type {boolean} whether to render this position*/visible;
+   /**@type {boolean} whether to output info on this position*/debug;
 
+   /**
+    * Construct a position with the given data.
+    * 
+    * @param {Model} [model=new Model] this positions model
+    * @param {Matrix} [matrix=Matrix.identity()] this positions matrix
+    * @param {string} [name=""] this positions name
+    * @param {Position[]} [nestedPositions=new Array()] this positions array of nested positions 
+    * @param {boolean} [visible=true] whether to render this position
+    * @param {boolean} [debug=false] whether to debug this position
+    */
    constructor(model = new Model(), matrix = Matrix.identity(), name = "", nestedPositions = new Array(), visible = true, debug = false)
    {
       if(model instanceof Model == false)
@@ -110,47 +121,90 @@ export default class Position
       this.debug = debug;
    }
 
+   /**
+    * Build a position with this model and the models name 
+    * positioned using the identity matrix
+    * @param {Model} model
+    * @returns {Position} the new position
+    */
    static buildFromModel(model)
    {
       return new Position(model, Matrix.identity(), model.getName());
    }
 
+   /**
+    * Build a position with a default model, 
+    * positions using the identity matrix,
+    * with the given name
+    * @param {string} name
+    * @returns {Position} the new position
+    */
    static buildFromName(name)
    {
       return new Position(new Model(), Matrix.identity(), name);
    }
 
+   /**
+    * Build a position with the given model and name
+    * positioned with the identity matrix
+    * @param {Model} model
+    * @param {string} name
+    * @returns {Position} the new position
+    */
    static buildFromModelName(model, name)
    {
       return new Position(model, Matrix.identity(), name);
    }
 
+   /**
+    * Get the name of this position
+    * @returns {string} this positions name
+    */
    getName()
    {
       return this.#name;
    }
 
-   name = () => {return this.#name;}
-
+   /**
+    * Get the name of this position
+    * @returns {string} this positions name
+    */
    get name() {return this.#name;}
 
+   /**
+    * Get the model of this position
+    * @returns {Model} return this positions model
+    */
    getModel()
    {
       return this.#model;
    }
 
-   model = () => {return this.#model;}
-
+   /**
+    * Get the model of this position
+    * @returns {Model} this positions model
+    */
    get model() {return this.#model;}
 
+   /**
+    * Set this positions model to be the given model
+    * @param {Model} model
+    */
    setModel(model)
    {
       if(model instanceof Model == false)
          throw new Error("Model must be a Model");
 
+      if(model == undefined)
+         throw new Error("Model cannot be null or undefined")
+
       this.#model = model;
    }
 
+   /**
+    * Set this positions model to be the given model
+    * @param {Model} mod
+    */
    set model(mod)
    {
       if(mod instanceof Model == false)
@@ -162,25 +216,45 @@ export default class Position
       this.#model = mod;
    }
 
+   /**
+    * Get this positions matrix
+    * @returns {Matrix} this positions matrix
+    */
    getMatrix()
    {
       return this.#matrix;
    }
 
-   matrix = () => {return this.#matrix;}
-
+   /**
+    * Get this positions matrix
+    * @returns {Matrix} this positions matrix
+    */
    get matrix() {return this.#matrix;}
 
+   /**
+    * Set this positions matrix
+    * NOTE this function chainable
+    * @param {Matrix} matrix
+    */
    setMatrix(matrix)
    {
       if(matrix instanceof Matrix == false)
          throw new Error("Matrix must be a Matrix");
+
+      if(matrix == undefined)
+         throw new Error("Matrix cannot be null or undefined");
 
       this.#matrix = matrix;
 
       return this.#matrix;
    }
 
+   /**
+    * Set this positions matrix to be the given matrix
+    * NOTE cannot use for method chaining
+    * 
+    * @param {Matrix} mat
+    */
    set matrix(mat)
    {
       if(mat instanceof Matrix == false)
@@ -191,10 +265,27 @@ export default class Position
          throw new Error("Matrix cannot be undefined or null");
    
       this.#matrix = mat;
-
-      return this.#matrix;
    }
 
+   /**
+    * Get this positions array of nested positions
+    * @returns {Position[]} all nested positions of this position
+    */
+   getNestedPositions()
+   {
+      return this.#nestedPositions;
+   }
+
+   /**
+    * get this positions array of nested positions
+    * @returns {Position[]} all nested positions of this position
+    */
+   get nestedPositions() {return this.#nestedPositions;}
+
+   /**
+    * Reset this positions matrix to be the identity matrix
+    * @returns {Matrix} this positions reset identity matrix for method chaining
+    */
    matrix2Identity()
    {
       this.#matrix = Matrix.identity();
@@ -202,15 +293,11 @@ export default class Position
       return this.#matrix;
    }
 
-   getNestedPositions()
-   {
-      return this.#nestedPositions;
-   }
-
-   nestedPositions = () => {return this.#nestedPositions;}
-
-   get nestedPositions() {return this.#nestedPositions;}
-
+   /**
+    * Set the nested position at the given index to be the given position
+    * @param {number} index the index to insert the position at
+    * @param {Position} position the position to be inserted into this positions nested positions
+    */
    setNestedPosition(index, position)
    {
       if(typeof index != "number")
@@ -222,6 +309,10 @@ export default class Position
       this.#nestedPositions[index] = position;      
    }
 
+   /**
+    * Add the given positions to this positions array of nested positions
+    * @param {Position[]} pArray the positions to be added into this positions array of nested position
+    */
    addNestedPosition(... pArray)
    {
       let nestedLength = this.#nestedPositions.length;
@@ -240,6 +331,13 @@ export default class Position
       }
    }
 
+   /**
+    * DO NOT USE, for compatibility with previous renderers
+    * @deprecated use the Matrix.translate function instead
+    * @param {number} dx translation amount for the x direction
+    * @param {number} dy translation amount for the y direction
+    * @param {number} dz translation amount for the z direction
+    */
    translation(dx, dy, dz)
    {
       if(typeof dx != "number" || typeof dy != "number" || typeof dz != "number")
@@ -248,6 +346,10 @@ export default class Position
       this.#matrix = Matrix.translate(dx, dy, dz);
    }
 
+   /**
+    * For debugging purposes.
+    * @returns {string} representation of this position
+    */
    toString()
    {
       let result = "";
@@ -265,6 +367,9 @@ export default class Position
       return result;
    }
 
+   /**
+    * For testing purposes.
+    */
    static main()
    {
       
@@ -303,10 +408,6 @@ export default class Position
       console.log(p1.getName());
 
       console.log("");
-      console.log("p1.name()");
-      console.log(p1.name());
-
-      console.log("");
       console.log("p1.name");
       console.log(p1.name);
 
@@ -314,10 +415,6 @@ export default class Position
       console.log("");
       console.log("p2.getName(): ");
       console.log(p2.getName());
-
-      console.log("");
-      console.log("p2.name()");
-      console.log(p2.name());
 
       console.log("");
       console.log("p2.name");
@@ -328,20 +425,12 @@ export default class Position
       console.log(p3.getName());
 
       console.log("");
-      console.log("p3.name()");
-      console.log(p3.name());
-
-      console.log("");
       console.log("p3.name");
       console.log(p3.name);
 
       console.log("");
       console.log("p4.getName(): ");
       console.log(p4.getName());
-
-      console.log("");
-      console.log("p4.name()");
-      console.log(p4.name());
 
       console.log("");
       console.log("p4.name");
@@ -354,20 +443,12 @@ export default class Position
       console.log(p1.getModel().toString());
 
       console.log("");
-      console.log("p1.model()");
-      console.log(p1.model().toString());
-
-      console.log("");
       console.log("p1.model");
       console.log(p1.model.toString());
 
       console.log("");
       console.log("p2.getModel(): ");
       console.log(p2.getModel().toString());
-
-      console.log("");
-      console.log("p2.model()");
-      console.log(p2.model().toString());
 
       console.log("");
       console.log("p2.model");
@@ -378,20 +459,12 @@ export default class Position
       console.log(p3.getModel().toString());
 
       console.log("");
-      console.log("p3.model()");
-      console.log(p3.model().toString());
-
-      console.log("");
       console.log("p3.model");
       console.log(p3.model.toString());
 
       console.log("");
       console.log("p4.getModel(): ");
       console.log(p4.getModel().toString());
-
-      console.log("");
-      console.log("p4.model()");
-      console.log(p4.model().toString());
 
       console.log("");
       console.log("p4.model");
@@ -428,10 +501,6 @@ export default class Position
       console.log(p1.getMatrix());
 
       console.log("");
-      console.log("p1.matrix()");
-      console.log(p1.matrix());
-
-      console.log("");
       console.log("p1.matrix");
       console.log(p1.matrix);
 
@@ -440,24 +509,12 @@ export default class Position
       console.log(p2.getMatrix());
 
       console.log("");
-      console.log("p2.matrix()");
-      console.log(p2.matrix());
-
-      console.log("");
       console.log("p3.getMatrix(): ");
       console.log(p3.getMatrix());
 
       console.log("");
-      console.log("p3.matrix()");
-      console.log(p3.matrix());
-
-      console.log("");
       console.log("p4.getMatrix(): ");
       console.log(p4.getMatrix());
-
-      console.log("");
-      console.log("p4.matrix()");
-      console.log(p4.matrix());
 
 // --------------------------------------------------
 
@@ -483,10 +540,6 @@ export default class Position
       console.log("");
       console.log("p1.getNestedPositions(): ");
       console.log(p1.getNestedPositions());
-
-      console.log("");
-      console.log("p1.nestedPositions(): ");
-      console.log(p1.nestedPositions());
 
       console.log("");
       console.log("p1.addNestedPosition(p2): ");

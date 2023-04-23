@@ -47,30 +47,41 @@
    and {@code top = +1}.
 */
 
+//@ts-check
 import {Camera, Matrix, Model, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
 
-export default class OrthographicNormalizeMatrix
+
+/**
+ * This is a static factory method.
+ * <p>
+ * Construct the {@link Matrix} that transforms from the
+ * {@link Camera}'s orthographic view coordinate system to
+ * the normalized orthographic camera coordinate system.
+
+ * @param {number} l the left edge of the view volume
+ * @param {number} r the right edge of the view volume
+ * @param {number} b the bottom edge of the view volume
+ * @param {number} t the top edge of the view volume
+ * @returns {Matrix} a new matrix containing an orthographic normalization matrix
+ */
+export default function build(l, r, b, t)
 {
-    static build(l, r, b, t)
-    {
-        if( typeof l != Number || typeof r != Number ||
-            typeof b != Number || typeof t != Number)
-                throw new Error("L, B, R, T must be numerical");
+    if( typeof l != "number" || typeof r != "number" ||
+        typeof b != "number" || typeof t != "number")
+            throw new Error("L, B, R, T must be numerical");
 
-        m1, m2;
-        m1 = Matrix.buildFromColumns(
-            new Vector(  1.0,      0.0,    0.0, 0.0),
-            new Vector(  0.0,      1.0,    0.0, 0.0),
-            new Vector(  0.0,      0.0,    1.0, 0.0),
-            new Vector(-(r+l)/2, -(t+b)/2, 0.0, 1.0));
+    let m1, m2;
+    m1 = Matrix.buildFromColumns(
+                        new Vector(  1.0,      0.0,    0.0, 0.0),
+                        new Vector(  0.0,      1.0,    0.0, 0.0),
+                        new Vector(  0.0,      0.0,    1.0, 0.0),
+                        new Vector(-(r+l)/2, -(t+b)/2, 0.0, 1.0));
 
-        m2 = Matrix.buildFromColumns(
-            new Vector(2/(r-l),   0.0,   0.0, 0.0),
-            new Vector(   0.0,  2/(t-b), 0.0, 0.0),
-            new Vector(   0.0,    0.0,   1.0, 0.0),
-            new Vector(   0.0,    0.0,   0.0, 1.0));
+    m2 = Matrix.buildFromColumns(
+                        new Vector(2/(r-l),   0.0,   0.0, 0.0),
+                        new Vector(   0.0,  2/(t-b), 0.0, 0.0),
+                        new Vector(   0.0,    0.0,   1.0, 0.0),
+                        new Vector(   0.0,    0.0,   0.0, 1.0));
 
-        return m2.times(m1);
-    }
-
+    return m2.timesMatrix(m1);
 }

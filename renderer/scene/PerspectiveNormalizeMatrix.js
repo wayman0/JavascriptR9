@@ -83,32 +83,43 @@
    {@code left = -1}, {@code right = +1}, {@code bottom = -1},
    and {@code top = +1}.
 */
-
+//@ts-check
 import {Camera, Matrix, Model, OrthoNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
 
-export default class PerspectiveNormalizeMatrix
+/**
+ * This is a static factory method.
+ * <p>
+ * Construct the {@link Matrix} that transforms from the
+ * {@link Camera}'s perspective view coordinate system to
+ * the normalized perspective camera coordinate system.
+
+ * @param {number} l the left edge of the view rectangle in the plane z = -near
+ * @param {number} r the right edge of the view rectangle in the plane z = -near
+ * @param {number} b the bottom edge of the view rectangle in the plane z = -near
+ * @param {number} t the top edge of the view rectangle in the plane z = -near
+ * @param {number} near the distance from the origin to the near plane
+ * @returns {Matrix} a new matrix containing the perspective nomarlization matrix
+ */
+export default function build(l, r, b, t, near)
 {
-    static build(l, r, b, t, near)
-    {
-        if( typeof l != Number || typeof r != Number ||
-            typeof b != Number || typeof t != Number ||
-            typeof near != Number)
-                throw new Error("L, R, B, T, and near must be numerical");
+   if(typeof l != "number" || typeof r != "number" ||
+      typeof b != "number" || typeof t != "number" ||
+      typeof near != "number")
+          throw new Error("L, R, B, T, and near must be numerical");
 
-        m1, m2;
+   let m1, m2;
 
-        m1 = Matrix.buildFromColumns(
-            new Vector(    1.0,            0.0,        0.0, 0.0),
-            new Vector(    0.0,            1.0,        0.0, 0.0),
-            new Vector((r+l)/(2*near), (t+b)/(2*near), 1.0, 0.0),
-            new Vector(    0.0,            0.0,        0.0, 1.0));
+   m1 = Matrix.buildFromColumns(
+      new Vector(    1.0,            0.0,        0.0, 0.0),
+      new Vector(    0.0,            1.0,        0.0, 0.0),
+      new Vector((r+l)/(2*near), (t+b)/(2*near), 1.0, 0.0),
+      new Vector(    0.0,            0.0,        0.0, 1.0));
 
-        m2 = Matrix.buildFromColumns(
-            new Vector(2*near/(r-l),      0.0,     0.0, 0.0),
-            new Vector(     0.0,     2*near/(t-b), 0.0, 0.0),
-            new Vector(     0.0,          0.0,     1.0, 0.0),
-            new Vector(     0.0,          0.0,     0.0, 1.0));
+   m2 = Matrix.buildFromColumns(
+      new Vector(2*near/(r-l),      0.0,     0.0, 0.0),
+      new Vector(     0.0,     2*near/(t-b), 0.0, 0.0),
+      new Vector(     0.0,          0.0,     1.0, 0.0),
+      new Vector(     0.0,          0.0,     0.0, 1.0));
 
-        return m2.times(m1);
-    }
+   return m2.timesMatrix(m1);
 }
