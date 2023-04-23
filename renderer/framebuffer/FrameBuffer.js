@@ -3,17 +3,17 @@
     Copyright (c) 2022 rlkraft@pnw.edu
     See LICENSE for details.
 */
-
+//@ts-check
 import {Viewport} from "./FramebufferImport.js";
 import Color from "../color/Color.js";
 
 export default class FrameBuffer
 {
-    #width;
-    #height;
-    #bgColorFB;
-    #pixelBuffer;
-    #vp;
+    /**@type {number} #width the width of a framebuffer*/ #width;
+    /**@type {number} #height the height of this framebuffer*/ #height;
+    /**@type {Color} #bgColorFB the default color of the framebuffer*/ #bgColorFB;
+    /**@type {Color[]} #pixelBuffer the actual pixel data for this framebuffer*/ #pixelBuffer;
+    /**@type {Viewport} #vp the viewport for this framebuffer */ #vp;
 
     /**
     A {@code FrameBuffer} represents a two-dimensional array of pixel data.
@@ -37,8 +37,8 @@ export default class FrameBuffer
      * Width and height have the default value of 0, and color has the default color black
      * Will round Width and Height using the Math.round function.
      * 
-     * @param {Number} width the width of the {@code FrameBuffer}
-     * @param {Number} height the height of the {@code FrameBuffer}
+     * @param {number} width the width of the {@code FrameBuffer}
+     * @param {number} height the height of the {@code FrameBuffer}
      * @param {Color} color the background {@link Color} of the {@code FrameBuffer}
      */
     constructor(width, height, color = Color.Black)
@@ -61,8 +61,8 @@ export default class FrameBuffer
     /**
      * Creates an exact duplicate {@code FrameBuffer} out of the source {@code FrameBuffer}.
      * 
-     * @param {@code FrameBuffer} source 
-     * @returns this {@code FrameBuffer} object created
+     * @param {FrameBuffer} source 
+     * @returns {FrameBuffer} this {@code FrameBuffer} object created
      */
     static buildFB(source)
     {
@@ -83,8 +83,8 @@ export default class FrameBuffer
     /**
      * Creates an exact duplicate {@code FrameBuffer} out of the source {@code Viewport}
      * 
-     * @param {@link Viewport} source 
-     * @returns this {@code FrameBuffer} object created
+     * @param {Viewport} source 
+     * @returns {FrameBuffer} this {@code FrameBuffer} object created
      */
     static buildVP(source)
     {
@@ -105,47 +105,47 @@ export default class FrameBuffer
     /**
      * Get the width of this {@code FrameBuffer}
      * 
-     * @returns the width of this {@code FrameBuffer}
+     * @returns {number} the width of this {@code FrameBuffer}
      */
     getWidthFB()
     {
         return this.#width;
     }
 
-    width = () => {return this.#width;}
+    get width() {return this.#width;}
 
     /**
      * Get the height of this {@code FrameBuffer}
      * 
-     * @returns the height of this {@code FrameBuffer}
+     * @returns {number} the height of this {@code FrameBuffer}
      */
     getHeightFB()
     {
         return this.#height;
     }
 
-    height = () => {return this.#height;}
+    get height() {return this.#height;}
     
     /**
-     * Get the background {@link Color} of this {@code FrameBuffer}
+     * Get the background {Color} of this {@code FrameBuffer}
      * 
-     * @returns the background {@link Color} of this {@code FrameBuffer}
+     * @returns {Color} the background {Color} of this {@code FrameBuffer}
      */
     getBackgroundColorFB()
     {
         return this.#bgColorFB;
     }
 
-    bgColorFB = () => {return this.#bgColorFB;}
+    get bgColorFB() {return this.#bgColorFB;}
 
     /**
      * Set this {@code FrameBuffer} new background color.
      * <p>
      * NOTE: this does not clear the contents of the {@code FrameBuffer}.
-     * to the given {@link Color}.  To actually change all the {@code FrameBuffer} 
-     * pixels to the given {@link Color} call {@link clearFB()} method.
+     * to the given {Color}.  To actually change all the {@code FrameBuffer} 
+     * pixels to the given {Color} call {clearFB()} method.
      * 
-     * @param {@link Color} color: the new background color
+     * @param {Color} color: the new background color
      */
     setBackgroundColorFB(color)
     {
@@ -155,19 +155,28 @@ export default class FrameBuffer
         this.#bgColorFB = color;
     }
 
+    set bgColorFB(color)
+    {
+        if(color instanceof Color == false)
+            throw new Error("Color must be instance of Color");
+
+        this.#bgColorFB = color;
+    }
+
     /**
-     * Get the default {@link Viewport} of this {@code FrameBuffer}
+     * Get the default {Viewport} of this {@code FrameBuffer}
      * 
-     * @returns the {@link Viewport} of this {@code FrameBuffer}
+     * @returns {Viewport} the {Viewport} of this {@code FrameBuffer}
      */
     getViewport()
     {
         return this.#vp;
     }
 
-    vp = () => {return this.#vp;}
+    get vp() {return this.#vp;}
+
     /**
-     * Set this {@code FrameBuffer} default {@link Viewport} to be this whole this {@code FrameBuffer}
+     * Set this {@code FrameBuffer} default {Viewport} to be this whole this {@code FrameBuffer}
     */
     setViewportDefault()
     {
@@ -175,13 +184,13 @@ export default class FrameBuffer
     }
 
     /**
-     * Set the default {@link Viewport} with the given upper left hand corner, width, and height within this {@code FrameBuffer} 
-     * If no upper left hand corner is given uses (0, 0) as the default upper left corner for the {@link Viewport}
+     * Set the default {Viewport} with the given upper left hand corner, width, and height within this {@code FrameBuffer} 
+     * If no upper left hand corner is given uses (0, 0) as the default upper left corner for the {Viewport}
      * 
-     * @param {@link Number} width width of this {@code FrameBuffer} default {@link Viewport}
-     * @param {@link Number} height this {@code FrameBuffer} default {@link Viewport}
-     * @param {@link Number} upperLeftX upper left hand x coordinate of this {@code FrameBuffer} default {@link Viewport}
-     * @param {@link Number} upperLeftY upper left hand y coordinate of this {@code FrameBuffer} default {@link Viewport}
+     * @param {number} width width of this {@code FrameBuffer} default {Viewport}
+     * @param {number} height this {@code FrameBuffer} default {Viewport}
+     * @param {number} upperLeftX upper left hand x coordinate of this {@code FrameBuffer} default {Viewport}
+     * @param {number} upperLeftY upper left hand y coordinate of this {@code FrameBuffer} default {Viewport}
      */
     setViewport(width, height, upperLeftX = 0, upperLeftY = 0)
     {
@@ -192,7 +201,6 @@ export default class FrameBuffer
                 throw new Error("All Parameters must be Numerical");
 
         this.#vp.setViewport(width, height, upperLeftX, upperLeftY);
-
     }
 
     /**
@@ -204,9 +212,9 @@ export default class FrameBuffer
     }
     
     /**
-     * Clear this {@code FrameBuffer} using the given {@link Color}
+     * Clear this {@code FrameBuffer} using the given {Color}
      * 
-     * @param {@link Color} color the color to set this {@code FrameBuffer} pixels to  
+     * @param {Color} color the color to set this {@code FrameBuffer} pixels to  
      */
     clearFB(color)
     {
@@ -221,12 +229,12 @@ export default class FrameBuffer
     }
 
     /**
-     * Get the {@link Color} of the pixel within this {@code FrameBuffer} at the given {@code (x, y)} coordinate 
+     * Get the {Color} of the pixel within this {@code FrameBuffer} at the given {@code (x, y)} coordinate 
      * NOTE: will round x and y using Math.round().
      * 
-     * @param {@link Number} x horizontal coordinate within this {@code FrameBuffer} 
-     * @param {@link Number} y vertical coordinate within this {@code FrameBuffer}
-     * @returns the {@link Color} of the pixel at the given (x, y) coordinate
+     * @param {number} x horizontal coordinate within this {@code FrameBuffer} 
+     * @param {number} y vertical coordinate within this {@code FrameBuffer}
+     * @returns {Color} the {Color} of the pixel at the given (x, y) coordinate
      */
     getPixelFB(x, y)
     {
@@ -247,12 +255,12 @@ export default class FrameBuffer
     }
 
     /**
-     * Set the {@link Color} of the pixel within this {@code FrameBuffer} at the given {@code (x, y)} coordinate
+     * Set the {Color} of the pixel within this {@code FrameBuffer} at the given {@code (x, y)} coordinate
      * Note: if no color is uses by deafult uses Color.black;
      * 
-     * @param {@link Number} x horizontal coordinate within this {@code FrameBuffer}
-     * @param {@link Number} y vertical coordinate within this {@code FrameBuffer}
-     * @param {@link Color} color that this {@code FrameBuffer} pixel  at the given {@code (x, y)} coordinate should be set to
+     * @param {number} x horizontal coordinate within this {@code FrameBuffer}
+     * @param {number} y vertical coordinate within this {@code FrameBuffer}
+     * @param {Color} color that this {@code FrameBuffer} pixel  at the given {@code (x, y)} coordinate should be set to
      */
     setPixelFB(x, y, color = Color.Black)
     {
@@ -293,7 +301,7 @@ export default class FrameBuffer
     /**
      * Create a new {@code FrameBuffer} containing the pixel data from just the red plane of this {@code FrameBuffer}
      * 
-     * @returns {@code FrameBuffer} holding just the red pixel data from this {@code FrameBuffer}
+     * @returns {FrameBuffer} holding just the red pixel data from this {@code FrameBuffer}
      */
     convertRed2FB()
     {
@@ -316,7 +324,7 @@ export default class FrameBuffer
     /**
      * Create a new {@code FrameBuffer} containing the pixel data from just the green plane of this {@code FrameBuffer}
      * 
-     * @returns {@code FrameBuffer} holding just the green pixel data from this {@code FrameBuffer}
+     * @returns {FrameBuffer} holding just the green pixel data from this {@code FrameBuffer}
      */
     convertGreen2FB()
     {
@@ -339,7 +347,7 @@ export default class FrameBuffer
     /**
      * Create a new {@code FrameBuffer} containing the pixel data from just the blue plane of this {@code FrameBuffer}
      * 
-     * @returns {@code FrameBuffer} holding just the blue pixel data from this {@code FrameBuffer}
+     * @returns {FrameBuffer} holding just the blue pixel data from this {@code FrameBuffer}
      */
     convertBlue2FB()
     {
@@ -362,7 +370,7 @@ export default class FrameBuffer
     /**
       For debugging very small {@code FrameBuffer} objects.
 
-      @return a string representation of this {@code FrameBuffer}
+      @return {string} a string representation of this {@code FrameBuffer}
    */
     toString() 
     {
@@ -386,7 +394,7 @@ export default class FrameBuffer
     <a href="https://en.wikipedia.org/wiki/Netpbm_format" target="_top">
             https://en.wikipedia.org/wiki/Netpbm_format</a>
 
-    @param filename  name of PPM image file to hold {@code FrameBuffer} data
+    @param {string} filename  name of PPM image file to hold {@code FrameBuffer} data
     */
     dumpFB2File(filename) 
     {
@@ -406,11 +414,11 @@ export default class FrameBuffer
     <a href="http://stackoverflow.com/questions/2693631/read-ppm-file-and-store-it-in-an-array-coded-with-c" target="_top">
       http://stackoverflow.com/questions/2693631/read-ppm-file-and-store-it-in-an-array-coded-with-c</a>
 
-    @param ul_x      upper left hand x-coordinate of pixel data rectangle
-    @param ul_y      upper left hand y-coordinate of pixel data rectangle
-    @param lr_x      lower right hand x-coordinate of pixel data rectangle
-    @param lr_y      lower right hand y-coordinate of pixel data rectangle
-    @param filename  name of PPM image file to hold pixel data
+    @param {number} upperLeftX      upper left hand x-coordinate of pixel data rectangle
+    @param {number} upperLeftY      upper left hand y-coordinate of pixel data rectangle
+    @param {number} lowerRightX      lower right hand x-coordinate of pixel data rectangle
+    @param {number} lowerRightY      lower right hand y-coordinate of pixel data rectangle
+    @param {string} filename  name of PPM image file to hold pixel data
     */
     dumpPixels2File(upperLeftX, upperLeftY, lowerRightX, lowerRightY, filename) 
     {
@@ -427,8 +435,8 @@ export default class FrameBuffer
         // uses synchronous API to avoid file corruption
         import('node:fs').then(fs => 
         {
-            fs.writeFileSync(filename, "P6\n" + pWidth + " " + pHeight + "\n" + 255 + "\n",
-                            err => {if (err) throw err;});
+            // @ts-ignore
+            fs.writeFileSync(filename, "P6\n" + pWidth + " " + pHeight + "\n" + 255 + "\n", err => {if (err) throw err;});
         });
 
         let tempPB = new Uint8ClampedArray(pWidth * pHeight * 3);
@@ -450,8 +458,8 @@ export default class FrameBuffer
         // uses synchronous API to avoid file corruption
         import('node:fs').then(fs => 
         {
-            fs.appendFileSync(filename, Buffer.from(tempPB),
-                     err => {if (err) throw err;});
+            // @ts-ignore
+            fs.appendFileSync(filename, Buffer.from(tempPB), err => {if (err) throw err;});
         });
     }
 
@@ -478,20 +486,20 @@ export default class FrameBuffer
         console.log(fb1.getHeightFB());
 
         console.log("");
-        console.log("fb2.width(): ");
-        console.log(fb2.width());
+        console.log("fb2.width: ");
+        console.log(fb2.width);
 
         console.log("");
-        console.log("fb2.height()");
-        console.log(fb2.height());
+        console.log("fb2.height");
+        console.log(fb2.height);
 
         console.log("");
         console.log("fb3.getBAckgroundColor()");
         console.log(fb3.getBackgroundColorFB().toString());
 
         console.log("");
-        console.log("fb3.bgColor()");
-        console.log(fb3.bgColorFB().toString());
+        console.log("fb3.bgColor");
+        console.log(fb3.bgColorFB.toString());
 
         console.log("");
         console.log("fb2.setVP(2, 2, 1, 1)");
@@ -512,8 +520,8 @@ export default class FrameBuffer
         console.log(fb1.getViewport().toString());
 
         console.log("");
-        console.log("fb2.vp() to see if fb2 feels fb1's viewport change since fb2 made from fb1");
-        console.log(fb2.vp().toString());
+        console.log("fb2.vp to see if fb2 feels fb1's viewport change since fb2 made from fb1");
+        console.log(fb2.vp.toString());
 
         console.log("");
         console.log("fb2.setBackgroundColor(color.red)");

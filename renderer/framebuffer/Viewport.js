@@ -17,19 +17,19 @@
       coordinates; the positive {@code x} direction is to the right and the
       positive {@code y} direction is downward.
 */
-
+//@ts-check
 import {FrameBuffer} from "./FramebufferImport.js";
 import Color from "../color/Color.js";
 
 export default class Viewport
 {
     // Coordinates of the viewport within the framebuffer.
-    #vp_ul_x;     // upper-left-hand corner
-    #vp_ul_y;
-    #vp_lr_x;     // lower-right-hand corner
-    #vp_lr_y;
-    #bgColorVP;   // the viewport's background color
-    #parent;      // the parent fb that the viewport is in
+    /**@type {number} #vp_ur_x upper left x */ #vp_ul_x;     
+    /**@type {number} #vp_ur_y upper left y*/ #vp_ul_y;
+    /**@type {number} #vp_lr_x lower right x*/ #vp_lr_x;     
+    /**@type {number} #vp_lr_y lower right y*/ #vp_lr_y;
+    /**@type {Color}  #bgColorVP background color*/ #bgColorVP;   
+    /**@type {FrameBuffer} #parent the parent fb that the vp is in*/ #parent;
 
     /**
      * Create a {@code Viewport} with the given upper left hand corner
@@ -40,12 +40,12 @@ export default class Viewport
      * of this {@code Viewport} If you want the pixels of this {@code Viewport} to be cleared
      * to the background color call the {@link clearVP} method
      * 
-     * @param {@link Number} width the width of this {@code Viewport}
-     * @param {@link Number} height the height of this {@code Viewport}
-     * @param {@link FrameBuffer} parent the {@link FrameBuffer} that this {@code Viewport} is inside
-     * @param {@link Number} upperLeftX upper left hand x coordinate of this {@code Viewport}
-     * @param {@link Number} upperLeftY upper left hand y coordinate of this {@code Viewport}
-     * @param {@link Color} color background {@link Color} for this {@code Viewport}
+     * @param {number} width the width of this {@code Viewport}
+     * @param {number} height the height of this {@code Viewport}
+     * @param {FrameBuffer} parent the {FrameBuffer} that this {@code Viewport} is inside
+     * @param {number} upperLeftX upper left hand x coordinate of this {@code Viewport}
+     * @param {number} upperLeftY upper left hand y coordinate of this {@code Viewport}
+     * @param {Color} color background {Color} for this {@code Viewport}
      */
     constructor(width, height, parent, upperLeftX = 0, upperLeftY = 0, color = Color.Black)
     {
@@ -68,10 +68,10 @@ export default class Viewport
     }
 
     /**
-     * Create a {@code Viewport} that is the exact replica of its parent {@link FrameBuffer}.
+     * Create a {@code Viewport} that is the exact replica of its parent {FrameBuffer}.
      * 
-     * @param {@link FrameBuffer} parent the parent {@link FrameBuffer} from which all data is taken from
-     * @returns {@code Viewport} a viewport that is the exact same as its {@code parent}
+     * @param {FrameBuffer} parent the parent {FrameBuffer} from which all data is taken from
+     * @returns {Viewport} a viewport that is the exact same as its {parent}
      */
     static buildParent(parent)
     {
@@ -90,15 +90,15 @@ export default class Viewport
     }
 
     /**
-     * Create a {@code Viewport} that is the exact replica of the source {@link FrameBuffer} with its 
-     * upper left hand corner at the specified point inside its parent {@link FrameBuffer}
-     * If no upper left hand corner is given uses (0, 0) as the default upper left corner in the parent {@link FrameBuffer}
+     * Create a {Viewport} that is the exact replica of the source {FrameBuffer} with its 
+     * upper left hand corner at the specified point inside its parent {FrameBuffer}
+     * If no upper left hand corner is given uses (0, 0) as the default upper left corner in the parent {FrameBuffer}
      * 
-     * @param {@link FrameBuffer} source the {@link FrameBuffer} that the width, height, and pixel data is to be taken from
-     * @param {@link frameBuffer} parent the {@link FrameBuffer} that this {@code Viewport} is stored within
-     * @param {@link Number} upperLeftX the upper left hand x coordinate of this {@code Viewport}
-     * @param {@link Number} upperLeftY the upper left hand y coordinate of this {@code Viewport}
-     * @returns this {@code Viewport} with the specified upper left corner inside its parent and the size and pixel data of the source
+     * @param {FrameBuffer} source the {FrameBuffer} that the width, height, and pixel data is to be taken from
+     * @param {FrameBuffer} parent the {FrameBuffer} that this {Viewport} is stored within
+     * @param {number} upperLeftX the upper left hand x coordinate of this {Viewport}
+     * @param {number} upperLeftY the upper left hand y coordinate of this {Viewport}
+     * @returns {Viewport} this {Viewport} with the specified upper left corner inside its parent and the size and pixel data of the source
      */
     static buildFB(source, parent, upperLeftX = 0, upperLeftY = 0)
     {
@@ -123,15 +123,15 @@ export default class Viewport
     }
 
     /**
-     * Create a {@code Viewport} that is the exact replica of the source {@code Viewport} with its 
-     * upper left hand corner at the specified point inside its parent {@link FrameBuffer}
-     * if no upper left hand corner is given uses (0, 0) as the default upper left hand corner in the parent {@link FrameBuffer}
+     * Create a {Viewport} that is the exact replica of the source {Viewport} with its 
+     * upper left hand corner at the specified point inside its parent {FrameBuffer}
+     * if no upper left hand corner is given uses (0, 0) as the default upper left hand corner in the parent {FrameBuffer}
      * 
-     * @param {@link Viewport} source the {@code Viewport} that the width height and pixel data is to be taken from
-     * @param {@link FrameBuffer} parent the {@link FrameBuffer} that this {@code Viewport} is stored within 
-     * @param {@link Number} upperLeftX upper left hand x coordinate of this {@code Viewport}
-     * @param {@link Number} upperLeftY upper left hand y coordinate of this {@code Viewport}
-     * @returns this {@code Viewport} with the specified upper left corner inside its parent and the size and pixel data of the source
+     * @param {Viewport} source the {Viewport} that the width height and pixel data is to be taken from
+     * @param {FrameBuffer} parent the {FrameBuffer} that this {Viewport} is stored within 
+     * @param {number} upperLeftX upper left hand x coordinate of this {Viewport}
+     * @param {number} upperLeftY upper left hand y coordinate of this {Viewport}
+     * @returns {Viewport} with the specified upper left corner inside its parent and the size and pixel data of the source
      */
     static buildVP(source, parent, upperLeftX = 0, upperLeftY = 0)
     {
@@ -156,15 +156,15 @@ export default class Viewport
     }
 
     /**
-     * Mutate this {@code Viewport} into the given upper left hand corner 
-     * of its parent {@link FrameBuffer} with the specified widht and height
+     * Mutate this {Viewport} into the given upper left hand corner 
+     * of its parent {FrameBuffer} with the specified widht and height
      * if no upper left hand corner is given uses (0, 0) as the default
      * NOTE: will use Math.round() on upperLeftX and upperLeftY, width and height
      * 
-     * @param {@link Number} width the width of this {@code Viewport}
-     * @param {@link Number} height the height of this {@code Viewport}
-     * @param {@link Number} upperLeftX horizontal coordinate of this {@code Viewport}
-     * @param {@link Number} upperLeftY vertical coordinate of this {@code Viewport}
+     * @param {number} width the width of this {Viewport}
+     * @param {number} height the height of this {Viewport}
+     * @param {number} upperLeftX horizontal coordinate of this {Viewport}
+     * @param {number} upperLeftY vertical coordinate of this {Viewport}
      */
     setViewport(width, height, upperLeftX = 0, upperLeftY = 0)
     {
@@ -184,9 +184,9 @@ export default class Viewport
     }
 
     /**
-     * Return a reference to the {@link FrameBuffer} that this {@code Viewport} is in
+     * Return a reference to the {FrameBuffer} that this {Viewport} is in
      * 
-     * @returns a reference to the {@link FrameBuffer} that this {@code Viewport} is inside 
+     * @returns {FrameBuffer} a reference to the {FrameBuffer} that this {Viewport} is inside 
      */
     getFrameBuffer()
     {
@@ -195,56 +195,56 @@ export default class Viewport
 
     framebuffer = () => {return this.#parent}
 
-    parent = () => {return this.#parent}
+    get parent() {return this.#parent}
 
     /**
-     * Get the Width of this {@code Viewport}
+     * Get the Width of this {Viewport}
      * 
-     * @returns width of this {@code Viewport} 
+     * @returns {number} width of this {Viewport} 
      */
     getWidthVP()
     {
         return this.#vp_lr_x - this.#vp_ul_x;
     }
 
-    width = () => {return this.#vp_lr_x - this.#vp_ul_x;}
+    get width() {return this.#vp_lr_x - this.#vp_ul_x;}
 
     /**
-     * Get the height of this {@code Viewport}
-     * @returns the height of this {@code Viewport}
+     * Get the height of this {Viewport}
+     * @returns {number} the height of this {Viewport}
      */
     getHeightVP()
     {
         return this.#vp_lr_y - this.#vp_ul_y;
     }
 
-    height = () => {return this.#vp_lr_y - this.#vp_ul_y;}
+    get height() {return this.#vp_lr_y - this.#vp_ul_y;}
 
     /**
-     * Get this {@code Viewport} background color.
+     * Get this {Viewport} background color.
      * 
-     * @returns this {@code Viewport} background {@link Color}
+     * @returns {Color} this {Viewport} background {Color}
      */
     getBackgroundColorVP()
     {
         return this.#bgColorVP;
     }
 
-    bgColorVP = () => {return this.#bgColorVP;}
+    get bgColorVP() {return this.#bgColorVP;}
 
-    vp_ul_x = () => {return this.#vp_ul_x;}
-    vp_ul_y = () => {return this.#vp_ul_y;}
-    vp_lr_x = () => {return this.#vp_lr_x;}
-    vp_lr_y = () => {return this.#vp_lr_y;}
+    get vp_ul_x() {return this.#vp_ul_x;}
+    get vp_ul_y() {return this.#vp_ul_y;}
+    get vp_lr_x() {return this.#vp_lr_x;}
+    get vp_lr_y() {return this.#vp_lr_y;}
 
     /**
-     * Set this {@code Viewport} background color.
+     * Set this {Viewport} background color.
      * <p>
-     * NOTE: this method does not clear the pixels of this {@code Viewport}.
-     * to actually change all this {@code Viewport} pixels to the given 
-     * {@link Color} use the {@link clearVP} method.
+     * NOTE: this method does not clear the pixels of this {Viewport}.
+     * to actually change all this {Viewport} pixels to the given 
+     * {Color} use the {clearVP} method.
      * 
-     * @param {@link Color} color this {@code Viewport} new background color
+     * @param {Color} color this {Viewport} new background color
      */
     setBackgroundColorVP(color)
     {
@@ -254,8 +254,16 @@ export default class Viewport
         this.#bgColorVP = color;
     }
 
+    set bgColorVP(color)
+    {
+        if(color instanceof Color == false)
+            throw new Error("Color must be an intance of Color");
+
+        this.#bgColorVP = color;
+    }
+
     /**
-     * Clear this {@code Viewport} using its background {@link Color}
+     * Clear this {Viewport} using its background {Color}
      */
     clearVPDefault()
     {
@@ -263,9 +271,9 @@ export default class Viewport
     }
 
     /**
-     * Clear this {@code Viewport} using the given {@link Color}
+     * Clear this {Viewport} using the given {Color}
      * 
-     * @param {@link Color} color, the color to set this {@code Viewport} pixels to 
+     * @param {Color} color, the color to set this {Viewport} pixels to 
      */
     clearVP(color)
     {
@@ -280,13 +288,13 @@ export default class Viewport
     }
 
     /**
-     * Get the {@link Color} of the pixel with coordinates at 
-     * {@code (x, y)} realtive to this {@code Viewport}
+     * Get the {Color} of the pixel with coordinates at 
+     * {(x, y)} realtive to this {Viewport}
      * Note: uses Math.round() to round x and y
      * 
-     * @param {@link Number} x the horizontal coordinate within this {@code Viewport}
-     * @param {@link Number} y the vertical coordinate within this {@code Viewport}
-     * @returns the {@link Color} of the current pixel at the specified coordinate in this {@code Viewport}
+     * @param {number} x the horizontal coordinate within this {Viewport}
+     * @param {number} y the vertical coordinate within this {Viewport}
+     * @returns {Color} of the current pixel at the specified coordinate in this {Viewport}
      */
     getPixelVP(x, y)
     {
@@ -300,13 +308,13 @@ export default class Viewport
     }
 
     /**
-     * Set the {@link Color} of the pixel with coordinates {@code (x, y)} within this {@code Viewport}
-     * Note uses default value {@link Color}.black if no color is given
+     * Set the {Color} of the pixel with coordinates {(x, y)} within this {Viewport}
+     * Note uses default value {Color}.black if no color is given
      * Note rounds x and y
      * 
-     * @param {@link Number} x the horizontal coordinate within this {@code Viewport} 
-     * @param {@link Number} y the vertical coordinate within this {@code Viewport}
-     * @param {@link Color} color the {@link Color} that the {@code (x, y)} pixel should be set to within this {@code Viewport}
+     * @param {number} x the horizontal coordinate within this {Viewport} 
+     * @param {number} y the vertical coordinate within this {Viewport}
+     * @param {Color} color the {Color} that the {(x, y)} pixel should be set to within this {Viewport}
      */
     setPixelVP(x, y, color = Color.black)
     {
@@ -323,9 +331,9 @@ export default class Viewport
     }
 
     /**
-     * Create a new {@link FrameBuffer} contianing the pixel data from this {@code Viewport}
+     * Create a new {FrameBuffer} contianing the pixel data from this {Viewport}
      * 
-     * @returns {@link FrameBuffer} holding pixel data from this {@code Viewport} 
+     * @returns {FrameBuffer} holding pixel data from this {Viewport} 
      */
     convertVP2FB()
     {
@@ -333,12 +341,12 @@ export default class Viewport
     }
 
     /**
-         Write this {@code Viewport} to the specified PPM file.
+         Write this {Viewport} to the specified PPM file.
       <p>
          <a href="https://en.wikipedia.org/wiki/Netpbm_format" target="_top">
                   https://en.wikipedia.org/wiki/Netpbm_format</a>
 
-         @param filename  name of PPM image file to hold {@code Viewport} data
+         @param filename {string}  name of PPM image file to hold {Viewport} data
     */
     dumpVP2File(filename)
     {
@@ -349,9 +357,9 @@ export default class Viewport
     }
 
     /**
-      For debugging very small {@code Viewport} objects.
+      For debugging very small {Viewport} objects.
 
-      @return a string representation of this {@code Viewport}
+      @return {string} a string representation of this {Viewport}
    */
     toString() 
     {
@@ -369,6 +377,9 @@ export default class Viewport
         return result;
     } 
 
+    /**
+     * For Testing.
+     */
     static main()
     {
         const fb = new FrameBuffer(10, 10);
@@ -394,8 +405,8 @@ export default class Viewport
         console.log(vp2.framebuffer().toString());
 
         console.log("");
-        console.log("vp3.parent()");
-        console.log(vp3.parent().toString());
+        console.log("vp3.parent");
+        console.log(vp3.parent.toString());
 
         console.log("");
         console.log("vp1.getWidthVP()");
@@ -406,20 +417,20 @@ export default class Viewport
         console.log(vp1.getHeightVP());
 
         console.log("");
-        console.log("vp4.width()");
-        console.log(vp4.width());
+        console.log("vp4.width");
+        console.log(vp4.width);
 
         console.log("");
-        console.log("vp4.height()");
-        console.log(vp4.height());
+        console.log("vp4.height");
+        console.log(vp4.height);
 
         console.log("");
         console.log("vp2.getBackGroundColorVP()");
         console.log(vp2.getBackgroundColorVP().toString());
 
         console.log("");
-        console.log("vp3.bgColorVP()");
-        console.log(vp3.bgColorVP().toString());
+        console.log("vp3.bgColorVP");
+        console.log(vp3.bgColorVP.toString());
 
         console.log("");
         console.log("vp3.setBackGroundColorVP(Color.Green");

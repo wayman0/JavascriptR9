@@ -1,12 +1,13 @@
 /**
- * An {@code Color} is a way of storing the red, green, blue, and gamma data
+ * An {@code Color} is a way of storing the red, green, blue, and alpha data
  * about a color object.  It is supposed to mimic Java's Color class.
  */
 
+//@ts-check
 export default class Color
 {
-    #rgb = new Array(4);
-    #float = false;
+    /**@type {number[]} #rgb the rgba array for this color*/#rgb = new Array(4);
+    /**@type {boolean}  #float whether the rgba array is int or float representation*/#float = false;
 
     static GAMMA = 1/2.2;
     
@@ -60,11 +61,11 @@ export default class Color
      * By default alpha is set to 255 and float is set to false.  
      * If the color is supposed to be an integer representation uses Math.round() on r, g, b 
      *  
-     * @param {@link Number} r the red value of the {@code Color} 
-     * @param {@link Number} g the green value of the {@code Color} 
-     * @param {@link Number} b the blue value of the {@code Color} 
-     * @param {@link Number} a the gamma value of the {@code Color} 
-     * @param {@link Boolean} float specifing whether the rgb values are integer or float.
+     * @param {number} r the red value of the {@code Color} 
+     * @param {number} g the green value of the {@code Color} 
+     * @param {number} b the blue value of the {@code Color} 
+     * @param {number} a the gamma value of the {@code Color} 
+     * @param {boolean} float specifing whether the rgb values are integer or float.
      */
     constructor(r = 0, g = 0, b = 0, a = 255, float = false)
     {
@@ -85,8 +86,6 @@ export default class Color
                 throw new Error("B Float data must be between 0 and 1 inclusive");
             if(!(a >=0 && a <= 1))
                 throw new Error("Alpha Float data must be between 0 and 1 inclusive" + a);
-            
-            
         }
         else
         {
@@ -109,8 +108,8 @@ export default class Color
     /**
      * Creates a new color using the rgb, alpha, and float data of the color passed
      * 
-     * @param {@code Color}  color the color whose data is to be used to create the new {@code Color}  
-     * @returns a new {@code Color} that is a copy of the color passed.
+     * @param {Color}  color the color whose data is to be used to create the new {@code Color}  
+     * @returns {Color} a new {@code Color} that is a copy of the color passed.
      */
     static buildColor(color)
     {
@@ -125,9 +124,9 @@ export default class Color
      * Insteads uses the passed alpha.  This function is supposed to create a 'stronger' or 'weaker' duplicate color.
      * NOTE: this function is NON MUTATING
      * 
-     * @param {@code Color} color the rgb values to be used in the color being created 
-     * @param {@link Number} alpha the alpha value for the color to be created 
-     * @returns {@code Color} the 'stronger' or 'weaker' duplicate color 
+     * @param {Color} color the rgb values to be used in the color being created 
+     * @param {number} alpha the alpha value for the color to be created 
+     * @returns {Color} the 'stronger' or 'weaker' duplicate color 
      */
     static buildAlpha(color, alpha)
     {
@@ -155,8 +154,8 @@ export default class Color
      * this function is NON MUTATING
      * NOTE: returns a float color with alpha of 1
      * 
-     * @param {@code Color} c1 the first color to be blended with  
-     * @param {@code Color} c2 the second color to be blended with
+     * @param {Color} c1 the first color to be blended with  
+     * @param {Color} c2 the second color to be blended with
      * @returns the new float representation of the blended colors with an alpha of 1
      */
     static blendColor(c1, c2)
@@ -172,10 +171,10 @@ export default class Color
      * this function is NON MUTATING
      * NOTE: returns a float color with alpha of 1
      * 
-     * @param {@code Color} c1 the first color to be blended with 
-     * @param {@code Color} c2 the second color to be blended with 
-     * @param {@link Number} c1Weight the weight of the first color, must be in the range [0, 1]
-     * @returns 
+     * @param {Color} c1 the first color to be blended with 
+     * @param {Color} c2 the second color to be blended with 
+     * @param {number} c1Weight the weight of the first color, must be in the range [0, 1]
+     * @returns {Color} the new float representation of the passed color
      */
     static blendColorWeight(c1, c2, c1Weight = .5)
     {
@@ -202,8 +201,8 @@ export default class Color
      * Creates a new {@code Color} that is the float representation of the passed color.
      * NOTE: this function is NON MUTATING.  If you want to mutate the color call {@code mutate2Float()}
      * 
-     * @param {@code Color} color the color whose data is to be used to create the new color
-     * @returns {@code Color} the new float representation of the color passed 
+     * @param {Color} color the color whose data is to be used to create the new color
+     * @returns {Color} the new float representation of the color passed 
      */
     static convert2Float(color)
     {
@@ -220,8 +219,8 @@ export default class Color
      * Creates a new {@code Color} that is the integer representation of the passed Color.
      * NOTE: this function is NON MUTATING.  If you want to mutate the color call {@code mutate2Int()}
      * 
-     * @param {@code Color} color the color whose data is to be used to make the new {@code Color}
-     * @returns {@code Color} the new int representation of the color passed.
+     * @param {Color} color the color whose data is to be used to make the new {@code Color}
+     * @returns {Color} the new int representation of the color passed.
      */
     static convert2Int(color)
     {
@@ -236,8 +235,8 @@ export default class Color
 
     /**
      * MUTATE the calling {@code Color} object to be the float representation of itself.
-     * 
-     * @returns {@code Color} the MUTATED calling color represented as a float.
+     * @param {Color} c the color to be mutated into a float
+     * @returns {Color} the MUTATED calling color represented as a float for method chaining
      */
     static mutate2Float(c)
     {
@@ -245,12 +244,15 @@ export default class Color
             throw new Error("c is not a color");
 
         if(c.isFloat() == false)
-            c = new Color(this.getRed() / 255, this.getGreen() / 255, this.getBlue() /255, this.getAlpha()/255, true);
+            c = new Color(c.getRed()/255, c.getGreen()/255, c.getBlue()/255, c.getAlpha()/255, true);
+
+        return c;
     }
 
     /**
      * MUTATE the calling {@code Color} object to be the int representation of itself.
-     *
+     * @param {Color} c the color to be mutated
+     * @returns {Color} the mutated color for method chaining
      */
     static mutate2Int(c)
     {
@@ -259,6 +261,8 @@ export default class Color
 
         if(c.isFloat())
             c = new Color(c.getRed() * 255, c.getGreen() * 255, c.getBlue() * 255, c.getAlpha() * 255, false);
+        
+        return c;
     }
 
     getRed()
@@ -281,6 +285,10 @@ export default class Color
         return this.#rgb[3];
     }
 
+    /**
+     * Change the alpha value of this color
+     * @param {number} a the new alpha value for this color
+     */
     setAlpha(a)
     {
         if(this.isFloat())
@@ -300,16 +308,27 @@ export default class Color
         return this.#float;
     }
 
+    /**
+     * Get the r, g, b, and alpha values in an array
+     * @returns {number[]} the rgba array for this color
+     */
     getRGBComponents()
     {
         return this.#rgb;
     }
 
+    /**
+     * For debugging
+     * @returns {string} a string representation of this color
+     */
     toString()
     {
         return ("(r, g, b): (" + this.#rgb[0] + ", " + this.#rgb[1] + ", " + this.#rgb[2] + ")");
     }
 
+    /**
+     * for testing.
+     */
     static main()
     {
         console.log("Making color1 = new Color(0, 0, 0, 100)");
