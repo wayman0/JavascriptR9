@@ -14,6 +14,7 @@
    list of that {@link renderer.scene.Model} object.
 */
 
+//@ts-check
 import Primitive from "./Primitive.js";
 // import {Primitive} from "./PrimitiveImport.js"; doesnt work gives me an error
 
@@ -26,8 +27,8 @@ export default class LineSegment extends Primitive
      * {@link Primitive} {@link renderer.scene.Model} object. This constructor assumes that
      * the given indices are valid or will be by the time this {@link Primitive} is rendered.
      * 
-     * @param {@link Array} vIndList list of integer indexes to a {@link renderer.scene.Vertex} list
-     * @param {@link Array} cIndList list of integer indexes to a {@link renderer.color.Color} list
+     * @param {number[]} [vIndList=new Array(2)] list of integer indexes to a {@link renderer.scene.Vertex} list
+     * @param {number[]} [cIndList=new Array(2)] list of integer indexes to a {@link renderer.color.Color} list
      */
     constructor(vIndList = new Array(2), cIndList = new Array(2))
     {
@@ -45,8 +46,8 @@ export default class LineSegment extends Primitive
      * to access both the vertex and color list in the {@link renderer.scene.Model}
      * NOTE: uses 0 and 1 as the default indexes
      * 
-     * @param {@link Number} i0 the first endpoint index into the vertex and color list
-     * @param {@link Number} i1 the second endpoint index into the vertex and color list
+     * @param {number} i0 the first endpoint index into the vertex and color list
+     * @param {number} i1 the second endpoint index into the vertex and color list
      * @returns the new {@code LineSegment} created from the given data
      */
     static buildVertex(i0 = 0, i1 = 1)
@@ -59,9 +60,9 @@ export default class LineSegment extends Primitive
      * vertexes and the one index for the colors.
      * Note uses 0 and 1 as the default index for the vertexes and 0 for the color
      * 
-     * @param {@link Number} i0 the first endpoint index into the vertex list
-     * @param {@link Number} i1 the second endpoint index into the vertex list
-     * @param {@link Number} c the color index into the color list
+     * @param {number} i0 the first endpoint index into the vertex list
+     * @param {number} i1 the second endpoint index into the vertex list
+     * @param {number} c the color index into the color list
      * @returns a new {@code LineSegment} containing the given data.
      */
     static buildVertexColor(i0 = 0, i1 = 1, c = 0)
@@ -74,10 +75,10 @@ export default class LineSegment extends Primitive
      * vertexes and the 2 integer indexes for the colors
      * Note uses 0 and 1 as the default first and second indexes.
      * 
-     * @param {@link Number} i0 the first endpoint index into the vertex list
-     * @param {@link Number} i1 the second endpoint index into the vertex list
-     * @param {@link Number} c0 the first endopoint color index int the color list
-     * @param {@link Number} c1 the second endpoint color index into the color list
+     * @param {number} i0 the first endpoint index into the vertex list
+     * @param {number} i1 the second endpoint index into the vertex list
+     * @param {number} c0 the first endopoint color index int the color list
+     * @param {number} c1 the second endpoint color index into the color list
      * @returns a new {@code LineSegment} containing the given data.
      */
     static buildVertexColors(i0 = 0, i1 = 1, c0 = 0, c1 = 1)
@@ -88,7 +89,7 @@ export default class LineSegment extends Primitive
     /**
      * For debugging. 
      * 
-     * @returns a {@link String} representation of this {@code LineSegment}
+     * @returns {string} representation of this {@code LineSegment}
      */
     toString()
     {

@@ -13,12 +13,13 @@
    object.
 */
 
+//@ts-check
 import Primitive from "./Primitive.js";
 // import {Primitive} from "./PrimitiveImport.js"; doesnt work gives me an error
 
 export default class Point extends Primitive
 {
-    radius = 0;
+    /**@type {number} */ radius = 0;
 
     /**
      * Construct a {@code Point} object using an integer index.
@@ -34,9 +35,9 @@ export default class Point extends Primitive
       NOTE: uses the default value of 0 for the vertex index and
             uses the default value of the vertex index for the color index.
 
-     * @param {@link Number} vIndex index for the vertex to be used
-     * @param {@link Number} cIndex index for the color to be used
-     * @returns 
+     * @param {number} vIndex index for the vertex to be used
+     * @param {number} cIndex index for the color to be used
+     * @returns a new point with the specified vertex and color index
      */
     constructor(vIndex = 0, cIndex = vIndex)
     {
@@ -46,7 +47,7 @@ export default class Point extends Primitive
     /**
      * For Debugging.
      * 
-     * @returns the {@link String} representation of this {@code Point}
+     * @returns {string} representation of this {@code Point}
      */
     toString()
     {

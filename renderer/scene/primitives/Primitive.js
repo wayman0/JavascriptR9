@@ -37,10 +37,11 @@
          Color lists that the Primitive is indexing into.
 */
 
+//@ts-check
 export default class Primitive
 {
-    #vIndexList;
-    #cIndexList;
+    /**@type {number[]} the array of vertex indexes into the models vertex list for this primitive*/ #vIndexList;
+    /**@type {number[]} the array of color indexes into the models color listfor this primitive*/ #cIndexList;
 
     /**
      * Construct a {@code Primitive} using the two given {@link Array} of integer inexes
@@ -53,8 +54,8 @@ export default class Primitive
       <p>
       NOTE: uses the default values of empty arrays
 
-     * @param {@link Array} vIndList the list of integer indexes into the {@link renderer.scene.Vertex} list
-     * @param {@link Array} cIndList the list of integer indexes into the {@link renderer.color.Color} list
+     * @param {number[]} [vIndList=new Array()] the list of integer indexes into the {@link renderer.scene.Vertex} list
+     * @param {number[]} [cIndList=new Array()] the list of integer indexes into the {@link renderer.color.Color} list
      */
     constructor(vIndList = new Array(), cIndList = new Array())
     {
@@ -85,7 +86,7 @@ export default class Primitive
       the given indices are valid (or will be valid by the time this
       {@link Primitive} gets rendered).
 
-     * @param  {...@link Number} indices array of indexes into the vertex and color list to place in this {@code Primitve}
+     * @param  {...number} indices array of indexes into the vertex and color list to place in this {@code Primitve}
      * @returns a new {@code Primitive} created from the given indexes
      */
     static buildIndices(...indices)
@@ -102,12 +103,36 @@ export default class Primitive
         return thisP;
     }
 
+    /**
+     * Add the given array of indices to the {@link renderer.scene.Vertex}
+      and {@link java.awt.Color} index lists.
+      <p>
+      NOTE: This method does not put any {@link renderer.scene.Vertex}
+      or {@link java.awt.Color} objects into this {@link Primitive}'s
+      {@link renderer.scene.Model} object. This method assumes that
+      the given indices are valid (or will be valid by the time this
+      {@link Primitive} gets rendered).
+     * @param  {...any} indices array of vertex and color indexes to add to this primitive
+     */
     addIndex(... indices)
     {
         for(let i of indices)
             this.addIndices(i, i);
     }
 
+    /**
+     * Add the given indices to the {@link renderer.scene.Vertex} and
+      {@link java.awt.Color} index lists.
+      <p>
+      NOTE: This method does not put any {@link renderer.scene.Vertex}
+      or {@link java.awt.Color} objects into this {@link Primitive}'s
+      {@link renderer.scene.Model} object. This method assumes that
+      the given indices are valid (or will be valid by the time this
+      {@link Primitive} gets rendered).
+
+     * @param {number} vIndex the vertex index to be added
+     * @param {number} cIndex the color index to be added
+     */
     addIndices(vIndex = 0, cIndex = 0)
     {
         if(typeof vIndex != "number" || typeof cIndex != "number")
@@ -117,6 +142,15 @@ export default class Primitive
         this.#cIndexList[this.#cIndexList.length] = cIndex;
     }
 
+    /**
+     * Set the {@link java.awt.Color} index list to the given array of indices.
+      <p>
+      NOTE: This method does not put any {@link java.awt.Color} objects
+      into this {@link Primitive}'s {@link renderer.scene.Model} object.
+      This method assumes that the given indices are valid (or will be
+      valid by the time this {@link Primitive} gets rendered).
+     * @param  {...any} cIndices array of color indexes to be added
+     */
     setColorIndices(... cIndices)
     {
         if(this.#cIndexList.length != cIndices.length)
@@ -138,6 +172,17 @@ export default class Primitive
         this.#cIndexList.splice(origLength, this.#cIndexList.length);        
     }
 
+    /**
+     * Give this {@code Primitive} the uniform {@link java.awt.Color} indexed
+      by the given color index.
+      <p>
+      NOTE: This method does not put a {@link java.awt.Color} object
+      into this {@link Primitive}'s {@link renderer.scene.Model} object.
+      This method assumes that the given index is valid (or will be valid
+      by the time this {@link Primitive} gets rendered).
+
+     * @param {number} cIndex the color index
+     */
     setColorIndex(cIndex = 0)
     {
         if(typeof cIndex != "number")
@@ -152,12 +197,12 @@ export default class Primitive
         return this.#vIndexList;
     }
 
-    vIndexList = () => {return this.#vIndexList;}
+    get vIndexList() {return this.#vIndexList;}
 
     getColorIndexList()
     {
         return this.#cIndexList;
     }
 
-    cIndexList = () => {return this.#cIndexList;}
+    get cIndexList() {return this.#cIndexList;}
 }
