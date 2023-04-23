@@ -8,10 +8,22 @@
    Several static utility methods for checking
    and/or debugging a {@link Model}.
 */
+//@ts-check
 
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "../SceneImport.js";
 import {Primitive, Point, LineSegment} from "../primitives/PrimitiveImport.js";
 
+/**
+ *  Give this {@code Primitive} the uniform {@link java.awt.Color} indexed
+    by the given color index.
+    <p>
+    NOTE: This method does not put a {@link java.awt.Color} object
+    into this {@link Primitive}'s {@link renderer.scene.Model} object.
+    This method assumes that the given index is valid (or will be valid
+    by the time this {@link Primitive} gets rendered).
+
+ * @param {Model} model  the model to be checked
+ */
 export function check(model)
 {
     if(model instanceof Model == false)
@@ -34,16 +46,28 @@ export function check(model)
         console.log("***WARNING: This model does not have any colors.");
         error = true;
     }
+
     if(error)
-        console.log(model);
+        console.log(model.toString());
 }
 
+/**
+ *  Check each {@link Primitive} in the {@link Model} to make sure that
+    each index in the {@link Primitive}'s {@code vIndexList} refers to a
+    valid {@link Vertex} in the {@link Model}'s {@code vertexList} and
+    also that each index in the {@link Primitive}'s {@code cIndexList}
+    refers to a valid {@link java.awt.Color} in the {@link Model}'s
+    {@code colorList}
+
+ * @param {Model} model the model to be checked for consistent indexes
+ * @returns {boolean} true if no error, false if there is an error
+ */
 export function checkPrimitives(model)
 {
     if(model instanceof Model == false)
         throw new Error("Model must be a Model");
     const numberOfVertices = model.getVertexList().length;
-    result = true;
+    let result = true;
     
     for(let p of model.getPrimitiveList())
     {
@@ -57,10 +81,11 @@ export function checkPrimitives(model)
             }
         }
     }
+    
     const numberOfColors = model.getColorList().length;
-    for(p of model.getPrimitiveList())
+    for(let p of model.getPrimitiveList())
     {
-        for(i = 0; i < p.getColorIndexList().length; ++ i)
+        for(let i = 0; i < p.getColorIndexList().length; ++ i)
         {
             if(i >= numberOfColors)
             {

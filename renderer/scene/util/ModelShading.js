@@ -8,60 +8,103 @@
    This is a library of static methods that
    add color shading to a {@link Model}.
 */
+
+//@ts-check
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "../SceneImport.js";
 import Color from "../../color/Color.js";
+
+/**
+ * Set each vertex in the model to be the same color
+ * 
+ * @param {Model} model the model whose colors are to be changed
+ * @param {Color} color the color to set all the vertexes to be 
+ */
 
 export function setColor(model, color)
 {
     if(model instanceof Model == false)
         throw new Error("Model must be a Model");
+
     if(color instanceof Color == false)
         throw new Error("Color must be a Color");
+    
     if(model.getColorList().length == 0)
         for(let i = 0; i < model.getVertexList().length; i += 1)
-            model.addColor(c);
+            model.addColor(color);
     else
         for(let i = 0; i < model.getColorList().length; i += 1)
-            model.getColorList()[i] = c;
-}           
+            model.getColorList()[i] = color;
+}       
+
+/**
+ * Set each vertex in the model to be the same random color
+ * 
+ * @param {Model} model the model whose color is to be changed
+ */
 export function setRandomColor(model)
 {
     if(model instanceof Model == false)
         throw new Error("Model must be a Model");
+
     if(model.getColorList().length == 0)
         for(let i = 0; i < model.getVertexList().length; i += 1)
-            model.addColor(ModelShading.randomColor());
+            model.addColor(randomColor());
     else
         for(let i = 0; i < model.getColorList().length; i += 1)
-            model.getColorList()[i] = ModelShading.randomColor();
+            model.getColorList()[i] = randomColor();
 }
+
+/**
+ * Set each vertex to have a different random color
+ * NOTE this will destroy the color structure of the model
+ * 
+ * @param {Model} model the model whose colors are to be changed
+ */
 export function setRandomVertexColor(model)
 {
     if(model instanceof Model == false)
         throw new Error("Model must be a Model");
-    model.getColorList.length = 0;
+
+    model.getColorList().length = 0;
     for(let i = 0; i < model.getVertexList().length; i += 1)
-        model.addColor(ModelShading.randomColor());
+        model.addColor(randomColor());
+
     for(let p of model.getPrimitiveList())
     {
-        for(let i = 0; i < p.getVertexIndexList(); i += 1)
+        for(let i = 0; i < p.getVertexIndexList().length; i += 1)
             p.getColorIndexList()[i] = p.getVertexIndexList[i];
     }
 }
+
+/**
+ * Set each primitive to be a different random color
+ * NOTE: this will destroy the color structure of the model
+ * 
+ * @param {Model} model the model whose colors are to be changed 
+ */
 export function setRandomPrimitiveColor(model)
 {
     if(model instanceof Model == false)
         throw new Error("Model must be a model");
+
     model.getColorList().length = 0; 
     let cIndex = 0; 
     for(let p of model.getPrimitiveList())
     {
-        model.addColor(ModelShading.randomColor());
+        model.addColor(randomColor());
         for(let i = 0; i < p.getColorIndexList().length; i += 1)
             p.getColorIndexList()[i] = cIndex;
         ++cIndex;
     }
 }
+
+/**
+ * Set each primitive to be a random color, this creates a 
+ * 'rainbow primitive' effect
+ * NOTE: this will destory the color structure of the model
+ * 
+ * @param {Model} model the model whose colors are to be changed 
+ */
 export function setRainbowPrimitiveColors(model)
 {
     if(model instanceof Model == false)
@@ -73,18 +116,23 @@ export function setRainbowPrimitiveColors(model)
     {
         for (let i = 0; i < p.getColorIndexList().length; ++i)
         {
-            model.addColor(ModelShading.randomColor());
+            model.addColor(randomColor());
             p.getColorIndexList()[i] = cIndex;
             ++cIndex;
         }
     }
 }
 
+/**
+ * Create a random color by randomly generating a r, g, and b value
+ * @returns {Color} a random color
+ */
 export function randomColor()
 {
     let r = Math.random();
     let g = Math.random();
     let b = Math.random();
+    
     return new Color(r, g, b);
 }
 

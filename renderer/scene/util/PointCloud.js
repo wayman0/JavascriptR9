@@ -15,20 +15,38 @@ import Color from "../../color/Color.js";
                 https://en.wikipedia.org/wiki/Point_cloud</a>
 */
 
+/**
+ * Convert a model into a model made of only points
+ * 
+ * @param {Model} model 
+ * @param {number} [pointSize=0]  
+ * @returns {Model} the new model in the form of points
+ */
 export function make(model, pointSize = 0)
 {
     if(model instanceof Model == false)
         throw new Error("Model must be a model");
-    if(typeof pointSize != Number)
+
+    if(typeof pointSize != "number")
         throw new Error("Point Size must be a number");
-    pointCloud = new Model( new Array(model.getVertexList()),
+
+    //have to copy the models vertex list into new vertex list
+    let newVertexList = new Array();
+    for(let x = 0; x < model.getVertexList().length; x += 1)
+        newVertexList[x] = model.vertexList[x];
+
+    let newColorList = new Array()
+    for(let x = 0; x < model.getColorList().length; x += 1)
+        newColorList[x] = model.colorList[x];
+
+    let pointCloud = new Model(newVertexList,
                             new Array(), 
-                            new Array(model.getColorList()),
+                            newColorList,
                             "PointCloud: " + model.getName(),
                             model.visible);
                             
-    vIndices = new Array(model.getVertexList().length);
-    cIndices = new Array(model.getVertexList().length);
+    /**@type {boolean[]} */ let vIndices = new Array(model.getVertexList().length);
+    /**@type {number[]}  */ let cIndices = new Array(model.getVertexList().length);
     for(let p of model.getPrimitiveList())
     {
         for(let i = 0; i < p.getVertexIndexList().length; i += 1)
@@ -37,14 +55,18 @@ export function make(model, pointSize = 0)
             cIndices[p.getVertexIndexList()[i]] = p.getColorIndexList()[i];
         }
     }
+
     for(let i = 0; i < vIndices.length; i += 1)
     {
         if(vIndices[i])
-            pointCloud.addPrimitive(new PointCloud(i, cIndices[i]));
+            pointCloud.addPrimitive(new Point(i, cIndices[i]));
     }
+
     for(let p of pointCloud.getPrimitiveList())
     {
+        // @ts-ignore
         p.radius = pointSize;
     }
+
     return pointCloud; 
 }

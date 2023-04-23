@@ -73,6 +73,11 @@ import Color from "../color/Color.js";
 export default class Model
 {
     /**@type {Vertex[]} #vertexList the array of vertexes for this model */#vertexList;
+
+    // should the type of primitive list be made into
+    // @type{LineSegment[]|Point[]} 
+    // or would that be a problem if a model contains a combo of points and linesegments
+
     /**@type {Primitive[]} #primitiveList the array of primitives for this model */#primitiveList;
     /**@type {Color[]} #colorList the array of colors for this model */#colorList;
     /**@type {string} #name the name for this model */#name;
