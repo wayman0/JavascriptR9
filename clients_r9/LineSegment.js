@@ -2,28 +2,55 @@
 
 import {Scene, Matrix, Model, Position, Vertex} from "../renderer/scene/SceneImport.js";
 import {FrameBuffer, Viewport} from "../renderer/framebuffer/FramebufferImport.js";
-import {renderFB, setRastDebug} from "../renderer/pipeline/PipelineImport.js";
+import {renderFB, setRastDebug, setDoAntiAliasing} from "../renderer/pipeline/PipelineImport.js";
 import {LineSegment} from "../renderer/scene/primitives/PrimitiveImport.js";
 import Color from "../renderer/color/Color.js";
 
-let lsModel = Model.buildName("Line Segment Model");
-lsModel.addVertex(  new Vertex(-1, 0, 0), 
+let lsModelBlend = Model.buildName("Line Segment Model: Red to Blue");
+lsModelBlend.addVertex(  new Vertex(-1, 0, 0), 
                     new Vertex(1, 0, 0));
-lsModel.addColor(Color.red, Color.blue);
-lsModel.addPrimitive(LineSegment.buildVertexColors(0, 1, 0, 1));
+lsModelBlend.addColor(Color.red, Color.blue);
+lsModelBlend.addPrimitive(LineSegment.buildVertexColors(0, 1, 0, 1));
 
-let lsPosit = Position.buildFromModelName(lsModel, "Line Segment Position");
-lsPosit.setMatrix(Matrix.translate(0, 0, -5));
-lsPosit.debug = true;
+let lsPositBlend = Position.buildFromModelName(lsModelBlend, "Line Segment Blend Position");
+lsPositBlend.setMatrix(Matrix.translate(0, 0, -5));
+
+//add a second model because when first model gets drawn, 
+// it is only a black line instead of fading from red to blue
+// see if the problem is blending or just colors in general
+
+// the problem is colors in general.
+let lsModelRed = Model.buildName("Line Segment Model Red");
+lsModelRed.addVertex(   new Vertex(-1, -1, 0),
+                        new Vertex(1, -1, 0));
+lsModelRed.addColor(Color.Red);
+lsModelRed.addPrimitive(LineSegment.buildVertexColor(0, 1, 0));
+
+let lsPositRed = Position.buildFromModelName(lsModelRed, "Line Segment Red Position ")
+lsPositRed.setMatrix(Matrix.translate(0, 0, -5));
+
+let lsModelBlue = Model.buildName("Line Segment Model Blue");
+lsModelBlue .addVertex( new Vertex(-1, 1, 0),
+                        new Vertex(1, 1, 0));
+lsModelBlue.addColor(Color.Blue);
+lsModelBlue.addPrimitive(LineSegment.buildVertexColor(0, 1, 0));
+
+let lsPositBlue = Position.buildFromModelName(lsModelBlue, "Line Segment Blue Position ")
+lsPositBlue.setMatrix(Matrix.translate(0, 0, -5));
+
 
 let scene = Scene.buildFromName("Line Segment Scene");
-scene.addPosition(lsPosit);
-scene.debug = true;
+scene.addPosition(lsPositBlend);
+scene.addPosition(lsPositRed);
+scene.addPosition(lsPositBlue);
+
 
 let fb = new FrameBuffer(500, 500);
 
-setRastDebug(true);
+fb.vp.bgColorVP = Color.WHITE;
+fb.vp.clearVPDefault();
 
+// the rendered line is black instead of changing from red to blue;
 renderFB(scene, fb);
 fb.dumpFB2File("LineSegment.ppm");
 

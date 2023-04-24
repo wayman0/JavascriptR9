@@ -121,7 +121,6 @@ export function logPrimitive(stage, model, p)
  */
 export function logPixelMessage(clippedMessage, xpp, ypp, xvp, yvp, r, g, b, vp)
 {
-    console.log("Loggint pixel data from rasterizer");
     if(debugScene || debugPosition)
     {
         let wVP = vp.width;
