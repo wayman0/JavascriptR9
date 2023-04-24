@@ -15,15 +15,13 @@ import Color from "../color/Color.js";
 /**@type {boolean} whether to debug the scene */    export let debugScene = false;
 /**@type {boolean} whether to debug the position */ export let debugPosition = false;
 
-let debug = debugScene || debugPosition;
-
 /**
  * Use the debug info to determine whether to log info
  * @param {string} message the message to be recorded
  */
 export function logMessage(message)
 {
-    if(debug)
+    if(debugScene || debugPosition)
         console.log(message);
 }
 
@@ -34,7 +32,7 @@ export function logMessage(message)
  */
 export function logVertexList(stage, model)
 {
-    if(debug)
+    if(debugScene || debugPosition)
     {
         let i = 0; 
         for(const v of model.vertexList)
@@ -52,7 +50,7 @@ export function logVertexList(stage, model)
  */
 export function logColorList(stage, model)
 {
-    if(debug)
+    if(debugScene || debugPosition)
     {
         let i = 0; 
         for(const c of model.colorList)
@@ -70,7 +68,7 @@ export function logColorList(stage, model)
  */
 export function logPrimitiveList(stage, model)
 {
-    if(debug)
+    if(debugScene || debugPosition)
     {
         if(model.primitiveList.length == 0)
             console.log(stage + ": []\n");
@@ -90,7 +88,7 @@ export function logPrimitiveList(stage, model)
  */
 export function logPrimitive(stage, model, p)
 {
-    if(debug)
+    if(debugScene || debugPosition)
     {
         console.log(stage + ": " + p.toString() + "/n");
 
@@ -123,7 +121,8 @@ export function logPrimitive(stage, model, p)
  */
 export function logPixelMessage(clippedMessage, xpp, ypp, xvp, yvp, r, g, b, vp)
 {
-    if(debug)
+    console.log("Loggint pixel data from rasterizer");
+    if(debugScene || debugPosition)
     {
         let wVP = vp.width;
         let hVP = vp.height;
@@ -175,7 +174,7 @@ export function logPixel(xpp, ypp, xvp, yvp, r, g, b, vp)
    */
 export function logPixelsYAA(xpp, ypp, xvp, y1vp, y2vp, r1, g1, b1, r2, g2, b2, vp)
 {
-    if(debug)
+    if(debugScene || debugPosition)
     {
         const wVP = vp.width;
         const hVP = vp.height;
@@ -209,7 +208,7 @@ export function logPixelsYAA(xpp, ypp, xvp, y1vp, y2vp, r1, g1, b1, r2, g2, b2, 
    */
 export function logPixelsXAA(xpp, ypp, x1vp, x2vp, yvp, r1, g1, b1, r2, g2, b2, vp)
 {
-    if(debug)
+    if(debugScene || debugPosition)
     {
         const wVP = vp.width;
         const hVP = vp.height;

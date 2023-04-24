@@ -71,10 +71,10 @@ export default function rasterize(model, ls, vp)
     {
         //Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
         //Left side of comma operator is unused and has no side effects.ts(2695)
+        ////@ts-ignore
+        logMessage("(x0_pp, y0_pp) = (" + x0 + ", " + y0 + ")");
         //@ts-ignore
-        logMessage(("(x0_pp, y0_pp) = (%9.4f, %9.4f)", x0,y0));
-        //@ts-ignore
-        logMessage(("(x1_pp, y1_pp) = (%9.4f, %9.4f)", x1,y1));
+        logMessage(("(x1_pp, y1_pp) = (%9.4f, %9.4f)", x1, y1));
     }
 
     x0 = Math.round(x0), x1 = Math.round(x1);
@@ -142,11 +142,7 @@ export default function rasterize(model, ls, vp)
         logMessage("Slope mRed = " + slopeR);
         logMessage("Slope mGrn = " + slopeG);
         logMessage("Slope mBlu = " + slopeB);
-
-        //Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
-        //Left side of comma operator is unused and has no side effects.ts(2695)
-        //@ts-ignore
-        logMessage(("(x0_vp, y0_vp) = (%9.4f, %9.4f)", x0-1,h-y0));
+        logMessage("(x0_vp, y0_vp) = (" + (x0-1).toString() + ", " + (h-y0).toString() + ")");
         //@ts-ignore
         logMessage(("(x1_vp, y1_vp) = (%9.4f, %9.4f)", x1-1,h-y1));
     }
