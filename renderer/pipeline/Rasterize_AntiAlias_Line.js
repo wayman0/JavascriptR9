@@ -1,35 +1,79 @@
+/*
+ * Renderer 9. The MIT License.
+ * Copyright (c) 2022 rlkraft@pnw.edu
+ * See LICENSE for details.
+*/
+
+/**
+   Rasterize a clipped {@link LineSegment} into shaded pixels
+   in a {@link FrameBuffer}'s viewport and (optionally)
+   anti-alias and gamma-encode the line at the same time.
+<p>
+   This pipeline stage takes a clipped {@link LineSegment}
+   with vertices in the {@link Camera}'s view rectangle and
+   rasterizezs the line segment into shaded, anti-aliased
+   pixels in a {@link FrameBuffer}'s viewport. This rasterizer
+   will linearly interpolate color from the line segment's two
+   endpoints to each rasterized (and anti-aliased) pixel in
+   the line segment.
+<p>
+   This rasterization algorithm is based on
+<pre>
+     "Fundamentals of Computer Graphics", 3rd Edition,
+      by Peter Shirley, pages 163-165.
+</pre>
+<p>
+   This rasterizer implements a simple version of Xiaolin_Wu's
+   anti-aliasing algorithm. See
+     <a href="https://en.wikipedia.org/wiki/Xiaolin_Wu's_line_algorithm" target="_top">
+              https://en.wikipedia.org/wiki/Xiaolin_Wu's_line_algorithm</a>
+*/
+
+//@ts-check
 import {rastDebug, doAntiAliasing, doGamma, logMessage, logPixel, logPixelsXAA, logPixelsYAA} from "./PipelineImport.js";
 import {Model, LineSegment} from "../scene/SceneImport.js";
 import {Viewport} from "../framebuffer/FramebufferImport.js";
 import Color from "../color/Color.js";
 
+/**
+ *  Rasterize a clipped {@link LineSegment} into anti-aliased, shaded pixels
+    in the {@link FrameBuffer.Viewport}.
+
+ * @param {Model} model the model containing the linesegment
+ * @param {LineSegment} ls the linesegment to be rasterized
+ * @param {Viewport} vp the viewport to set the pixels in
+ */
 export default function rasterize(model, ls, vp)
 {
-    const bg = Color.convert2Float(vp.bgColorVP());
+    const bg = Color.convert2Float(vp.bgColorVP);
   //const bg = vp.bgColorVP();//.convert2Float();
-    const w = vp.width();
-    const h = vp.height();
+    const w = vp.width;
+    const h = vp.height;
 
-    const vIndex0 = ls.vIndexList()[0];
-    const vIndex1 = ls.vIndexList()[1];
-    const v0 = model.vertexList()[vIndex0];
-    const v1 = model.vertexList()[vIndex1];
+    const vIndex0 = ls.vIndexList[0];
+    const vIndex1 = ls.vIndexList[1];
+    const v0 = model.vertexList[vIndex0];
+    const v1 = model.vertexList[vIndex1];
 
-    const cIndex0 = ls.cIndexList()[0];
-    const cIndex1 = ls.cIndexList()[1];
-  //const c0 = model.colorList()[cIndex0].convert2Float().getRGBComponents();
-  //const c1 = model.colorList()[cIndex1].convert2Float().getRGBComponents();
-    const c0 = Color.convert2Float(model.colorList()[cIndex0]).getRGBComponents();
-    const c1 = Color.convert2Float(model.colorList()[cIndex1]).getRGBComponents();
+    const cIndex0 = ls.cIndexList[0];
+    const cIndex1 = ls.cIndexList[1];
+  //const c0 = model.colorList[cIndex0].convert2Float.getRGBComponents;
+  //const c1 = model.colorList[cIndex1].convert2Float.getRGBComponents;
+    const c0 = Color.convert2Float(model.colorList[cIndex0]).getRGBComponents();
+    const c1 = Color.convert2Float(model.colorList[cIndex1]).getRGBComponents();
     let r0 = c0[0], g0 = c0[1], b0 = c0[2];
     let r1 = c1[0], g1 = c1[1], b1 = c1[2];
 
-    let x0 = .5 + w/2.001 * (v0.x() + 1), x1 = .5 + w/2.001 * (v1.x() + 1);
-    let y0 = .5 + h/2.001 * (v0.y() + 1), y1 = .5 + h/2.001 * (v1.y() + 1);
+    let x0 = .5 + w/2.001 * (v0.x + 1), x1 = .5 + w/2.001 * (v1.x + 1);
+    let y0 = .5 + h/2.001 * (v0.y + 1), y1 = .5 + h/2.001 * (v1.y + 1);
     
     if(rastDebug)
     {
+        //Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+        //Left side of comma operator is unused and has no side effects.ts(2695)
+        //@ts-ignore
         logMessage(("(x0_pp, y0_pp) = (%9.4f, %9.4f)", x0,y0));
+        //@ts-ignore
         logMessage(("(x1_pp, y1_pp) = (%9.4f, %9.4f)", x1,y1));
     }
 
@@ -44,7 +88,7 @@ export default function rasterize(model, ls, vp)
         if(rastDebug)
             logPixel(x0, y0, x0VP, y0VP, r0, g0, b0, vp);
 
-        vp.setPixelVP(x0VP, y0VP, new Color(r0, g0, b0, 255, model.colorList()[cIndex0].isFloat()));
+        vp.setPixelVP(x0VP, y0VP, new Color(r0, g0, b0, 255, model.colorList[cIndex0].isFloat()));
 
         return;
     }
@@ -98,7 +142,12 @@ export default function rasterize(model, ls, vp)
         logMessage("Slope mRed = " + slopeR);
         logMessage("Slope mGrn = " + slopeG);
         logMessage("Slope mBlu = " + slopeB);
+
+        //Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
+        //Left side of comma operator is unused and has no side effects.ts(2695)
+        //@ts-ignore
         logMessage(("(x0_vp, y0_vp) = (%9.4f, %9.4f)", x0-1,h-y0));
+        //@ts-ignore
         logMessage(("(x1_vp, y1_vp) = (%9.4f, %9.4f)", x1-1,h-y1));
     }
 
@@ -121,9 +170,9 @@ export default function rasterize(model, ls, vp)
 
             const weight = (y - yLow);
 
-            let rL = (1-wieght) * r + weight * (bg.getRed());
-            let gL = (1-wieght) * g + weight * (bg.getGreen());
-            let bL = (1-wieght) * b + weight * (bg.getBlue());
+            let rL = (1-weight) * r + weight * (bg.getRed());
+            let gL = (1-weight) * g + weight * (bg.getGreen());
+            let bL = (1-weight) * b + weight * (bg.getBlue());
 
             let rH = weight * r + (1-weight) * (bg.getRed());
             let gH = weight * g + (1-weight) * (bg.getGreen());
