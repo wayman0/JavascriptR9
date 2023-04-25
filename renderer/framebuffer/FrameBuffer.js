@@ -446,10 +446,12 @@ export default class FrameBuffer
             for (let x = upperLeftX; x < lowerRightX; x += 1) 
             {
                 const index = y * this.getWidthFB() + x;
+                // have to make sure all pixels are int representation before writing to ppm
+                const pixColorInt = Color.convert2Int(this.#pixelBuffer[index]);
 
-                tempPB[tempIndex+0] = this.#pixelBuffer[index].getRed();
-                tempPB[tempIndex+1] = this.#pixelBuffer[index].getGreen();
-                tempPB[tempIndex+2] = this.#pixelBuffer[index].getBlue();
+                tempPB[tempIndex+0] = pixColorInt.getRed();
+                tempPB[tempIndex+1] = pixColorInt.getGreen();
+                tempPB[tempIndex+2] = pixColorInt.getBlue();
                 tempIndex+=3;
             }
         }
