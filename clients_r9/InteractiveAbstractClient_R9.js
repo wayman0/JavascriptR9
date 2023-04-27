@@ -200,7 +200,7 @@ export function setTransformations(c)
 
     const modelP = scene.getPosition(currentModel);
 
-    modelP.matrix2Identit().mult(Matrix.translate(0, 0, pushbakc))
+    modelP.matrix2Identity().mult(Matrix.translate(0, 0, pushback))
                            .mult(Matrix.translate(xTranslation, yTranslation, zTranslation))
                            .mult(Matrix.rotateX(xRotation))
                            .mult(Matrix.rotateY(yRotation))

@@ -59,10 +59,9 @@ export function clip(model)
 
         let pClipped = undefined;
         if(p instanceof LineSegment)
-            pClipped = LineClip(model2, p);
+            pClipped = LineClip(model2, /**@type {LineSegment}*/ (p));
         else
-            //@ts-ignore
-            pClipped = PointClip(model2, p);
+            pClipped = PointClip(model2, /**@type {Point}*/ (p));
 
         if(pClipped != undefined)
         {

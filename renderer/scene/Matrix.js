@@ -24,6 +24,7 @@ import {Camera, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} fr
 
 export default class Matrix
 {
+   
    /** @type {Vector} v1 the first column vector of this matrix*/ v1;
    /** @type {Vector} v2 the second column vector of this matrix*/ v2;
    /** @type {Vector} v3 the third column vector of this matrix*/ v3;

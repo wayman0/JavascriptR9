@@ -109,9 +109,7 @@ function interpolateNewVertex(model, ls, n)
     const c1 = model.colorList[cInd1].getRGBComponents();
 
     const t = (n-v1z)/(v0z-v1z);
-    console.log("N: " + n);
-    console.log("t: " + t);
-    
+
     const x = (1-t) * v1x + t * v0x;
     const y = (1-t) * v1y + t * v0y;
     const z = n;
@@ -127,13 +125,13 @@ function interpolateNewVertex(model, ls, n)
     const r = (1-t_) * c1[0] + t_ * c0[0];
     const g = (1-t_) * c1[1] + t_ * c0[1];
     const b = (1-t_) * c1[2] + t_ * c0[2];
-    
-    console.log(x + " " + y + " " + z );
+
     const newVertex = new Vertex(x, y, z);
     const vIndexNew = model.vertexList.length;
     model.vertexList.push(newVertex);
 
-    const newColor = new Color(r, g, b);
+    // have to do trunc otherwise can get 255.000000000001 which will give error
+    const newColor = new Color(Math.trunc(r), Math.trunc(g), Math.trunc(b));
     const cIndexNew = model.colorList.length;
     model.colorList.push(newColor);
 

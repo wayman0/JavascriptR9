@@ -77,12 +77,13 @@ export default function rasterize(model, pt, vp)
                     clippedMessage = CLIPPED;
 
                 logPixelMessage(clippedMessage, x, y, x_-1, h -y_, r, g, b, vp);
-
-                const isFloat = r <= 1 && g <= 1 && b <= 1;
-                if(x_ > 0 && x_ <= w && y_ > 0 && y_ <= h)
-                    // have to check if the color is in int or float representation
-                    vp.setPixelVP(x_-1, h-y_, new Color(r, g, b, isFloat? 1:255, isFloat));
             }
+            
+            const isFloat = r <= 1 && g <= 1 && b <= 1;
+            if(x_ > 0 && x_ <= w && y_ > 0 && y_ <= h)
+                // have to check if the color is in int or float representation
+                vp.setPixelVP(x_-1, h-y_, new Color(r, g, b, isFloat? 1:255, isFloat));
+            
         }
     }
 }

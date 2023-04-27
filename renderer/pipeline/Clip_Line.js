@@ -408,9 +408,8 @@ function clipOneTime(model, ls)
     let g = (1-t_) * cO[1] + t_ * cI[1];
     let b = (1-t_) * cO[2] + t_ * cI[2];
 
-    console.log("r: " + r + "g: " + g + "b: " + b);
-
-    let newColor = new Color(r, g, b);
+    // have to truncate otherwise can get 255.0000000001
+    let newColor = new Color(Math.trunc(r), Math.trunc(g), Math.trunc(b));
     let cIndexNew = model.colorList.length;
     model.addColor(newColor);
         

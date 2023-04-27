@@ -65,8 +65,7 @@ export function clip(model, camera)
         if(p instanceof LineSegment)
             pClipped = NearLine(model2, p, camera);
         else
-            // @ts-ignore
-            pClipped = NearPoint(model2, p, camera);
+            pClipped = NearPoint(model2, /**@type{Point}*/(p), camera);
 
         if(pClipped != undefined)
         {

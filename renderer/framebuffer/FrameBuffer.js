@@ -435,9 +435,10 @@ export default class FrameBuffer
         // uses synchronous API to avoid file corruption
         import('node:fs').then(fs => 
         {
-            // @ts-ignore
-            fs.writeFileSync(filename, "P6\n" + pWidth + " " + pHeight + "\n" + 255 + "\n", err => {if (err) throw err;});
+            //@ts-ignore
+            fs.writeFileSync(filename, "P6\n" + pWidth + " " + pHeight + "\n" + 255 + "\n", (err) => {if (err) throw err;});
         });
+
 
         let tempPB = new Uint8ClampedArray(pWidth * pHeight * 3);
         let tempIndex = 0;
