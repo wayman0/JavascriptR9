@@ -79,20 +79,83 @@ let arm1ShoulderMod = Model.buildName("Arm 1: Shoulder");
 buildArmSegment(arm1ShoulderMod, new Color(0, Math.trunc(0/3 * 255), Math.trunc(3/3 * 255)));
 let arm1ShoulderPos = Position.buildFromModelName(arm1ShoulderMod, "Arm 1 Shoulder Position");
 arm1ShoulderPos.addNestedPosition(arm1Elbow1Pos, arm1Elbow2Pos);
-arm1ShoulderPos.setMatrix(Matrix.translate(0, -.5, -1)
+arm1ShoulderPos.setMatrix(Matrix.translate(-.5, -.5, -1)
                                 .mult(Matrix.scaleXYZ(shoulderLength, shoulderLength, 1)));
 
+                        
+// build the second arm
+// build the finger structure                                
+let arm2Finger1Mod = Model.buildName("Arm 1: Finger 1");
+buildArmSegment(arm2Finger1Mod,  new Color(Math.trunc(3/3 * 255), Math.trunc(0/3 * 255), 0));
+let arm2Finger1Pos = Position.buildFromModelName(arm2Finger1Mod, "Arm 1 Finger 1 Position");
+arm2Finger1Pos.setMatrix(Matrix.translate(0, 1, 0)
+                                .mult(Matrix.rotateZ(-15))
+                                .mult(Matrix.scaleXYZ(fingerLength / wristLength, fingerLength/wristLength, 1)));
+
+
+let arm2Finger2Mod = Model.buildName("Arm 1: Finger 2");
+buildArmSegment(arm2Finger2Mod,  new Color(Math.trunc(3/3 * 255), Math.trunc(0/3 * 255), 0));
+let arm2Finger2Pos = Position.buildFromModelName(arm2Finger2Mod, "Arm 1 Finger 2 Position");
+arm2Finger2Pos.setMatrix(Matrix.translate(0, 1, 0)
+                                .mult(Matrix.rotateZ(15))
+                                .mult(Matrix.scaleXYZ(fingerLength / wristLength, fingerLength / wristLength, 1)));
+
+// build the wrist structure
+let arm2Wrist1Mod = Model.buildName("Arm 1: Wrist 1");
+buildArmSegment(arm2Wrist1Mod,   new Color(Math.trunc(2/3 * 255), Math.trunc(1/3 * 255), 0));
+let arm2Wrist1Pos = Position.buildFromModelName(arm2Wrist1Mod, "Arm 1 Wrist 1 Position");
+arm2Wrist1Pos.addNestedPosition(arm2Finger1Pos);
+arm2Wrist1Pos.setMatrix(Matrix.translate(0, 1, 0)
+                                .mult(Matrix.rotateZ(-15)
+                                .mult(Matrix.scaleXYZ(wristLength / elbowLength, wristLength / elbowLength, 1))));
+
+let arm2Wrist2Mod = Model.buildName("Arm 1: Wrist 2");
+buildArmSegment(arm2Wrist2Mod,   new Color(Math.trunc(2/3 * 255), Math.trunc(1/3 * 255), 0));
+let arm2Wrist2Pos = Position.buildFromModelName(arm2Wrist2Mod, "Arm 1 Wrist 2 Position");
+arm2Wrist2Pos.addNestedPosition(arm2Finger2Pos);
+arm2Wrist2Pos.setMatrix(Matrix.translate(0, 1, 0)
+                                .mult(Matrix.rotateZ(15)
+                                .mult(Matrix.scaleXYZ(wristLength / elbowLength, wristLength / elbowLength, 1))));
+
+
+// build the elbow structure
+let arm2Elbow1Mod = Model.buildName("Arm 1: Elbow 1");
+buildArmSegment(arm2Elbow1Mod,   new Color(Math.trunc(1/3 * 255), Math.trunc(2/3 * 255), 0));
+let arm2Elbow1Pos = Position.buildFromModelName(arm2Elbow1Mod, "Arm 1 Elbow 1 Position");
+arm2Elbow1Pos.addNestedPosition(arm2Wrist1Pos);
+arm2Elbow1Pos.setMatrix(Matrix.translate(0, 1, 0)
+                                .mult(Matrix.rotateZ(-15)
+                                .mult(Matrix.scaleXYZ(elbowLength / shoulderLength, elbowLength / shoulderLength, 1))));
+
+let arm2Elbow2Mod = Model.buildName("Arm 1: Elbow 2");
+buildArmSegment(arm2Elbow2Mod,   new Color(Math.trunc(1/3 * 255), Math.trunc(2/3 * 255), 0));
+let arm2Elbow2Pos = Position.buildFromModelName(arm2Elbow2Mod, "Arm 1 elbow 2 Position");
+arm2Elbow2Pos.addNestedPosition(arm2Wrist2Pos);
+arm2Elbow2Pos.setMatrix(Matrix.translate(0, 1, 0)
+                                .mult(Matrix.rotateZ(15)
+                                .mult(Matrix.scaleXYZ(elbowLength / shoulderLength, elbowLength / shoulderLength, 1))));
+
+// build the shoulder structure
+let arm2ShoulderMod = Model.buildName("Arm 1: Shoulder");
+buildArmSegment(arm2ShoulderMod, new Color(Math.trunc(0/3 * 255), Math.trunc(3/3 * 255), 0));
+let arm2ShoulderPos = Position.buildFromModelName(arm2ShoulderMod, "Arm 1 Shoulder Position");
+arm2ShoulderPos.addNestedPosition(arm2Elbow1Pos, arm2Elbow2Pos);
+arm2ShoulderPos.setMatrix(Matrix.translate(.5, -.5, -1)
+                                .mult(Matrix.scaleXYZ(shoulderLength, shoulderLength, 1)));
+                                
 let scene = new Scene();
-scene.addPosition(arm1ShoulderPos);
+scene.addPosition(arm1ShoulderPos, arm2ShoulderPos);
+
 
 let fb = new FrameBuffer(1000, 1000);
 
+setDoAntiAliasing(true);
 render(scene, fb.vp);
 fb.dumpFB2File("Robot Arm.ppm");
 
+/*
 // rotate just the shoulder position to 
 // demonstrate how nested positions works 
-/*
 for(let x = -45; x <= 45; x += 5)
 {
     fb.clearFBDefault();
@@ -103,7 +166,6 @@ for(let x = -45; x <= 45; x += 5)
     render(scene, fb.vp);
     fb.dumpFB2File("Robot Arm Rotate Shoulder " + x + ".ppm");
 }
-*/
 
 for(let x = -45; x <= 45; x += 5)
 {
@@ -120,30 +182,9 @@ for(let x = -45; x <= 45; x += 5)
               .mult(Matrix.scaleXYZ(elbowLength / shoulderLength, elbowLength / shoulderLength, 1)));
 
     render(scene, fb.vp);
-    fb.dumpFB2File("Robot Arm Rotate Elbow 1: " + x + " Rotate Elbow 2: " + -x + ".ppm");
+    fb.dumpFB2File("Robot Arm Rotate Elbow 1 " + x + " Rotate Elbow 2 " + -x + ".ppm");
 }
 
-/**
- * get error: 
- * node:fs:600
-  handleErrorFromBinding(ctx);
-  ^
-
-Error: ENOENT: no such file or directory, open 'Robot Arm Rotate Elbow 1: -45.ppm'
-←[90m    at Object.openSync (node:fs:600:3)←[39m
-←[90m    at Module.writeFileSync (node:fs:2221:35)←[39m
-    at file:///E:/JavaScript%20Renderer%209/JavascriptR9/renderer/framebuffer/FrameBuffer.js:438:16 {
-  errno: ←[33m-4058←[39m,
-  syscall: ←[32m'open'←[39m,
-  code: ←[32m'ENOENT'←[39m,
-  path: ←[32m'Robot Arm Rotate Elbow 1: -45.ppm'←[39m
-}
-
-Node.js v18.13.0
- */
-
-
-/*
 for(let x = -45; x <= 45; x += 5)
 {
     fb.clearFBDefault();
@@ -159,7 +200,24 @@ for(let x = -45; x <= 45; x += 5)
               .mult(Matrix.scaleXYZ(wristLength / elbowLength, wristLength / elbowLength, 1)));
 
     render(scene, fb.vp);
-    fb.dumpFB2File("Robot Arm Rotate Wrist 1: " + x + " Rotate Wrist 2: " + -x + ".ppm");
+    fb.dumpFB2File("Robot Arm Rotate Wrist 1 " + x + " Rotate Wrist 2 " + -x + ".ppm");
+}
+
+for(let x = -45; x <= 45; x += 5)
+{
+    fb.clearFBDefault();
+    arm1Finger1Pos.setMatrix(
+        Matrix.translate(0, 1, 0)
+              .mult(Matrix.rotateZ(x))
+              .mult(Matrix.scaleXYZ(fingerLength / wristLength, fingerLength / wristLength, 1)));
+
+    arm1Finger2Pos.setMatrix(
+      Matrix.translate(0, 1, 0)
+            .mult(Matrix.rotateZ(-x))
+            .mult(Matrix.scaleXYZ(fingerLength / wristLength, fingerLength / wristLength, 1)));
+
+    render(scene, fb.vp);
+    fb.dumpFB2File("Robot Arm Rotate Finger 1 " + x + " Rotate Finger 2 " + -x + ".ppm");
 }
 */
 

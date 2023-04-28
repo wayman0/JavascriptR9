@@ -4,6 +4,9 @@
     See LICENSE for details.
 */
 //@ts-check
+import {writeFileSync, appendFileSync, writeFile, appendFile} from "node:fs";
+import {Buffer} from "node:buffer";
+
 import {Viewport} from "./FramebufferImport.js";
 import Color from "../color/Color.js";
 
@@ -295,7 +298,7 @@ export default class FrameBuffer
             this.#pixelBuffer[index] = color;
     */
    
-            this.#pixelBuffer[index] = color;
+            this.#pixelBuffer[index] = Color.convert2Int(color);
     }
 
     /**
@@ -432,38 +435,39 @@ export default class FrameBuffer
         let pWidth  = lowerRightX - upperLeftX;
         let pHeight = lowerRightY - upperLeftY;
     
-        // uses synchronous API to avoid file corruption
-        import('node:fs').then(fs => 
-        {
-            //@ts-ignore
-            fs.writeFileSync(filename, "P6\n" + pWidth + " " + pHeight + "\n" + 255 + "\n", (err) => {if (err) throw err;});
-        });
+        const format = "P6\n" + pWidth + " " + pHeight + "\n" + 255 + "\n"
+        const colorData = new Uint8Array(pWidth * pHeight * 3);
 
-
-        let tempPB = new Uint8ClampedArray(pWidth * pHeight * 3);
-        let tempIndex = 0;
-        for (let y = upperLeftY; y < lowerRightY; y += 1) 
+        let index = 0;
+        for(let y = upperLeftY; y < lowerRightY; y += 1)
         {
-            for (let x = upperLeftX; x < lowerRightX; x += 1) 
+            for(let x = upperLeftX; x < lowerRightX; x += 1)
             {
-                const index = y * this.getWidthFB() + x;
-                // have to make sure all pixels are int representation before writing to ppm
-                const pixColorInt = Color.convert2Int(this.#pixelBuffer[index]);
+                const col = this.getPixelFB(x, y);
 
-                tempPB[tempIndex+0] = pixColorInt.getRed();
-                tempPB[tempIndex+1] = pixColorInt.getGreen();
-                tempPB[tempIndex+2] = pixColorInt.getBlue();
-                tempIndex+=3;
+                colorData[index+ 0] = col.getRed();
+                colorData[index+ 1] = col.getGreen();
+                colorData[index+ 2] = col.getBlue();        
+                index += 3;
             }
         }
 
-   
-        // uses synchronous API to avoid file corruption
-        import('node:fs').then(fs => 
-        {
-            // @ts-ignore
-            fs.appendFileSync(filename, Buffer.from(tempPB), err => {if (err) throw err;});
-        });
+        const fileData = new Uint8Array(Buffer.from(colorData))
+        
+        // creates a gray framebuffer
+        //const fileData = Buffer.from(format + colorData)
+        //writeFileSync(filename, fileData, "ascii");
+
+        // use synchronous to avoid file corruption
+        writeFileSync(filename, format, "ascii");
+        appendFileSync(filename, fileData, "ascii");
+
+        // if non synchronous is wanted use the lines below
+        //writeFile(filename, format, (err) => {if(err)throw err;});
+        //appendFile(filename, fileData, (err) => {if(err)throw err;});
+
+        
+
     }
 
     static main()
