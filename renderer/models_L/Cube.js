@@ -5,9 +5,9 @@ export default class Cube extends Model
 {
     constructor()
     {
-        const cube = Model.buildName("Cube");
+        super(undefined, undefined, undefined, "Cube");
 
-        cube.addVertex( new Vertex(-1, -1, -1), // 4 vertices around the bottom face
+        this.addVertex( new Vertex(-1, -1, -1), // 4 vertices around the bottom face
                         new Vertex( 1, -1, -1),
                         new Vertex( 1, -1,  1),
                         new Vertex(-1, -1,  1),
@@ -17,17 +17,17 @@ export default class Cube extends Model
                         new Vertex(-1,  1,  1));
 
       // Create 12 line segments.
-        cube.addPrimitive( new LineSegment(0, 1),  // bottom face
-                           new LineSegment(1, 2),
-                           new LineSegment(2, 3),
-                           new LineSegment(3, 0),
-                           new LineSegment(4, 5),  // top face
-                           new LineSegment(5, 6),
-                           new LineSegment(6, 7),
-                           new LineSegment(7, 4),
-                           new LineSegment(0, 4),  // back face
-                           new LineSegment(1, 5),
-                           new LineSegment(2, 6),  // front face
-                           new LineSegment(3, 7));
+        this.addPrimitive( LineSegment.buildVertex(0, 1),  // bottom face
+                           LineSegment.buildVertex(1, 2),
+                           LineSegment.buildVertex(2, 3),
+                           LineSegment.buildVertex(3, 0),
+                           LineSegment.buildVertex(4, 5),  // top face
+                           LineSegment.buildVertex(5, 6),
+                           LineSegment.buildVertex(6, 7),
+                           LineSegment.buildVertex(7, 4),
+                           LineSegment.buildVertex(0, 4),  // back face
+                           LineSegment.buildVertex(1, 5),
+                           LineSegment.buildVertex(2, 6),  // front face
+                           LineSegment.buildVertex(3, 7));
     }
 }

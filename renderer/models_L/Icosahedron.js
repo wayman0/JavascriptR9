@@ -5,12 +5,12 @@ export default class Icosahedron extends Model
 {
     constructor()
     {
-        const ico = Model.buildName("Icosahedron");
+        super(undefined, undefined, undefined, "Icosahedron");
 
         const t = (1 + Math.sqrt(5))/2;
         const r = 1/t;
 
-        ico.addVertex(  new Vertex(-r,  1,  0),
+        this.addVertex( new Vertex(-r,  1,  0),
                         new Vertex( r,  1,  0),
                         new Vertex(-r, -1,  0),
                         new Vertex( r, -1,  0),
@@ -23,7 +23,7 @@ export default class Icosahedron extends Model
                         new Vertex(-1,  0, -r),
                         new Vertex(-1,  0,  r));
 
-        ico.addPrimitive(LineSegment.buildVertex( 0,  1),
+        this.addPrimitive(LineSegment.buildVertex( 0,  1),
                          LineSegment.buildVertex( 0,  5),
                          LineSegment.buildVertex( 0,  7),
                          LineSegment.buildVertex( 0, 11),

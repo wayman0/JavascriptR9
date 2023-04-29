@@ -3,12 +3,14 @@ import Color from "../color/Color.js";
 
 export default class Disk extends Model
 {
-    r;
-    n;
-    k;
+    /**@type{number}*/r;
+    /**@type{number}*/n;
+    /**@type{number}*/k;
 
     constructor(r = 1, n = 6, k = 12)
     {
+        super(undefined, undefined, undefined, "Disk(" + r + ", " + n + ", " + k + ")");
+
         if(typeof r != "number" || typeof n != "number" || typeof k != "number")
             throw new Error("All parameters must be numerical");
 
@@ -20,12 +22,11 @@ export default class Disk extends Model
         this.r = r;
         this.n = n; 
         this.k = k;
-        const disk = Model.buildName("Disk(" + r + ", " + n + ", " + k + ")");
 
         const deltaR = r/n;
         const deltaT = 2 * Math.PI/k;
 
-        const vArr = new Array(new Array());
+        const v = new Array(new Array());
 
         for(let j = 0; j < k; j += 1)
         {
@@ -41,26 +42,26 @@ export default class Disk extends Model
 
         for(let j = 0; j < k; j += 1)
             for(let i = 0; i < k; i += 1)
-                disk.addVertex(v[i][j]);
+                this.addVertex(v[i][j]);
 
-        vArr[0][0] = new Vertex(0, 0, 0);
+        v[0][0] = new Vertex(0, 0, 0);
         const centIndex = n * k;
-        disk.addVertex(vArr[n][k])
+        this.addVertex(v[n][k])
 
         for(let j = 0; j < k; j += 1)
         {
-            disk.addPrimitive(LineSegment.buildVertex(centIndex, (0*k) + j));
+            this.addPrimitive(LineSegment.buildVertex(centIndex, (0*k) + j));
 
             for(let i = 0; i < n-1; i += 1)
-                disk.addPrimitive(LineSegment.buildVertex((i*k) + j, ((i+1)*k) + j));
+                this.addPrimitive(LineSegment.buildVertex((i*k) + j, ((i+1)*k) + j));
         }
 
         for(let i = 0; i < n; i += 1)
         {
             for(let j = 0; j < k-1; j += 1)
-                disk.addPrimitive(LineSegment.buildVertex((i * k) + j, (i * k) + (j + 1)))
+                this.addPrimitive(LineSegment.buildVertex((i * k) + j, (i * k) + (j + 1)))
             
-            disk.addPrimitive(LineSegment.buildVertex((i * k) + (k-1), (i * k) + 0))
+            this.addPrimitive(LineSegment.buildVertex((i * k) + (k-1), (i * k) + 0))
         }
 
         
