@@ -38,7 +38,11 @@ export default class ConeFrustum extends Model
         const dTheta = 2 * Math.PI / k;
 
         /**@type {number[][]} */
-        const vertInd = new Array(new Array());
+        //const vertInd = new Array(new Array());
+        const vertInd = new Array(n);
+        for(let x = 0; x < vertInd.length; x += 1)
+            vertInd[x] = new Array(k);
+        
         let index = 0; 
 
         for (let j = 0; j < k; ++j) // choose an angle of longitude

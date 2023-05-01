@@ -14,7 +14,10 @@ export default class PanelXZ extends Model
                 throw new Error("All parameters must be numerical");
 
         // An array of indexes to be used to create line segments.
-        const index = new Array(new Array());
+        //const index = new Array(new Array());
+        const index = new Array(xMax-xMin +1);
+        for(let x = 0; x < index.length; x += 1)
+            index[x] = new Array(zMax-zMin+1);
 
         // Create the checkerboard of vertices.
         let i = 0;

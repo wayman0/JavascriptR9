@@ -26,7 +26,11 @@ export default class Disk extends Model
         const deltaR = r/n;
         const deltaT = 2 * Math.PI/k;
 
-        const v = new Array(new Array());
+        /**@type {Vertex[][]} */
+        //const v = new Array(new Array());
+        const v = new Array(n);
+        for(let x = 0; x < v.length; x += 1)
+            v[x] = new Array(k);
 
         for(let j = 0; j < k; j += 1)
         {

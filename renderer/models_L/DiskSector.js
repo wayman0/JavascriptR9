@@ -36,7 +36,10 @@ export default class DiskSector extends Model
         const deltaTheta = (this.theta2 - this.theta1) / (k - 1);
           
         /**@type {Vertex[][]} */
-        const vertArr = new Array(new Array());
+        //const vertArr = new Array(new Array());
+        const vertArr = new Array(n)
+        for(let x = 0; x < vertArr.length; x += 1)
+            vertArr[x] =  new Array(k);
 
         for(let j = 0; j < k; ++j) // choose a spoke (an angle)
         {

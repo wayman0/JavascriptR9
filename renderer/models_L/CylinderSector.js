@@ -49,8 +49,11 @@ export default class CylinderSector extends Model
         const dTheta = (this.theta2 - this.theta1)/(this.k - 1);
 
         /**@type {Vertex[][]} */
-        const vertArr = new Array(new Array());
-
+        //const vertArr = new Array(new Array());
+        const vertArr = new Array(n);
+        for(let x = 0; x < vertArr.length; x += 1)
+            vertArr[x] = new Array(k);
+            
         // Create all the vertices.
         for (let j = 0; j < k; ++j) // choose an angle of longitude
         {

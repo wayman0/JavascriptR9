@@ -10,10 +10,10 @@ export default class Sphere extends Model
 
     constructor(r = 1, n = 15, k = 16)
     {
-        super(undefined, undefined, undefined, "Speher r = " + r);
-
-        if(typeof r != "number" || typeof n != "number" || typeof "k" != "number")
+        if(typeof r != "number" || typeof n != "number" || typeof k != "number")
             throw new Error("All parameters must be numerical");
+
+        super(undefined, undefined, undefined, "Speher r = " + r);        
 
         if(n < 1) throw new Error("n must be greater than 1");
         if(k < 3) throw new Error("k must be greater than 3");
@@ -25,8 +25,10 @@ export default class Sphere extends Model
         const deltaPhi = Math.PI / (n + 1);
         const deltaTheta = (2 * Math.PI) / k;
 
-      // An array of vertices to be used to create line segments.
-        const v = new Array(new Array());
+      // An array of vertices to be used to create line segment
+        const v = new Array(n);
+        for(let x = 0; x < v.length; x += 1)
+            v[x] = new Array(k);
 
       // Create all the vertices.
         for (let j = 0; j < k; ++j) // choose an angle of longitude
@@ -38,9 +40,7 @@ export default class Sphere extends Model
             {
                 const c2 = Math.cos(deltaPhi + i * deltaPhi);
                 const s2 = Math.sin(deltaPhi + i * deltaPhi);
-                v[i][j] = new Vertex( r * s2 * c1,
-                                      r * c2,
-                                      -r * s2 * s1 );
+                v[i][j] = new Vertex( r * s2 * c1, r * c2, -r * s2 * s1 );
             }
         }
 
