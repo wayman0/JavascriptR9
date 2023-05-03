@@ -16,6 +16,7 @@
 */
 
 // @ts-check
+import format from "../../StringFormat.js";
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vertex} from "./SceneImport.js";
 export default class Vector
 {
@@ -274,7 +275,10 @@ export default class Vector
     */
    toString()
    {
-        return "[x,y,z,w]=[" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + "]";      
+      // width = 3;
+      // precision = 5;
+      return format("[x, y, z, w] = [%3.5d, %3.5d, %3.5d, %3.5d]", this.x, this.y, this.z, this.w);
+      //  return "[x,y,z,w]=[" + this.x + ", " + this.y + ", " + this.z + ", " + this.w + "]";      
    }
 
    static main()

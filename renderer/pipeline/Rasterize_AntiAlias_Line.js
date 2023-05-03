@@ -34,6 +34,7 @@ import {rastDebug, doAntiAliasing, doGamma, logMessage, logPixel, logPixelsXAA, 
 import {Model, LineSegment} from "../scene/SceneImport.js";
 import {Viewport} from "../framebuffer/FramebufferImport.js";
 import Color from "../color/Color.js";
+import format from "../../StringFormat.js";
 
 /**
  *  Rasterize a clipped {@link LineSegment} into anti-aliased, shaded pixels
@@ -69,12 +70,8 @@ export default function rasterize(model, ls, vp)
     
     if(rastDebug)
     {
-        //Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
-        //Left side of comma operator is unused and has no side effects.ts(2695)
-        ////@ts-ignore
-        logMessage("(x0_pp, y0_pp) = (" + x0 + ", " + y0 + ")");
-        //@ts-ignore
-        logMessage(("(x1_pp, y1_pp) = (%9.4f, %9.4f)", x1, y1));
+        logMessage(format("(x0_pp, y0_pp) = (%9.4f, %9.4f)", x0, y0));
+        logMessage(format("(x1_pp, y1_pp) = (%9.4f, %9.4f)", x1, y1));
     }
 
     x0 = Math.round(x0), x1 = Math.round(x1);
@@ -142,9 +139,8 @@ export default function rasterize(model, ls, vp)
         logMessage("Slope mRed = " + slopeR);
         logMessage("Slope mGrn = " + slopeG);
         logMessage("Slope mBlu = " + slopeB);
-        logMessage("(x0_vp, y0_vp) = (" + (x0-1).toString() + ", " + (h-y0).toString() + ")");
-        //@ts-ignore
-        logMessage(("(x1_vp, y1_vp) = (%9.4f, %9.4f)", x1-1,h-y1));
+        logMessage(format("(x0_vp, y0_vp) = (%9.4f, %9.4f)", x0-1, h-y0));
+        logMessage(format("(x1_vp, y1_vp) = (%9.4f, %9.4f)", x1-1, h-y1));
     }
 
     let y = y0;

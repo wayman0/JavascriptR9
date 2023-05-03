@@ -16,6 +16,7 @@ import {rastDebug, doGamma, logMessage, logPixelMessage} from "./PipelineImport.
 import {Model, Point, LineSegment, Primitive} from "../scene/SceneImport.js";
 import {Viewport} from "../framebuffer/FramebufferImport.js";
 import Color from "../color/Color.js";
+import format from "../../StringFormat.js";
 
 /**
  * rasterize a point into shaded pixels in a viewport
@@ -53,10 +54,7 @@ export default function rasterize(model, pt, vp)
     let y = .5 + h/2.001 * (v.y + 1);
 
     if(rastDebug)
-        //Argument of type 'number' is not assignable to parameter of type 'string'.ts(2345)
-        //Left side of comma operator is unused and has no side effects.ts(2695)
-        //@ts-ignore
-        logMessage(("(x_pp, y_pp) = (%9.4f, %9.4f)", x, y));
+        logMessage(format("(x_pp, y_pp) = (%9.4f, %9.4f)", x, y));
 
     x = Math.round(x);
     y = Math.round(y);

@@ -66,6 +66,8 @@
 */
 
 //@ts-check
+import format from "../../StringFormat.js";
+
 export default class Camera
 {
     /**@type {number} left the left wall of the view volumne*/ left;
@@ -235,7 +237,7 @@ export default class Camera
                +  "  top = "    + this.top + "\n"
                +  "  near = "   + -1 * this.n + "\n"
                +  "  (fovy = " + fovy
-               +  ", aspect ratio = " + ratio + ")";
+               +  format(", aspect ratio = %.2f)", ratio );
       
         return result;
     }

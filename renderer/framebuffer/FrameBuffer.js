@@ -9,6 +9,7 @@ import {Buffer} from "node:buffer";
 
 import {Viewport} from "./FramebufferImport.js";
 import Color from "../color/Color.js";
+import format from "../../StringFormat.js";
 
 export default class FrameBuffer
 {
@@ -377,6 +378,26 @@ export default class FrameBuffer
    */
     toString() 
     {
+        let result = "FrameBuffer [w=" + this.width + ", h=" + this.height + "]\n";
+        for (let j = 0; j < this.width; ++j) 
+            result += " r   g   b |";
+    
+        result += "\n";
+        for(let i = 0; i < this.height; ++i) 
+        {
+            for (let j = 0; j < this.width; ++j) 
+            {
+                const c = this.#pixelBuffer[(i*this.width) + j];
+                const color = Color.buildColor(c);
+            
+                result += format("%3d ", color.getRed());
+                result += format("%3d ", color.getGreen());
+                result += format("%3d|", color.getBlue());
+            }
+            result += "\n";
+        }
+
+        /*
         let result = "FrameBuffer [w = " + this.getWidthFB() + ", h = " + this.getHeightFB() + "]\n";
         
         for(let y = 0; y < this.getHeightFB(); ++y) 
@@ -388,6 +409,7 @@ export default class FrameBuffer
             }
             result += "\n";
         }
+        */
         return result;
     } 
 

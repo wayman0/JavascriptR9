@@ -20,6 +20,7 @@
    scaling. A 4-by-4 matrix can also represent a projection transformation.
 */
 //@ts-check
+import format from "../../StringFormat.js";
 import {Camera, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
 
 export default class Matrix
@@ -448,10 +449,15 @@ export default class Matrix
    {
       let result = "";
 
-      result += "[[" + this.v1.x + " " + this.v2.x + " " + this.v3.x + " " + this.v4.x + "]\n";
-      result += " [" + this.v1.y + " " + this.v2.y + " " + this.v3.y + " " + this.v4.y + "]\n";
-      result += " [" + this.v1.z + " " + this.v2.z + " " + this.v3.z + " " + this.v4.z + "]\n";
-      result += " [" + this.v1.w + " " + this.v2.w + " " + this.v3.w + " " + this.v4.w + "]]\n";
+      result += format("[[%3.5f  %3.5f  %3.5f  %3.5f ]\n",  this.v1.x, this.v2.x, this.v3.x, this.v4.x);
+      result += format(" [%3.5f  %3.5f  %3.5f  %3.5f ]\n",  this.v1.y, this.v2.y, this.v3.y, this.v4.y);
+      result += format(" [%3.5f  %3.5f  %3.5f  %3.5f ]\n",  this.v1.z, this.v2.z, this.v3.z, this.v4.z);
+      result += format(" [%3.5f  %3.5f  %3.5f  %3.5f ]]",   this.v1.w, this.v2.w, this.v3.w, this.v4.w);
+
+      //result += "[[" + this.v1.x + " " + this.v2.x + " " + this.v3.x + " " + this.v4.x + "]\n";
+      //result += " [" + this.v1.y + " " + this.v2.y + " " + this.v3.y + " " + this.v4.y + "]\n";
+      //result += " [" + this.v1.z + " " + this.v2.z + " " + this.v3.z + " " + this.v4.z + "]\n";
+      //result += " [" + this.v1.w + " " + this.v2.w + " " + this.v3.w + " " + this.v4.w + "]]\n";
    
       return result;
    }

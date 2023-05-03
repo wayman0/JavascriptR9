@@ -201,6 +201,7 @@
 import {clipDebug, logMessage} from "./PipelineImport.js";
 import {Model, Vertex, LineSegment} from "../scene/SceneImport.js";
 import Color from "../color/Color.js";
+import format from "../../StringFormat.js";
 
 /**
  * If the {@link LineSegment} sticks out of the view rectangle,
@@ -421,6 +422,7 @@ function clipOneTime(model, ls)
         else
             vOut = "v1";
         
+        /*
         logMessage("--Clip off " + vOut + " at " + equation);
         logMessage("-- t = " + t);
         logMessage("-- <x_i, y_i> = <" + vIx + ", " + vIy + ">");
@@ -432,7 +434,28 @@ function clipOneTime(model, ls)
                                         cO[0] + ", " + cO[1] + ", " + cO[2] + ">");
         logMessage("-- <r_c, g_c, b_c> = <" + 
                                             r + ", " + g + ", " + b + ">");
+        */
 
+        logMessage(
+            format("-- Clip off %s at %s", vOut, equation));
+         logMessage(
+            format("-- t = %.25f", t));
+         logMessage(
+            format("-- <x_i, y_i> = <%.24f, %.24f>",  vIx, vIy));
+         logMessage(
+            format("-- <x_o, y_o> = <%.24f, %.24f>",  vOx, vOy));
+         logMessage(
+            format("-- <x_c, y_c> = <%.24f, %.24f>",    x,   y));
+         logMessage(
+            format("-- <r_i, g_i, b_i> = <%.15f,  %.15f,  %.15f>",
+                              cI[0], cI[1], cI[2]));
+         logMessage(
+            format("-- <r_o, g_o, b_o> = <%.15f,  %.15f,  %.15f>",
+                              cO[0], cO[1], cO[2]));
+         logMessage(
+            format("-- <r_c, g_c, b_c> = <%.15f,  %.15f,  %.15f>",
+                               r,   g,   b));
+        
     }
 
     let newLS = undefined;

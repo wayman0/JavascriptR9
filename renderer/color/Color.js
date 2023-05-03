@@ -4,6 +4,8 @@
  */
 
 //@ts-check
+import format from "../../StringFormat.js";
+
 export default class Color
 {
     /**@type {number[]} #rgb the rgba array for this color*/#rgb = new Array(4);
@@ -323,7 +325,10 @@ export default class Color
      */
     toString()
     {
-        return ("(r, g, b): (" + this.#rgb[0] + ", " + this.#rgb[1] + ", " + this.#rgb[2] + ")");
+        if(this.#float)
+            return (format("(r, g, b): (%0.5d, %0.5d, %0.5d)"));
+        else
+            return (format("(r, g, b): (%3d, %3d, %3d)", this.#rgb[0], this.#rgb[1], this.#rgb[2]));
     }
 
     /**

@@ -153,7 +153,7 @@ setDoAntiAliasing(true);
 render(scene, fb.vp);
 fb.dumpFB2File("Robot Arm.ppm");
 
-/*
+
 // rotate just the shoulder position to 
 // demonstrate how nested positions works 
 for(let x = -45; x <= 45; x += 5)
@@ -163,6 +163,12 @@ for(let x = -45; x <= 45; x += 5)
         Matrix.translate(0, -.5, -1)
               .mult(Matrix.rotateZ(x))
               .mult(Matrix.scaleXYZ(shoulderLength, shoulderLength, 1)));
+
+    arm2ShoulderPos.setMatrix(
+        Matrix.translate(0, .5, -1)
+                .mult(Matrix.rotateZ(x))
+                .mult(Matrix.scaleXYZ(shoulderLength, shoulderLength, 1)));
+    
     render(scene, fb.vp);
     fb.dumpFB2File("Robot Arm Rotate Shoulder " + x + ".ppm");
 }
@@ -219,7 +225,7 @@ for(let x = -45; x <= 45; x += 5)
     render(scene, fb.vp);
     fb.dumpFB2File("Robot Arm Rotate Finger 1 " + x + " Rotate Finger 2 " + -x + ".ppm");
 }
-*/
+
 
 
 

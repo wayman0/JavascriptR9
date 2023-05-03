@@ -4,7 +4,7 @@ import {Matrix, Position, Scene, Model, LineSegment, Primitive} from "../../rend
 import {FrameBuffer} from "../../renderer/framebuffer/FramebufferImport.js";
 import * as ModelShading from "../../renderer/scene/util/UtilImport.js";
 import Color from "../../renderer/color/Color.js";
-import {LineClip, renderFB} from "../../renderer/pipeline/PipelineImport.js";
+import {renderFB} from "../../renderer/pipeline/PipelineImport.js";
 import {Sphere} from "../../renderer/models_L/ModelsImport.js";
 
 const ecliptic = 23.5;
@@ -82,15 +82,16 @@ for(let x = 0; x <= 72; x += 1)
     moonPos.getMatrix().mult(Matrix.rotateY(10));
 
     renderFB(scene, fb);
-    fb.dumpFB2File("SolarSystem(AccumulateMatrix)Frame0" + x + ".ppm");
+    fb.dumpFB2File("SolarSystem--Frame0" + x + ".ppm");
 }
 
+/*
 for(let x = 0; x <= 72; x += 1)
 {
     fb.clearFBDefault();
     
-    // accumulate the rotations over time
-    // instead of resetting the matrixes
+    // reset the matrixes every frame
+    // instead of accumulating 
     sunPos.setMatrix(Matrix.translate(0, 0, -8).mult(Matrix.rotateX(ecliptic)).mult(Matrix.rotateY(5 * x)));
     planetPos.setMatrix(Matrix.translate(planetRad, 0, 0).mult(Matrix.rotateY(5 * x)));
     moonPos.setMatrix(Matrix.translate(moonRad, 0, 0).mult(Matrix.rotateY(10*x)));
@@ -98,7 +99,7 @@ for(let x = 0; x <= 72; x += 1)
     renderFB(scene, fb);
     fb.dumpFB2File("SolarSystem(ResetMatrix)-Frame0" + x + ".ppm");
 }
-
+*/
 
 
 

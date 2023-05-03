@@ -18,6 +18,7 @@
 import {nearDebug, logMessage} from "./PipelineImport.js";
 import {Model, Vertex, LineSegment, Camera} from "../scene/SceneImport.js";
 import Color from "../color/Color.js";
+import format from "../../StringFormat.js";
 
 /**
  * If the {@link LineSegment} crosses the camera's near plane,
@@ -146,25 +147,15 @@ function interpolateNewVertex(model, ls, n)
     {
         const vClipped = (0 == vNearIndex) ? "v0" : "v1";
 
-        //I get an error: Left side of comma operator is unused and has no side effects. ts 2695
-        // is this because I use %s and %.3f?
-
-        //@ts-ignore 
-        logMessage(("-- Clip off %s at z=%.3f", vClipped, n));
-        // @ts-ignore
-        logMessage(("-- t = %.25f", t));
-        // @ts-ignore
-        logMessage(("-- <x0, y0, z0> = <% .8f, % .8f, % .8f", v0x, v0y, v0z));
-        // @ts-ignore
-        logMessage(("-- <x1, y1, z1> = <% .8f, % .8f, % .8f", v1x, v1y, v1z));
-        // @ts-ignore
-        logMessage(("-- <x,  y,  z>  = <% .8f, % .8f, % .8f", x,   y,   z));
-        // @ts-ignore
-        logMessage(("-- <r0, g0, b0> = <%.8f, %.8f, %.8f>", c0[0], c0[1], c0[2]));
-        // @ts-ignore
-        logMessage(("-- <r1, g1, b1> = <%.8f, %.8f, %.8f>", c1[0], c1[1], c1[2]));
-        // @ts-ignore
-        logMessage(("-- <r,  g,  b>  = <%.8f, %.8f, %.8f>", r,  g,  b));
+        logMessage(format("-- Clip off %s at z=%.3f", vClipped, n));
+        logMessage(format("-- t = %.25f", t));
+        logMessage(format("-- <x0, y0, z0> = <%.8f, %.8f, %.8f", v0x, v0y, v0z));
+        logMessage(format("-- <x1, y1, z1> = <%.8f, %.8f, %.8f", v1x, v1y, v1z));
+        logMessage(format("-- <x,  y,  z>  = <%.8f, %.8f, %.8f", x,   y,   z));
+        logMessage(format("-- <r0, g0, b0> = <%.8f, %.8f, %.8f>", c0[0], c0[1], c0[2]));
+        logMessage(format("-- <r1, g1, b1> = <%.8f, %.8f, %.8f>", c1[0], c1[1], c1[2]));
+        logMessage(format("-- <r,  g,  b>  = <%.8f, %.8f, %.8f>", r,  g,  b));
+        
     }
     
     let result = undefined;

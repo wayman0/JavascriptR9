@@ -20,6 +20,7 @@
 //@ts-check
 import {FrameBuffer} from "./FramebufferImport.js";
 import Color from "../color/Color.js";
+import format from "../../StringFormat.js";
 
 export default class Viewport
 {
@@ -363,6 +364,25 @@ export default class Viewport
    */
     toString() 
     {
+        let result = "Viewport [w=" + this.width + ", h=" + this.height + "]\n";
+        for (let j = 0; j < this.width; ++j) 
+            result += " r   g   b |";
+    
+        result += "\n";
+        for(let i = 0; i < this.height; ++i) 
+        {
+            for (let j = 0; j < this.width; ++j) 
+            {
+                const c = this.getPixelVP(j, i);
+                const color = Color.buildColor(c);
+            
+                result += format("%3d ", color.getRed());
+                result += format("%3d ", color.getGreen());
+                result += format("%3d|", color.getBlue());
+            }
+            result += "\n";
+        }
+        /*
         let result = "Viewport [w = " + this.getWidthVP() + ", h = " + this.getHeightVP() + "]\n";
           
         for(let y = 0; y < this.getHeightVP(); ++y) 
@@ -374,6 +394,7 @@ export default class Viewport
             }
             result += "\n";
         }
+        */
         return result;
     } 
 

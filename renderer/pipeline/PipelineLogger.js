@@ -11,6 +11,7 @@
 import {Model, Vertex, Primitive, LineSegment, Point} from "../scene/SceneImport.js";
 import {Viewport} from "../framebuffer/FramebufferImport.js";
 import Color from "../color/Color.js";
+import format from "../../StringFormat.js";
 
 /**@type {boolean} whether to debug the scene */    export let debugScene = false;
 /**@type {boolean} whether to debug the position */ export let debugPosition = false;
@@ -131,8 +132,8 @@ export function logPixelMessage(clippedMessage, xpp, ypp, xvp, yvp, r, g, b, vp)
         let wFB = fb.width;
         let hFB = fb.height;
 
-        console.log("fb_[w=%d,h=%d] vp_[x=%4d, y=%4d, w=%d,h=%d]  (x_pp=%9.4f, y_pp=%9.4f)  (x_vp=%4d, y_vp=%4d)  r=%.4f g=%.4f b=%.4f",
-        wFB, hFB,      xVP,   yVP,   wVP, hVP,    xpp,       ypp,         xvp,     yvp,      r,     g,     b);
+        console.log(format("fb_[w=%d,h=%d] vp_[x=%4d, y=%4d, w=%d,h=%d]  (x_pp=%9.4f, y_pp=%9.4f)  (x_vp=%4d, y_vp=%4d)  r=%.4f g=%.4f b=%.4f",
+                    wFB, hFB,      xVP,   yVP,   wVP, hVP,    xpp,       ypp,         xvp,     yvp,      r,     g,     b));
         console.log(clippedMessage);
     }
 }
@@ -183,8 +184,8 @@ export function logPixelsYAA(xpp, ypp, xvp, y1vp, y2vp, r1, g1, b1, r2, g2, b2, 
         const wFB = fb.width;
         const hFB = fb.height;
 
-        console.log("fb_[w=%d,h=%d] vp_[x=%4d, y=%4d, w=%d,h=%d]  (x_pp=%4d, y_pp=%9.4f)  x_vp=%4d {y_low=%4d r=%.4f g=%.4f b=%.4f} {y_hi =%4d r=%.4f g=%.4f b=%.4f}\n",
-                     wFB, hFB,      xVP,   yVP,   wVP, hVP,    xpp,     ypp,        xvp,     y1vp,    r1,    g1,    b1,      y2vp,    r2,    g2,    b2);
+        console.log(format("fb_[w=%d,h=%d] vp_[x=%4d, y=%4d, w=%d,h=%d]  (x_pp=%4d, y_pp=%9.4f)  x_vp=%4d {y_low=%4d r=%.4f g=%.4f b=%.4f} {y_hi =%4d r=%.4f g=%.4f b=%.4f}\n",
+                     wFB, hFB,      xVP,   yVP,   wVP, hVP,    xpp,     ypp,        xvp,     y1vp,    r1,    g1,    b1,      y2vp,    r2,    g2,    b2));
     }
 }
 
@@ -217,8 +218,8 @@ export function logPixelsXAA(xpp, ypp, x1vp, x2vp, yvp, r1, g1, b1, r2, g2, b2, 
         const wFB = fb.width;
         const hFB = fb.height;
 
-        console.log("fb_[w=%d,h=%d] vp_[x=%4d, y=%4d, w=%d,h=%d]  (x_pp=%9.4f, y_pp=%4d)  y_vp=%4d {x_low=%4d r=%.4f g=%.4f b=%.4f} {x_hi =%4d r=%.4f g=%.4f b=%.4f}\n",
-                     wFB, hFB,      xVP,   yVP,   wVP, hVP,    xpp,       ypp,      yvp,     x1vp,    r1,    g1,    b1,      x2vp,    r2,    g2,    b2);
+        console.log(format("fb_[w=%d,h=%d] vp_[x=%4d, y=%4d, w=%d,h=%d]  (x_pp=%9.4f, y_pp=%4d)  y_vp=%4d {x_low=%4d r=%.4f g=%.4f b=%.4f} {x_hi =%4d r=%.4f g=%.4f b=%.4f}\n",
+                     wFB, hFB,      xVP,   yVP,   wVP, hVP,    xpp,       ypp,      yvp,     x1vp,    r1,    g1,    b1,      x2vp,    r2,    g2,    b2));
     }
 }
 

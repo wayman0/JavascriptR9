@@ -29,6 +29,7 @@
 
 // @ts-check
 import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector} from "./SceneImport.js";
+import format from "../../StringFormat.js";
 
 export default class Vertex
 {
@@ -117,7 +118,7 @@ export default class Vertex
     */
    toString()
    {
-        return "(x,y,z,w)=(" + this.#x + ", " + this.#y + ", " + this.#z + ", " + this.#w + ")";      
+        return format("(x, y, z, w) = (%3.5d, %3.5d, %3.5d, %3.5d)", this.#x, this.#y, this.#z, this.#w);
    }
 
    static main()
