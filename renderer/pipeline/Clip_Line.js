@@ -395,12 +395,15 @@ function clipOneTime(model, ls)
     let cI = model.colorList[cIndexI].getRGBComponents();
     let cO = model.colorList[cIndexO].getRGBComponents();
 
+    console.log(t);
     // since t is already a float we dont need to cast it
     let t_ = undefined;    
     if(t > 1)
         t_ = 1/t;
     else
         t_ = t;
+
+    console.log(t_);
 
     // this looks like blending code, 
     // can we just use a blend function in
@@ -410,6 +413,7 @@ function clipOneTime(model, ls)
     let b = (1-t_) * cO[2] + t_ * cI[2];
 
     // have to truncate otherwise can get 255.0000000001
+    console.log(r, g, b);
     let newColor = new Color(Math.trunc(r), Math.trunc(g), Math.trunc(b));
     let cIndexNew = model.colorList.length;
     model.addColor(newColor);

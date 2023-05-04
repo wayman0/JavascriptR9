@@ -14,7 +14,7 @@ export default class Tetrahedron extends Model
     n1;
     n2;
 
-    constructor(n1, n2)
+    constructor(n1 = 0, n2 = 0)
     {
         if(typeof n1 != "number" || typeof n2 != "number")
             throw new Error("All parameters must be numerical");

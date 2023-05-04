@@ -74,8 +74,13 @@ export default function rasterize(model, ls, vp)
         logMessage(format("(x1_pp, y1_pp) = (%9.4f, %9.4f)", x1, y1));
     }
 
-    x0 = Math.round(x0), x1 = Math.round(x1);
-    y0 = Math.round(y0), y1 = Math.round(y1);
+    //x0 = Math.round(x0), x1 = Math.round(x1);
+    //y0 = Math.round(y0), y1 = Math.round(y1);
+
+    x0 = Math.trunc(x0), x1 = Math.trunc(x1);
+    y0 = Math.trunc(y0), y1 = Math.trunc(y1);
+    
+    //console.log("(%d, %d), (%d, %d)", x0, y0, x1, y1);
 
     if( (x0 == x1) && (y0 == y1))
     {
@@ -223,20 +228,19 @@ export default function rasterize(model, ls, vp)
             const isFloat = r<= 1 && g<= 1 && b<= 1;
             if(!transposedLine)
             {
-                const xVP = x-1;
-                const yVP = h-Math.trunc(Math.round(y));
+                const xVP = x;
+                const yVP = h-Math.trunc(Math.round(y)) - 1;
                 
                 if(rastDebug)
                     logPixel(x, y, xVP, yVP, r, g, b, vp);
 
                 // have to check if the color is in int or float representation
-                
                 vp.setPixelVP(xVP, yVP, new Color(r, g, b, isFloat? 1:255, isFloat));
             }
             else
             {
-                const xVP = Math.trunc(Math.round(y)) -1;
-                const yVP = h-x;
+                const xVP = Math.trunc(Math.round(y));
+                const yVP = h-x - 1;
 
                 if(rastDebug)
                     logPixel(y, x, xVP, yVP, r, g, b, vp);
@@ -250,8 +254,8 @@ export default function rasterize(model, ls, vp)
     const isFloat = r1 <=1 && g1 <= 1 && b1 <= 1
     if(!transposedLine)
     {
-        const xVP = Math.trunc(x1) - 1;
-        const yVP = h - Math.trunc(y1);
+        const xVP = Math.trunc(x1);
+        const yVP = h - Math.trunc(y1) - 1;
 
         if(rastDebug)
             logPixel(x1, y1, xVP, yVP, r1, g1, b1, vp);
