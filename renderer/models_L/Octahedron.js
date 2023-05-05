@@ -81,6 +81,8 @@ export default class Octahedron extends Model
         octo.fan(n3a, 1, v0, v4, v2, v5); // fan out from v1
         octo.fan(n2b, 2, v1, v4, v3, v5); // fan out from v2
         octo.fan(n3b, 3, v2, v4, v0, v5); // fan out from v3
+
+        return octo;
     }
 
     /**

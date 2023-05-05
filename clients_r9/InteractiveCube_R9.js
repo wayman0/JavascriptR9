@@ -81,7 +81,7 @@ for(let r = -90; r <= 90; r += 5)
                             .mult(Matrix.rotateY(r))
                             .mult(Matrix.rotateZ(r)));
     renderFB(scene, fb);
-    fb.dumpFB2File("Cube--RotateXYZ(" + r + ").ppm");
+    fb.dumpFB2File("Cube--RotateAll(" + r + ").ppm");
 }
 
 

@@ -190,8 +190,8 @@ export default function rasterize(model, ls, vp)
             if(!transposedLine)
             {
                 const xVP = x-1;
-                const yVPLow = h-yLow;
-                const yVPHi = h-yHi;
+                const yVPLow = h-yLow - 1;
+                const yVPHi = h-yHi - 1;
 
                 if(rastDebug)
                     logPixelsYAA(x, y, xVP, yVPLow, yVPHi,
@@ -205,7 +205,7 @@ export default function rasterize(model, ls, vp)
             {
                 const xVPLow = yLow -1;
                 const xVPHi = yHi -1;
-                const yVP = h-x;
+                const yVP = h-x -1;
 
                 if(rastDebug)
                     logPixelsXAA(y, x, xVPLow, xVPHi, yVP, 
