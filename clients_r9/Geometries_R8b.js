@@ -8,7 +8,6 @@ import {renderFB, setDoAntiAliasing, setDoGamma, setRastDebug} from "../renderer
 import format from "../StringFormat.js";
 import Color from "../renderer/color/Color.js";
 import { FrameBuffer } from "../renderer/framebuffer/FramebufferImport.js";
-import model2view from "../renderer/pipeline/Model2View.js";
 
 // build the models, set the color, and create the positions
 const triangMod = new TriangularPrism(undefined, undefined, undefined, 30);
@@ -59,11 +58,6 @@ const xzPlaneMod = new PanelXZ(-7, 7, -7, 7);
 ModelShading.setColor(xzPlaneMod, new Color(200, 200, 200));
 const xzPlanePos = new Position(xzPlaneMod, Matrix.translate(0, -1, -10), "Floor Position");
 
-/*
-const xyPlaneMod = new PanelXY(-6, 6, -1, 10);
-ModelShading.setColor(xyPlaneMod, new Color(100, 100, 100));
-const xyPlanePos = new Position(xyPlaneMod, Matrix.translate(0, 0, -20), "Back Wall Position");
-*/
 
 // create the nested structure of the scene
 xzPlanePos.addNestedPosition(triangPos); // looks in wrong position?
@@ -78,7 +72,6 @@ xzPlanePos.addNestedPosition(spherePos);
 
 // create and set the viewvolume of the camera
 const cam = new Camera();
-//cam.projOrtho(-5, 5, -1, 10, 0);
 
 // add the camera and xzPlanes to the scene
 const scene = Scene.buildFromCameraName(cam, "Geometries R8 Scene");
@@ -88,15 +81,13 @@ scene.getPosition(0).getMatrix().mult(Matrix.rotateX(15));
 
 // create the framebuffer, render, and dump to file
 const fb = new FrameBuffer(1024, 1024, new Color(50, 50, 50));
-//setRastDebug(true);
 renderFB(scene, fb);
-fb.dumpFB2File("GeometriesR8b.ppm");
+fb.dumpFB2File("Geometries_R8b.ppm");
 
-for(let r = 0; r < 360; r += 10)
+for(let r = 0; r < 360; r += 1)
 {
     fb.clearFBDefault();
 
-    // rotate the xyPlane    
 /*
     xzPlanePos.getMatrix().mult(Matrix.rotateY(10));
     xzPlanePos.matrix2Identity().mult(Matrix.translate(0, -1, -10).mult(Matrix.rotateX(15)).mult(Matrix.rotateY(r)));
@@ -104,25 +95,33 @@ for(let r = 0; r < 360; r += 10)
                                 .mult(Matrix.rotateX(15))
                                 .mult(Matrix.rotateY(r)));
 
-    // but these do work!
     scene.getPosition(0).getMatrix().mult(Matrix.rotateY(10));
     scene.getPosition(0).matrix2Identity().mult(Matrix.translate(0, -1, -10).mult(Matrix.rotateX(15)).mult(Matrix.rotateY(r)));
 */
+    // rotate the xzPlane
     scene.getPosition(0).setMatrix(Matrix.translate(0, -1, -10)
                                             .mult(Matrix.rotateX(15)
                                             .mult(Matrix.rotateY(r))));
 
 
+    // get each nested position,
+    // translate where it is supposed to be,
+    // rotate on its own x and y axises
+
+    // don't have to push away from camera 
+    // or tilt on x axis because they 
+    // are nested positions so they are
+    // automatically pushed away and rotated
+    // fromthe xzPlane rotation above
     for(let x = 0; x < xzPlanePos.nestedPositions.length; x += 1)
     {
         const p = xzPlanePos.nestedPositions[x];
 
-        p.setMatrix(Matrix.translate(x%3 *3 - 3, 0, x%3 * -3 + 3)
+        p.setMatrix(Matrix.translate(x%3*3-3,  0, Math.trunc(x/3)*-3+3)
                             .mult(Matrix.rotateX(r))
-                            .mult(Matrix.rotateY(r))
-                            .mult(Matrix.translate((x * 3 -3), 0, x/3 * -3 + 3)));
+                            .mult(Matrix.rotateY(r)));
     }
     
     renderFB(scene, fb);
-    fb.dumpFB2File(format("Geometries_R8b_Frame%03d.ppm", r/10));
+    fb.dumpFB2File(format("Geometries_R8b_Frame%03d.ppm", r));
 }

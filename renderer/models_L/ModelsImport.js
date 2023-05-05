@@ -30,7 +30,17 @@ export {default as PyramidFrustum} from "./PyramidFrustum.js";
 export {default as Ring} from "./Ring.js";
 export {default as RingSector} from "./RingSector.js";
 
+export {default as SphereSector} from "./SphereSector.js";
+export {default as SphereSubdivided} from "./SphereSubdivided.js";
 export {default as Sphere} from "./Sphere.js";
 
+export {default as Square} from "./Square.js";
+export {default as SquareGrid} from "./SquareGrid.js";
+
 export {default as Tetrahedron} from "./Tetrahedron.js";
+export {default as TorusSector} from "./TorusSector.js";
+export {default as Torus} from "./Torus.js";
 export {default as TriangularPrism} from "./TriangularPrism.js";
+export {default as TriangularPyramid} from "./TriangularPyramid.js";
+
+export {default as ViewFrustum} from "./ViewFrustumModel.js";
