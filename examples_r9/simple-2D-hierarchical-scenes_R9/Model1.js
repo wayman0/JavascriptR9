@@ -1,6 +1,6 @@
 //@ts-check
 
-import {Model, Vertex, LineSegment} from "../../renderer/scene/SceneImport.js";
+import {Model, Vertex, LineSegment} from "../../renderer/scene/SceneExport.js";
 
 export default class Model1 extends Model
 {

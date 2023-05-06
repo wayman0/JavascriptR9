@@ -9,7 +9,7 @@
  */
 //@ts-check
 import {Model, Vertex, Primitive, LineSegment, Point} from "../scene/SceneExport.js";
-import {Viewport} from "../framebuffer/FramebufferImport.js";
+import {Viewport} from "../framebuffer/FramebufferExport.js";
 import Color from "../color/Color.js";
 import format from "../../StringFormat.js";
 

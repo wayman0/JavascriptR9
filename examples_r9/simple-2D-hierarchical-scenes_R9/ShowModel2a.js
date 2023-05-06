@@ -1,10 +1,10 @@
 // @ts-check
 
 import Model1 from "./Model1.js";
-import * as ModelShading from "../../renderer/scene/util/UtilImport.js";
-import {Position, Scene, Matrix} from "../../renderer/scene/SceneImport.js";
-import {FrameBuffer} from "../../renderer/framebuffer/FramebufferImport.js";
-import {renderFB} from "../../renderer/pipeline/PipelineImport.js";
+import * as ModelShading from "../../renderer/scene/util/UtilExport.js";
+import {Position, Scene, Matrix} from "../../renderer/scene/SceneExport.js";
+import {FrameBuffer} from "../../renderer/framebuffer/FramebufferExport.js";
+import {renderFB} from "../../renderer/pipeline/PipelineExport.js";
 import Color from "../../renderer/color/Color.js";
 
 

@@ -1,9 +1,9 @@
 //@ts-check
 
-import {Scene, Model, Position, Vertex, LineSegment} from "../renderer/scene/SceneImport.js";
-import {FrameBuffer, Viewport} from "../renderer/framebuffer/FramebufferImport.js";
+import {Scene, Model, Position, Vertex, LineSegment} from "../renderer/scene/SceneExport.js";
+import {FrameBuffer, Viewport} from "../renderer/framebuffer/FramebufferExport.js";
 import Color from "../renderer/color/Color.js";
-import {render, setClipDebug, setDoAntiAliasing, setDoGamma, setRastDebug} from "../renderer/pipeline/PipelineImport.js";
+import {render, setClipDebug, setDoAntiAliasing, setDoGamma, setRastDebug} from "../renderer/pipeline/PipelineExport.js";
 import { setRainbowPrimitiveColors } from "../renderer/scene/util/ModelShading.js";
 
 const scene = Scene.buildFromName("LinesInTwoViewports_R9");

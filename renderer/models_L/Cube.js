@@ -3,18 +3,18 @@ import Color from "../color/Color.js";
 
 export default class Cube extends Model
 {
-    constructor()
+    constructor(s = 1)
     {
         super(undefined, undefined, undefined, "Cube");
 
-        this.addVertex( new Vertex(-1, -1, -1), // 4 vertices around the bottom face
-                        new Vertex( 1, -1, -1),
-                        new Vertex( 1, -1,  1),
-                        new Vertex(-1, -1,  1),
-                        new Vertex(-1,  1, -1), // 4 vertices around the top face
-                        new Vertex( 1,  1, -1),
-                        new Vertex( 1,  1,  1),
-                        new Vertex(-1,  1,  1));
+        this.addVertex( new Vertex(-s, -s, -s), // 4 vertices around the bottom face
+                        new Vertex( s, -s, -s),
+                        new Vertex( s, -s,  s),
+                        new Vertex(-s, -s,  s),
+                        new Vertex(-s,  s, -s), // 4 vertices around the top face
+                        new Vertex( s,  s, -s),
+                        new Vertex( s,  s,  s),
+                        new Vertex(-s,  s,  s));
 
       // Create 12 line segments.
         this.addPrimitive( LineSegment.buildVertex(0, 1),  // bottom face

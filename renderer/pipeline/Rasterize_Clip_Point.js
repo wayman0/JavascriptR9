@@ -14,7 +14,7 @@
 //@ts-check
 import {rastDebug, doGamma, logMessage, logPixelMessage} from "./PipelineExport.js";
 import {Model, Point, LineSegment, Primitive} from "../scene/SceneExport.js";
-import {Viewport} from "../framebuffer/FramebufferImport.js";
+import {Viewport} from "../framebuffer/FramebufferExport.js";
 import Color from "../color/Color.js";
 import format from "../../StringFormat.js";
 

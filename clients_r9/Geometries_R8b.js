@@ -1,13 +1,13 @@
 //@ts-check
 
 import { TriangularPrism, Cylinder, ConeFrustum, Octahedron, Box, 
-    ParametricCurve, Cone, Tetrahedron, Sphere, Axes3D, PanelXZ, PanelXY} from "../renderer/models_L/ModelsImport.js";
-import {Scene, Position, Matrix, Camera} from "../renderer/scene/SceneImport.js";
-import * as ModelShading from "../renderer/scene/util/UtilImport.js";
-import {renderFB, setDoAntiAliasing, setDoGamma, setRastDebug} from "../renderer/pipeline/PipelineImport.js";
+    ParametricCurve, Cone, Tetrahedron, Sphere, Axes3D, PanelXZ, PanelXY} from "../renderer/models_L/ModelsExport.js";
+import {Scene, Position, Matrix, Camera} from "../renderer/scene/SceneExport.js";
+import * as ModelShading from "../renderer/scene/util/UtilExport.js";
+import {renderFB, setDoAntiAliasing, setDoGamma, setRastDebug} from "../renderer/pipeline/PipelineExport.js";
 import format from "../StringFormat.js";
 import Color from "../renderer/color/Color.js";
-import { FrameBuffer } from "../renderer/framebuffer/FramebufferImport.js";
+import { FrameBuffer } from "../renderer/framebuffer/FramebufferExport.js";
 
 // build the models, set the color, and create the positions
 const triangMod = new TriangularPrism(undefined, undefined, undefined, 30);

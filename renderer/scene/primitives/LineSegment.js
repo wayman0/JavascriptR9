@@ -16,7 +16,7 @@
 
 //@ts-check
 import Primitive from "./Primitive.js";
-// import {Primitive} from "./PrimitiveImport.js"; doesnt work gives me an error
+// import {Primitive} from "./PrimitiveExport.js"; doesnt work gives me an error
 
 export default class LineSegment extends Primitive
 {

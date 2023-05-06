@@ -6,11 +6,11 @@
 
 //@ts-check
 
-import { Octahedron, TriangularPyramid} from "../renderer/models_L/ModelsImport.js";
-import {Scene, Position, Matrix} from "../renderer/scene/SceneImport.js";
-import * as ModelShading from "../renderer/scene/util/UtilImport.js";
-import {renderFB} from "../renderer/pipeline/PipelineImport.js";
-import { FrameBuffer } from "../renderer/framebuffer/FramebufferImport.js";
+import { Octahedron, TriangularPyramid} from "../renderer/models_L/ModelsExport.js";
+import {Scene, Position, Matrix} from "../renderer/scene/SceneExport.js";
+import * as ModelShading from "../renderer/scene/util/UtilExport.js";
+import {renderFB} from "../renderer/pipeline/PipelineExport.js";
+import { FrameBuffer } from "../renderer/framebuffer/FramebufferExport.js";
 import Color from "../renderer/color/Color.js";
 import format from "../StringFormat.js";
 

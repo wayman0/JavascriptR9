@@ -12,7 +12,7 @@
 //@ts-check
 import {RastLine, RastPoint, logPrimitive} from "./PipelineExport.js";
 import {Model, LineSegment, Primitive, Point} from "../scene/SceneExport.js";
-import { Viewport} from "../framebuffer/FramebufferImport.js";
+import { Viewport} from "../framebuffer/FramebufferExport.js";
 
 /**@type {boolean} */export var rastDebug = false;
 /**@type {boolean} */export var doAntiAliasing = false;

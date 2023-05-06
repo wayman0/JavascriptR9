@@ -32,7 +32,7 @@
 //@ts-check
 import {rastDebug, doAntiAliasing, doGamma, logMessage, logPixel, logPixelsXAA, logPixelsYAA} from "./PipelineExport.js";
 import {Model, LineSegment} from "../scene/SceneExport.js";
-import {Viewport} from "../framebuffer/FramebufferImport.js";
+import {Viewport} from "../framebuffer/FramebufferExport.js";
 import Color from "../color/Color.js";
 import format from "../../StringFormat.js";
 

@@ -1,11 +1,11 @@
 //@ts-check
 
-import {Matrix, Position, Scene, Model, LineSegment, Primitive} from "../../renderer/scene/SceneImport.js";
-import {FrameBuffer} from "../../renderer/framebuffer/FramebufferImport.js";
-import * as ModelShading from "../../renderer/scene/util/UtilImport.js";
+import {Matrix, Position, Scene, Model, LineSegment, Primitive} from "../../renderer/scene/SceneExport.js";
+import {FrameBuffer} from "../../renderer/framebuffer/FramebufferExport.js";
+import * as ModelShading from "../../renderer/scene/util/UtilExport.js";
 import Color from "../../renderer/color/Color.js";
-import {renderFB} from "../../renderer/pipeline/PipelineImport.js";
-import {Sphere} from "../../renderer/models_L/ModelsImport.js";
+import {renderFB} from "../../renderer/pipeline/PipelineExport.js";
+import {Sphere} from "../../renderer/models_L/ModelsExport.js";
 
 const ecliptic = 23.5;
 

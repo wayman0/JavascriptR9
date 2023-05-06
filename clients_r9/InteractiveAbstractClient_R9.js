@@ -1,8 +1,8 @@
-import {Scene, Model, Position, Matrix, Camera, Vertex} from "../renderer/scene/SceneImport.js";
-import {Point, LineSegment} from "../renderer/scene/primitives/PrimitiveImport.js";
-import {PointCloud, MeshMaker, ModelShading} from "../renderer/scene/util/UtilImport.js";
-import {render, renderFB, clipDebug, rastDebug, doAntiAliasing, doGamma, doNearClipping} from "../renderer/pipeline/PipelineImport.js"
-import { FrameBuffer, Viewport} from "../renderer/framebuffer/FramebufferImport.js";
+import {Scene, Model, Position, Matrix, Camera, Vertex} from "../renderer/scene/SceneExport.js";
+import {Point, LineSegment} from "../renderer/scene/primitives/PrimitiveExport.js";
+import {PointCloud, MeshMaker, ModelShading} from "../renderer/scene/util/UtilExport.js";
+import {render, renderFB, clipDebug, rastDebug, doAntiAliasing, doGamma, doNearClipping} from "../renderer/pipeline/PipelineExport.js"
+import { FrameBuffer, Viewport} from "../renderer/framebuffer/FramebufferExport.js";
 
 export let letterbox = false;
 export let aspectRatio = 1.0;

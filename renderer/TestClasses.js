@@ -1,5 +1,5 @@
-import * as sp from "./scene/SceneImport.js";
-import * as fb from "./framebuffer/FramebufferImport.js";
+import * as sp from "./scene/SceneExport.js";
+import * as fb from "./framebuffer/FramebufferExport.js";
 import Color from "./color/Color.js";
 
 //sp.Vertex.main();     //testing   built in getter added but when ccalled outputs '[Function: "field name"]'
