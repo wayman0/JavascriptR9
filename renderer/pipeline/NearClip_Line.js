@@ -15,8 +15,8 @@
 */
 
 //@ts-check
-import {nearDebug, logMessage} from "./PipelineImport.js";
-import {Model, Vertex, LineSegment, Camera} from "../scene/SceneImport.js";
+import {nearDebug, logMessage} from "./PipelineExport.js";
+import {Model, Vertex, LineSegment, Camera} from "../scene/SceneExport.js";
 import Color from "../color/Color.js";
 import format from "../../StringFormat.js";
 

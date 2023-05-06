@@ -1,6 +1,6 @@
 //@ts-check
 
-import {Model, Vertex, LineSegment} from "../scene/SceneImport.js";
+import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
 
 export default class PanelYZ extends Model
 {

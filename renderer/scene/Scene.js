@@ -20,7 +20,7 @@
 */
 
 //@ts-check
-import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Vector, Vertex, LineSegment} from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Vector, Vertex, LineSegment} from "./SceneExport.js";
 // for testing purposes
 import Color from "../color/Color.js";
 

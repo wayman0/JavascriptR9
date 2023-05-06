@@ -84,7 +84,7 @@
    and {@code top = +1}.
 */
 //@ts-check
-import {Camera, Matrix, Model, OrthoNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, Position, Scene, Vector, Vertex} from "./SceneExport.js";
 
 /**
  * This is a static factory method.

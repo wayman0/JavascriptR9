@@ -16,7 +16,7 @@
 */
 
 //@ts-check
-import {Model, Position, Matrix, Vertex} from "../scene/SceneImport.js";
+import {Model, Position, Matrix, Vertex} from "../scene/SceneExport.js";
 
 /**
  * Use the current model-to-view transformation {@link Matrix} to transform

@@ -21,7 +21,7 @@
 */
 //@ts-check
 import format from "../../StringFormat.js";
-import {Camera, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
+import {Camera, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneExport.js";
 
 export default class Matrix
 {

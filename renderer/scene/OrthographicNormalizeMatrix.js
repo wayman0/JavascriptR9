@@ -48,7 +48,7 @@
 */
 
 //@ts-check
-import {Camera, Matrix, Model, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneImport.js";
+import {Camera, Matrix, Model, PerspNorm, Position, Scene, Vector, Vertex} from "./SceneExport.js";
 
 
 /**

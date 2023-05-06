@@ -10,7 +10,7 @@
 */
 
 //@ts-check
-import {Model, Vertex, Point, Camera} from "../scene/SceneImport.js";
+import {Model, Vertex, Point, Camera} from "../scene/SceneExport.js";
 
 /**
  *       If the {@link Vertex} used by the {@link Point} is on the camera

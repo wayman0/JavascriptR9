@@ -18,7 +18,7 @@
       positive {@code y} direction is downward.
 */
 //@ts-check
-import {FrameBuffer} from "./FramebufferImport.js";
+import {FrameBuffer} from "./FramebufferExport.js";
 import Color from "../color/Color.js";
 import format from "../../StringFormat.js";
 

@@ -29,6 +29,6 @@ export {default as Position} from "./Position.js";
 export {default as Scene} from "./Scene.js";
 export {default as Vector} from "./Vector.js";
 export {default as Vertex} from "./Vertex.js";
-export {Primitive} from "./primitives/PrimitiveImport.js";
-export {Point} from "./primitives/PrimitiveImport.js";
-export {LineSegment} from "./primitives/PrimitiveImport.js"
+export {Primitive} from "./primitives/PrimitiveExport.js";
+export {Point} from "./primitives/PrimitiveExport.js";
+export {LineSegment} from "./primitives/PrimitiveExport.js"

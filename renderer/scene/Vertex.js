@@ -28,7 +28,7 @@
 */
 
 // @ts-check
-import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector} from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector} from "./SceneExport.js";
 import format from "../../StringFormat.js";
 
 export default class Vertex

@@ -1,6 +1,6 @@
 //@ts-check
 
-import { LineSegment, Model, Vertex } from "../scene/SceneImport.js";
+import { LineSegment, Model, Vertex } from "../scene/SceneExport.js";
 import Color from "../color/Color.js";
 
 export default class Axes2D extends Model

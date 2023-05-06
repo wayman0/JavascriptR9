@@ -44,7 +44,7 @@
 */
 
 //@ts-check
-import {Model, Camera, Vertex} from "../scene/SceneImport.js";
+import {Model, Camera, Vertex} from "../scene/SceneExport.js";
 
 /**
  *  Use the {@link Camera}'s view volume data to transform each

@@ -10,8 +10,8 @@
 */
 //@ts-check
 
-import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "../SceneImport.js";
-import {Primitive, Point, LineSegment} from "../primitives/PrimitiveImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex} from "../SceneExport.js";
+import {Primitive, Point, LineSegment} from "../primitives/PrimitiveExport.js";
 
 /**
  *  Give this {@code Primitive} the uniform {@link java.awt.Color} indexed

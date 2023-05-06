@@ -5,7 +5,7 @@
 */
 
 //@ts-check
-import {Model, LineSegment, Vertex} from "../scene/SceneImport.js";
+import {Model, LineSegment, Vertex} from "../scene/SceneExport.js";
 import format from "../../StringFormat.js";
 
 export default class Pyramid extends Model

@@ -1,4 +1,4 @@
-import { LineSegment, Model, Vertex } from "../scene/SceneImport.js";
+import { LineSegment, Model, Vertex } from "../scene/SceneExport.js";
 
 export default class Circle extends Model
 {

@@ -1,6 +1,6 @@
 //@ts-check
 
-import {CylinderSector} from "./ModelsImport.js";
+import {CylinderSector} from "./ModelsExport.js";
 
 export default class Cylinder extends CylinderSector
 {

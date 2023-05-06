@@ -12,8 +12,8 @@
 */
 
 //@ts-check
-import {LineClip, PointClip, logPrimitive} from "./PipelineImport.js";
-import {Model, Primitive, LineSegment, Point} from "../scene/SceneImport.js";
+import {LineClip, PointClip, logPrimitive} from "./PipelineExport.js";
+import {Model, Primitive, LineSegment, Point} from "../scene/SceneExport.js";
 
 export var /**@type {boolean} whether to debug clipping */clipDebug = false;
 

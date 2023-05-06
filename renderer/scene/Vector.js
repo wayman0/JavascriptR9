@@ -17,7 +17,7 @@
 
 // @ts-check
 import format from "../../StringFormat.js";
-import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vertex} from "./SceneImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vertex} from "./SceneExport.js";
 export default class Vector
 {
    /** @type {number} x the x value of this Vector*/ x;

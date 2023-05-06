@@ -64,7 +64,7 @@
 }</pre>
 */
 //@ts-check
-import {Model, Vertex, Camera} from "../scene/SceneImport.js";
+import {Model, Vertex, Camera} from "../scene/SceneExport.js";
 
 /**
  *  Project each {@link Vertex} from a {@link Model} to

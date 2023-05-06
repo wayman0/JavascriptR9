@@ -66,7 +66,7 @@
 */
 
 //@ts-check
-import {Camera, Matrix, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex, Primitive, LineSegment, Point} from "./SceneImport.js";
+import {Camera, Matrix, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex, Primitive, LineSegment, Point} from "./SceneExport.js";
 
 import Color from "../color/Color.js";
 

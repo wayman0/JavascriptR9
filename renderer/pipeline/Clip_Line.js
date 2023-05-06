@@ -198,8 +198,8 @@
 
 //@ts-check
 
-import {clipDebug, logMessage} from "./PipelineImport.js";
-import {Model, Vertex, LineSegment} from "../scene/SceneImport.js";
+import {clipDebug, logMessage} from "./PipelineExport.js";
+import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
 import Color from "../color/Color.js";
 import format from "../../StringFormat.js";
 

@@ -16,7 +16,7 @@
                 https://en.wikipedia.org/wiki/Viewing_frustum</a>
 */
 //@ts-check
-import {Model, LineSegment, Vertex} from "../scene/SceneImport.js";
+import {Model, LineSegment, Vertex} from "../scene/SceneExport.js";
 
 export default class ViewFrustumModel extends Model
 {

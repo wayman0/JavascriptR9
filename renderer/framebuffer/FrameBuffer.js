@@ -7,7 +7,7 @@
 import {writeFileSync, appendFileSync, writeFile, appendFile} from "node:fs";
 import {Buffer} from "node:buffer";
 
-import {Viewport} from "./FramebufferImport.js";
+import {Viewport} from "./FramebufferExport.js";
 import Color from "../color/Color.js";
 import format from "../../StringFormat.js";
 

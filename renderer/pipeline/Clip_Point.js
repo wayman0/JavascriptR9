@@ -10,7 +10,7 @@
 */
 
 //@ts-check
-import {Model, Vertex, Point} from "../scene/SceneImport.js";
+import {Model, Vertex, Point} from "../scene/SceneExport.js";
 
 /**
  * If the {@link Vertex} used by the {@link Point} sticks out

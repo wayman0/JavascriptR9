@@ -24,10 +24,10 @@
 */
 
 //@ts-check
-import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex, Primitive, LineSegment, Point} from "../scene/SceneImport.js";
-import {check} from "../scene/util/UtilImport.js";
-import {FrameBuffer, Viewport} from "../framebuffer/FramebufferImport.js";
-import {clip, M2V, NearClip, Project, rasterize, V2C, debugPosition, debugScene, logMessage, logVertexList, logColorList, logPrimitiveList, setDebugScene, setDebugPosition} from "./PipelineImport.js";
+import {Camera, Matrix, Model, OrthoNorm, PerspNorm, Position, Scene, Vector, Vertex, Primitive, LineSegment, Point} from "../scene/SceneExport.js";
+import {check} from "../scene/util/UtilExport.js";
+import {FrameBuffer, Viewport} from "../framebuffer/FramebufferExport.js";
+import {clip, M2V, NearClip, Project, rasterize, V2C, debugPosition, debugScene, logMessage, logVertexList, logColorList, logPrimitiveList, setDebugScene, setDebugPosition} from "./PipelineExport.js";
 import Color from "../color/Color.js";
 
 /**@type {Color} */ export var DEFAULT_COLOR = Color.white;

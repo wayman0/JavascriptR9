@@ -10,8 +10,8 @@
 */
 
 //@ts-check
-import {RastLine, RastPoint, logPrimitive} from "./PipelineImport.js";
-import {Model, LineSegment, Primitive, Point} from "../scene/SceneImport.js";
+import {RastLine, RastPoint, logPrimitive} from "./PipelineExport.js";
+import {Model, LineSegment, Primitive, Point} from "../scene/SceneExport.js";
 import { Viewport} from "../framebuffer/FramebufferImport.js";
 
 /**@type {boolean} */export var rastDebug = false;

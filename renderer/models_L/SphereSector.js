@@ -74,7 +74,7 @@
 //@ts-check
 
 import format from "../../StringFormat.js";
-import {Model, Vertex, LineSegment} from "../scene/SceneImport.js";
+import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
 
 
 export default class SphereSector extends Model

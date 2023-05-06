@@ -10,8 +10,8 @@
 */
 
 //@ts-check
-import {NearLine, NearPoint, logPrimitive} from "./PipelineImport.js";
-import {Camera, Model, Primitive, LineSegment, Point} from "../scene/SceneImport.js";
+import {NearLine, NearPoint, logPrimitive} from "./PipelineExport.js";
+import {Camera, Model, Primitive, LineSegment, Point} from "../scene/SceneExport.js";
 
 export var /**@type {boolean} doNearClipping whether to do near clipping */ doNearClipping = true;
 export var /**@type {boolean} nearDebug whether to debug near clipping */ nearDebug = false;

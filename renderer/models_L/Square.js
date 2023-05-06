@@ -30,8 +30,8 @@
 */
 
 //@ts-check
-import format from "../../StringFormat";
-import {Model, Vertex, LineSegment} from "../scene/SceneImport.js";
+import format from "../../StringFormat.js";
+import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
 
 export default class Square extends Model
 {

@@ -1,6 +1,6 @@
 //@ts-check
 
-import {ConeSector} from "./ModelsImport.js";
+import {ConeSector} from "./ModelsExport.js";
 
 export default class Cone extends ConeSector
 {
