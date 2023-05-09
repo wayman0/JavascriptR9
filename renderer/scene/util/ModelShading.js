@@ -129,9 +129,9 @@ export function setRainbowPrimitiveColors(model)
  */
 export function randomColor()
 {
-    let r = Math.random();
-    let g = Math.random();
-    let b = Math.random();
+    let r = Math.random() * 255;
+    let g = Math.random() * 255;
+    let b = Math.random() * 255;
     
     return new Color(r, g, b);
 }

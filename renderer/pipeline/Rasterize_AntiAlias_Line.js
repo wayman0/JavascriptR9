@@ -85,7 +85,7 @@ export default function rasterize(model, ls, vp)
     if( (x0 == x1) && (y0 == y1))
     {
         const x0VP = Math.trunc(x0) -1;
-        const y0VP = Math.trunc(y0);
+        const y0VP = Math.trunc(y0)-1;
 
         if(rastDebug)
             logPixel(x0, y0, x0VP, y0VP, r0, g0, b0, vp);
@@ -254,7 +254,7 @@ export default function rasterize(model, ls, vp)
     const isFloat = r1 <=1 && g1 <= 1 && b1 <= 1
     if(!transposedLine)
     {
-        const xVP = Math.trunc(x1);
+        const xVP = Math.trunc(x1) -1;
         const yVP = h - Math.trunc(y1) - 1;
 
         if(rastDebug)

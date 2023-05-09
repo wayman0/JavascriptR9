@@ -27,7 +27,6 @@ export default class Disk extends Model
         const deltaT = 2 * Math.PI/k;
 
         /**@type {Vertex[][]} */
-        //const v = new Array(new Array());
         const v = new Array(n);
         for(let x = 0; x < v.length; x += 1)
             v[x] = new Array(k);
@@ -43,14 +42,14 @@ export default class Disk extends Model
                 v[i][j] = new Vertex(ri * c, ri *s, 0);
             }
         }
-
-        for(let j = 0; j < k; j += 1)
-            for(let i = 0; i < k; i += 1)
+        
+        for(let i = 0; i < n; i += 1)
+            for(let j = 0; j < k; j += 1)
                 this.addVertex(v[i][j]);
 
-        v[0][0] = new Vertex(0, 0, 0);
+        const center = new Vertex(0, 0, 0);
+        this.addVertex(center);
         const centIndex = n * k;
-        this.addVertex(v[n][k])
 
         for(let j = 0; j < k; j += 1)
         {

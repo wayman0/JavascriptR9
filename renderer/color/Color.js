@@ -66,7 +66,7 @@ export default class Color
      * @param {number} r the red value of the {@code Color} 
      * @param {number} g the green value of the {@code Color} 
      * @param {number} b the blue value of the {@code Color} 
-     * @param {number} a the gamma value of the {@code Color} 
+     * @param {number} a the alpha value of the {@code Color} 
      * @param {boolean} float specifing whether the rgb values are integer or float.
      */
     constructor(r = 0, g = 0, b = 0, a = 255, float = false)
@@ -87,7 +87,7 @@ export default class Color
             if(!(b >= 0 && b <= 1))
                 throw new Error("B Float data must be between 0 and 1 inclusive");
             if(!(a >=0 && a <= 1))
-                throw new Error("Alpha Float data must be between 0 and 1 inclusive" + a);
+                throw new Error("Alpha Float data must be between 0 and 1 inclusive");
         }
         else
         {

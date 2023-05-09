@@ -1,6 +1,7 @@
 //@ts-check
 
 import {LineSegment, Model, Vertex} from "../scene/SceneExport.js";
+import Circle from "./Circle.js";
 
 export default class CircleSector extends Model
 {
@@ -27,8 +28,10 @@ export default class CircleSector extends Model
         if(num < 4)
             throw new Error("N must be greater than 3");
 
+        this.r = rad;
         this.theta1 = t1 % (2 * Math.PI);
         this.theta2 = t2 % (2 * Math.PI);
+        this.n = num;
 
         if(this.theta1 < 0) this.theta1 = 2 * Math.PI + this.theta1;
         if(this.theta2 < 0) this.theta2 = 2 * Math.PI + this.theta2;      

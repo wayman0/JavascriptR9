@@ -64,8 +64,7 @@ export function make(model, pointSize = 0)
 
     for(let p of pointCloud.getPrimitiveList())
     {
-        // @ts-ignore
-        p.radius = pointSize;
+        /**@type {Point}*/(p).radius = pointSize;
     }
 
     return pointCloud; 
