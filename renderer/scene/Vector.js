@@ -46,9 +46,6 @@ export default class Vector
       this.w = w;
    }
 
-   // if do @param {{x: number, y: number, z: number, w: number;}} v the ...
-   // when the function is hovered over it gives the object structure and then says its 
-   // type is a Vector instead of vertex, how do I fix this?
    /**
     * Create a new {@this Vector} from a {@link Vertex}
     * @param {Vertex} v the vertex to convert into a {@code Vector}
@@ -64,7 +61,7 @@ export default class Vector
 
    /**
     * The dot-product of two {@code Vector}s which returns a scalar
-    * @param {{x: number, y: number, z: number, w: number;}} v the vector to multiply with this {@code Vector}
+    * @param {Vector} v the vector to multiply with this {@code Vector}
     * @returns  {number} that is the dot product of this {@code Vector} and @param {Vector} v
     * 
     */
@@ -78,7 +75,7 @@ export default class Vector
 
    /**
     * The cross product of two {@code Vector}s returns a (new) {@code Vector}
-    * @param {{x: number, y: number, z: number, w: number;}} v the vector to mutliply with this {@code Vector}
+    * @param {Vector} v the vector to mutliply with this {@code Vector}
     * @returns  {Vector} the new {@code Vector} that is the cross product of this {@code Vector} and @param {Vector} v
     */
    crossProduct(v)
@@ -105,7 +102,7 @@ export default class Vector
 
    /**
     * A {@code Vector} plus a {@code Vector} returns a (new) {@code Vector}
-    * @param {{x: number, y: number, z: number, w: number;}} v the vector to add to this {@code Vector}
+    * @param {Vector} v the vector to add to this {@code Vector}
     * @returns {Vector} a new {@code Vector} object that is the sum of this {@code Vector} and v
     */
    plusVector(v)
@@ -118,7 +115,7 @@ export default class Vector
 
    /**
     * A {@code Vector} minus a {@code Vector} returns a (new) {@code Vector}
-    * @param {{x: number, y: number, z: number, w: number;}} v the vector to subtract from this {@code Vector}
+    * @param {Vector} v the vector to subtract from this {@code Vector}
     * @returns {Vector} a new {@code Vector} that is this {@code Vector} minus v
     */
    minusVector(v)
@@ -147,7 +144,7 @@ export default class Vector
    /**
     * A {@code Vector} plus a {@link Vertex } returns a new {@link Vertex }
     * The vector translates the vertex to a new location.
-    * @param {{x: number, y: number, z: number, w: number;}} v the vertex to add to this {@code Vector}
+    * @param {Vertex} v the vertex to add to this {@code Vector}
     * @returns {Vertex} a new {@link Vertex } that is the translation of {@code v} by this {@code Vector}
     */
    plusVertex(v)
@@ -214,7 +211,7 @@ export default class Vector
    /**
     * MUTATE this {@code Vector} to contain the sum of this {@code Vector}
     * with the {@code Vector} {@code v}
-    * @param {{x: number, y: number, z: number, w: number;}} v the vector to add to this {@code Vector}
+    * @param {Vector} v the vector to add to this {@code Vector}
     * @returns {Vector} a reference to this {@code Vector} for method chaining.
     */
    plusEqualsVector(v)
@@ -233,7 +230,7 @@ export default class Vector
    /**
     * MUTATE this {@code Vector} to contain the differenceo of this {@code Vector}
     * with the {@code Vector} {@code v}
-    * @param {{x: number, y: number, z: number, w: number;}} v the vector to subtract form this {@code Vector}
+    * @param {Vector} v the vector to subtract form this {@code Vector}
     * @returns {Vector} a reference to this {@code Vector} for method chaining.
     */
    minusEqualsVector(v)
