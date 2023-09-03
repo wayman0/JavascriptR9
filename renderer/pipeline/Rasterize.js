@@ -12,12 +12,12 @@
 //@ts-check
 import {RastLine, RastPoint, logPrimitive} from "./PipelineExport.js";
 import {Model, LineSegment, Primitive, Point} from "../scene/SceneExport.js";
-import { Viewport} from "../framebuffer/FramebufferExport.js";
+import {Viewport} from "../framebuffer/FramebufferExport.js";
 
 /**@type {boolean} */export var rastDebug = false;
 /**@type {boolean} */export var doAntiAliasing = false;
 /**@type {boolean} */export var doGamma = true;
-/**@type {number} */export var GAMMA = 2.2;
+/**@type {number}  */export var GAMMA = 2.2;
 
 /**
  * Rasterize every clipped primitive into shadded pixels in the viewport

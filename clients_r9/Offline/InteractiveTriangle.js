@@ -1,11 +1,10 @@
 //@ts-check
 
-import {Scene, Model, Position, Vertex, LineSegment, Matrix} from "../renderer/scene/SceneExport.js";
-import {FrameBuffer} from "../renderer/framebuffer/FramebufferExport.js";
-import {renderFB} from "../renderer/pipeline/PipelineExport.js";
-
-import Color from "../renderer/color/Color.js";
-import format from "../StringFormat.js";
+import {Scene, Model, Position, Vertex, LineSegment, Matrix} from "../../renderer/scene/SceneExport.js";
+import {FrameBuffer} from "../../renderer/framebuffer/FramebufferExport.js";
+import {renderFB} from "../../renderer/pipeline/PipelineExport.js";
+import Color from "../../renderer/color/Color.js";
+import format from "../../StringFormat.js";
 
 let scene = new Scene();
 

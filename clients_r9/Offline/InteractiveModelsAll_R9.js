@@ -1,13 +1,13 @@
 //@ts-check
 
-import {Scene, Position, Matrix} from "../renderer/scene/SceneExport.js";
-import {make} from "../renderer/scene/util/UtilExport.js";
-import * as Shapes from "../renderer/models_L/ModelsExport.js";
-import * as ModelShading from "../renderer/scene/util/UtilExport.js";
-import {FrameBuffer} from "../renderer/framebuffer/FramebufferExport.js";
-import {renderFB} from "../renderer/pipeline/PipelineExport.js";
-import Color from "../renderer/color/Color.js";
-import format from "../StringFormat.js";
+import {Scene, Position, Matrix} from "../../renderer/scene/SceneExport.js";
+import {make} from "../../renderer/scene/util/UtilExport.js";
+import * as Shapes from "../../renderer/models_L/ModelsExport.js";
+import * as ModelShading from "../../renderer/scene/util/UtilExport.js";
+import {FrameBuffer} from "../../renderer/framebuffer/FramebufferExport.js";
+import {renderFB} from "../../renderer/pipeline/PipelineExport.js";
+import Color from "../../renderer/color/Color.js";
+import format from "../../StringFormat.js";
 
 const scene = new Scene();
 // Instantiate at least one of every Model class.

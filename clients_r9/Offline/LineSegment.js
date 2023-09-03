@@ -1,10 +1,10 @@
 //@ts-check
 
-import {Scene, Matrix, Model, Position, Vertex} from "../renderer/scene/SceneExport.js";
-import {FrameBuffer, Viewport} from "../renderer/framebuffer/FramebufferExport.js";
-import {renderFB, setRastDebug, setDoAntiAliasing} from "../renderer/pipeline/PipelineExport.js";
-import {LineSegment} from "../renderer/scene/primitives/PrimitiveExport.js";
-import Color from "../renderer/color/Color.js";
+import {Scene, Matrix, Model, Position, Vertex} from "../../renderer/scene/SceneExport.js";
+import {FrameBuffer, Viewport} from "../../renderer/framebuffer/FramebufferExport.js";
+import {renderFB, setRastDebug, setDoAntiAliasing} from "../../renderer/pipeline/PipelineExport.js";
+import {LineSegment} from "../../renderer/scene/primitives/PrimitiveExport.js";
+import Color from "../../renderer/color/Color.js";
 
 let lsModelBlend = Model.buildName("Line Segment Model: Red to Blue");
 lsModelBlend.addVertex(  new Vertex(-1, 0, 0), 

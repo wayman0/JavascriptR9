@@ -74,18 +74,18 @@ export default function rasterize(model, ls, vp)
         logMessage(format("(x1_pp, y1_pp) = (%9.4f, %9.4f)", x1, y1));
     }
 
-    //x0 = Math.round(x0), x1 = Math.round(x1);
-    //y0 = Math.round(y0), y1 = Math.round(y1);
+    x0 = Math.round(x0), x1 = Math.round(x1);
+    y0 = Math.round(y0), y1 = Math.round(y1);
 
-    x0 = Math.trunc(x0), x1 = Math.trunc(x1);
-    y0 = Math.trunc(y0), y1 = Math.trunc(y1);
+    //x0 = Math.trunc(x0), x1 = Math.trunc(x1);
+    //y0 = Math.trunc(y0), y1 = Math.trunc(y1);
     
     //console.log("(%d, %d), (%d, %d)", x0, y0, x1, y1);
 
     if( (x0 == x1) && (y0 == y1))
     {
         const x0VP = Math.trunc(x0) -1;
-        const y0VP = Math.trunc(y0)-1;
+        const y0VP = h-Math.trunc(y0);
 
         if(rastDebug)
             logPixel(x0, y0, x0VP, y0VP, r0, g0, b0, vp);
@@ -191,7 +191,8 @@ export default function rasterize(model, ls, vp)
             {
                 const xVP = x-1;
                 const yVPLow = h-yLow - 1;
-                const yVPHi = h-yHi - 1;
+                //const yVPHi = h-yHi - 1;
+                const yVPHi = h-yHi;
 
                 if(rastDebug)
                     logPixelsYAA(x, y, xVP, yVPLow, yVPHi,
@@ -205,8 +206,8 @@ export default function rasterize(model, ls, vp)
             {
                 const xVPLow = yLow -1;
                 const xVPHi = yHi -1;
-                const yVP = h-x -1;
-
+                //const yVP = h-x -1;
+                const yVP = h-x;
                 if(rastDebug)
                     logPixelsXAA(y, x, xVPLow, xVPHi, yVP, 
                                 rL, gL, bL, rH, gH, bH, vp);
@@ -228,9 +229,11 @@ export default function rasterize(model, ls, vp)
             const isFloat = r<= 1 && g<= 1 && b<= 1;
             if(!transposedLine)
             {
-                const xVP = x;
-                const yVP = h-Math.trunc(Math.round(y)) - 1;
-                
+                //const xVP = x;
+                const xVP = x-1;
+                //const yVP = h-Math.trunc(Math.round(y)) - 1;
+                const yVP = h - Math.trunc(Math.round(y));
+
                 if(rastDebug)
                     logPixel(x, y, xVP, yVP, r, g, b, vp);
 
@@ -239,8 +242,10 @@ export default function rasterize(model, ls, vp)
             }
             else
             {
-                const xVP = Math.trunc(Math.round(y));
-                const yVP = h-x - 1;
+                //const xVP = Math.trunc(Math.round(y));
+                const xVP = (Math.trunc(Math.round(y))) -1;
+                //const yVP = h-x - 1;
+                const yVP = h-x;
 
                 if(rastDebug)
                     logPixel(y, x, xVP, yVP, r, g, b, vp);
@@ -255,7 +260,8 @@ export default function rasterize(model, ls, vp)
     if(!transposedLine)
     {
         const xVP = Math.trunc(x1) -1;
-        const yVP = h - Math.trunc(y1) - 1;
+        //const yVP = h - Math.trunc(y1) - 1;
+        const yVP = h - Math.trunc(y1);
 
         if(rastDebug)
             logPixel(x1, y1, xVP, yVP, r1, g1, b1, vp);

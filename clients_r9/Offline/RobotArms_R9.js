@@ -1,10 +1,10 @@
 //@ts-check
 
-import {Scene, Matrix, Model, Position, Vertex} from "../renderer/scene/SceneExport.js";
-import {FrameBuffer, Viewport} from "../renderer/framebuffer/FramebufferExport.js";
-import {render, renderFB, setRastDebug, setDoAntiAliasing} from "../renderer/pipeline/PipelineExport.js";
-import {LineSegment} from "../renderer/scene/primitives/PrimitiveExport.js";
-import Color from "../renderer/color/Color.js";
+import {Scene, Matrix, Model, Position, Vertex} from "../../renderer/scene/SceneExport.js";
+import {FrameBuffer, Viewport} from "../../renderer/framebuffer/FramebufferExport.js";
+import {render, renderFB, setRastDebug, setDoAntiAliasing} from "../../renderer/pipeline/PipelineExport.js";
+import {LineSegment} from "../../renderer/scene/primitives/PrimitiveExport.js";
+import Color from "../../renderer/color/Color.js";
 
 /**
  * @param {Model} model the arm segment model to be made
