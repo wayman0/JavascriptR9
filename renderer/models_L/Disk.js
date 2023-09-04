@@ -15,9 +15,9 @@
 */
 //@ts-check
 
-import {DiskSector} from "./Models_LExports.js";
+import {DiskSector} from "./Models_LExport.js";
 import format from "../../StringFormat.js";
-import {LineSegment, Vertex} from "../scene/SceneExports.js";
+import {LineSegment, Vertex} from "../scene/SceneExport.js";
 
 export default class Disk extends DiskSector
 {

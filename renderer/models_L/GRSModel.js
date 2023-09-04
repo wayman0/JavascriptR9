@@ -4,17 +4,6 @@
  * See LICENSE for details.
 */
 
-package renderer.models_L;
-
-import renderer.scene.*;
-import renderer.scene.primitives.*;
-
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.FileNotFoundException;
-
 /**
    Create a wirefram model from a GRS file.
 <p>
@@ -41,101 +30,38 @@ import java.io.FileNotFoundException;
        each vertex.
    </ol>
 */
-public class GRSModel extends Model
-{
-   // the figure's extents (bounding box)
-   public double left   = 0.0;
-   public double top    = 0.0;
-   public double right  = 0.0;
-   public double bottom = 0.0;
-   public int numLineStrips = 0;
+//@ts-check
+import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
+import format from "../../StringFormat.js";
+import Color from "../color/Color.js";
 
+export default class GRSModel extends Model
+{
+   /**@type {number} [left=0]   */ #left;  
+   /**@type {number} [top=0]    */ #top;
+   /**@type {number} [right=0]  */ #right;
+   /**@type {number} [bottom=0] */ #bottom;
+   /**@type {number} [numLineStrips=0] */ #numLineStrips;
+   
    /**
       Create a wireframe model from the contents of an GRS file.
-
-      @param grsFile  {@link File} object for the GRS data file
+      @param {string} grsFile  string object containing the path for the GRS data file
    */
-   public GRSModel(final File grsFile)
+   constructor(grsFile)
    {
-      super("GRS Model");
+      super(undefined, undefined, undefined, "GRS Model");
 
-      // Open the GRS file.
-      String grsName = null;
-      FileInputStream fis = null;
-      try
-      {
-         grsName = grsFile.getCanonicalPath();
-         fis = new FileInputStream( grsFile );
-      }
-      catch (FileNotFoundException e)
-      {
-         e.printStackTrace(System.err);
-         System.err.printf("ERROR! Could not find GRS file: %s\n", grsName);
-         System.exit(-1);
-      }
-      catch (IOException e)
-      {
-         e.printStackTrace(System.err);
-         System.err.printf("ERROR! Could not open GRS file: %s\n", grsName);
-         System.exit(-1);
-      }
+      const fs = require("fs");
+      let text = fs.readFileSync(grsFile, "utf8");
 
-      // Update this model's name.
-      this.name = grsName;
+      console.log(text);
 
-      final Scanner scanner = new Scanner(fis);
 
-      // Get the geometry from the GRS file.
-      try
-      {
-         // Skip over the comment lines.
-         String line = scanner.nextLine();
-         while ( ! line.startsWith("*") )
-         {
-            //System.err.println(line);
-            line = scanner.nextLine();
-         }
 
-         // Read the figure extents.
-         this.left   = scanner.nextDouble();
-         this.top    = scanner.nextDouble();
-         this.right  = scanner.nextDouble();
-         this.bottom = scanner.nextDouble();
+   }// end constructor
 
-         // Read the number of line-strips.
-         this.numLineStrips = scanner.nextInt();
-
-         int index = -1;
-
-         // Read each line-strip.
-         for(int j = 0; j < this.numLineStrips; ++j)
-         {
-            // Read the number of vertices in this line-strip.
-            final int numVertices = scanner.nextInt();
-
-            // Put this line-strip in the Model object.
-            double x = scanner.nextDouble(); // read the first vertex in the line-strip
-            double y = scanner.nextDouble();
-            addVertex( new Vertex(x, y, 0) );
-            ++index;
-            for (int i = 1; i < numVertices; ++i)
-            {
-               // Read the next model coordinate pair.
-               x = scanner.nextDouble();
-               y = scanner.nextDouble();
-               addVertex( new Vertex(x, y, 0) );
-               ++index;
-               // Create a new LineSegment in the Model.
-               addPrimitive(new LineSegment(index - 1, index));
-            }
-         }
-         fis.close();
-      }
-      catch (IOException e)
-      {
-         e.printStackTrace(System.err);
-         System.err.printf("ERROR! Could not read GRS file: %s\n", grsName);
-         System.exit(-1);
-      }
+   static main()
+   {
+      const t = new GRSModel("../../assets/grs/bronto.grs");
    }
 }//GRSModel

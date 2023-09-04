@@ -13,7 +13,7 @@
 */
 //@ts-check 
 
-import {Model, Vertex, LineSegment} from "../scene/SceneExports.js";
+import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
 import format from "../../StringFormat";
 
 export default class SphereSubdivided extends Model

@@ -10,7 +10,7 @@
 */
 //@ts-check
 
-import {CircleSector} from "./Models_LExports.js";
+import {CircleSector} from "./Models_LExport.js";
 import format from "../../StringFormat.js";
 
 export default class Circle extends CircleSector

@@ -53,3 +53,5 @@ export {default as TriangularPrism} from "./TriangularPrism.js";
 export {default as TriangularPyramid} from "./TriangularPyramid.js";
 
 export {default as ViewFrustumModel} from "./ViewFrustumModel.js";
+
+export {default as GRSModel} from "./GRSModel.js";

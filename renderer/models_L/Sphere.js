@@ -47,9 +47,9 @@
 */
 //@ts-check
 import format from "../../../StringFormat.js";
-import {SphereSector} from "./Models_LExports.js";
+import {SphereSector} from "./Models_LExport.js";
 
-//import {Vertex, LineSegment} from "../scene/SceneExports.js";
+//import {Vertex, LineSegment} from "../scene/SceneExport.js";
 
 export default class Sphere extends SphereSector
 {

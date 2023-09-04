@@ -42,8 +42,8 @@
 */
 //@ts-check
 
-import {Cube} from "./Models_LExports.js";
-import {Vertex, LineSegment} from "../scene/SceneExports.js";
+import {Cube} from "./Models_LExport.js";
+import {Vertex, LineSegment} from "../scene/SceneExport.js";
 import format from "../../StringFormat";
 
 export default class Cube3 extends Cube

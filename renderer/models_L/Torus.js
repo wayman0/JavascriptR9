@@ -50,10 +50,10 @@
 
    @see TorusSector
 */
-import {TorusSector} from "./Models_LExports.js";
+import {TorusSector} from "./Models_LExport.js";
 import format from "../../StringFormat.js";
 
-import {Vertex, LineSegment} from "../scene/SceneExports.js";
+import {Vertex, LineSegment} from "../scene/SceneExport.js";
 
 export default class Torus extends TorusSector
 {

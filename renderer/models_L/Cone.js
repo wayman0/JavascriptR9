@@ -20,7 +20,7 @@
 */
 //@ts-check
 
-import {ConeSector} from "./Models_LExports.js";
+import {ConeSector} from "./Models_LExport.js";
 import format from "../../StringFormat.js";
 
 export default class Cone extends ConeSector
