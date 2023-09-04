@@ -1,38 +1,55 @@
-import { LineSegment, Model, Vertex } from "../scene/SceneExport.js";
+/*
+ * Renderer Models. The MIT License.
+ * Copyright (c) 2022 rlkraft@pnw.edu
+ * See LICENSE for details.
+*/
 
-export default class Circle extends Model
+/**
+   Create a wireframe model of a circle in
+   the xy-plane centered at the origin.
+*/
+//@ts-check
+
+import {CircleSector} from "./Models_LExports.js";
+import format from "../../StringFormat.js";
+
+export default class Circle extends CircleSector
 {
-    /**@type {number} */r;
-    /**@type {number} */n;
+   // /**@type {number} */ #r;
+   // /**@type {number} */ #n;
+   
 
-    /**
-     * 
-     * @param {number} rad 
-     * @param {number} num 
-     */
-    constructor(rad = 1, num = 16)
-    {
-        super(undefined, undefined, undefined, "Circle(" + rad + "," + num + ")");
+   /**
+      Create a circle in the xy-plane with radius {@code r}
+      and with {@code n} line segments around the circumference.
 
-        if(typeof rad != "number" || typeof num != "number")
-            throw new Error("All parameters must be numerical");
+      @param {number} [r=1]  radius of the circle
+      @param {number} [n=16]  number of line segments in the circle's circumference
+   */
+   constructor(r = 1, n = 16)
+   {
+      super(r, 0, 360, 16, format("Circle(%f.2,%d)", r, n));
 
-        if(num < 3)
-            throw new Error("N must be greater than 3");
+      /*
+      this.#r = r;
+      this.#n = n;
 
-        this.r = rad;
-        this.n = num;
-    
-        const deltaTheta = (2 * Math.PI)/this.n;
+      // Create the circle's geometry.
+      const deltaTheta = (2.0 * Math.PI) / n;
 
-        for(let i = 0; i < this.n; ++i)
-            this.addVertex(new Vertex(  this.r * Math.cos(i * deltaTheta),
-                                        this.r * Math.sin(i * deltaTheta), 
-                                        0));
+      // Create all the vertices.
+      for (let i = 0; i < n; ++i)
+      {
+         const c = Math.cos(i * deltaTheta),
+               s = Math.sin(i * deltaTheta);
+         this.addVertex( new Vertex(r * c, r * s, 0) );
+      }
 
-        for(let i = 0; i < this.n - 1; ++i)
-            this.addPrimitive(LineSegment.buildVertex(i, i + 1));
-        
-        this.addPrimitive(LineSegment.buildVertex(this.n-1, 0));
-    }
-}
+      // Create the line segments around the circle.
+      for (let i = 0; i < n - 1; ++i)
+         this.addPrimitive(new LineSegment([i, i+1]));
+      
+      this.addPrimitive(new LineSegment([n-1, 0]));
+      */
+   }
+}//Circle

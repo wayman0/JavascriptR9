@@ -2,7 +2,7 @@
 
 import * as ModelShading from "../../renderer/scene/util/UtilExport.js";
 import {Position, Scene, Matrix, Model, LineSegment, Vertex} from "../../renderer/scene/SceneExport.js";
-import {PanelXZ, Sphere} from "../../renderer/models_L/ModelsExport.js";
+import {PanelXZ, Sphere} from "../../renderer/models_L/Models_LExports.js";
 import {FrameBuffer} from "../../renderer/framebuffer/FramebufferExport.js";
 import {renderFB} from "../../renderer/pipeline/PipelineExport.js";
 import Color from "../../renderer/color/Color.js";

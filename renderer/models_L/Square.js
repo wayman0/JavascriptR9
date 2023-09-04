@@ -28,19 +28,19 @@
                    |
 }</pre>
 */
+//@ts-check 
 
-//@ts-check
-import format from "../../StringFormat.js";
-import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
+import {Model, Vertex, LineSegment} from "../scene/SceneExports.js";
+import format from "../../StringFormat";
 
 export default class Square extends Model
 {
    /**
       Create a square in the xy-plane with corners {@code (�r, �r, 0)}.
 
-      @param {number} r  determines the corners of the square
+      @param {number} [r=1]  determines the corners of the square
    */
-   constructor(r = 1)
+   constructor(r=1)
    {
       super(undefined, undefined, undefined, format("Square(%.2f)", r));
 
@@ -49,13 +49,13 @@ export default class Square extends Model
 
       // Create the square's geometry.
       this.addVertex(new Vertex(-r, -r, 0),
-                new Vertex(-r,  r, 0),
-                new Vertex( r,  r, 0),
-                new Vertex( r, -r, 0));
+                     new Vertex(-r,  r, 0),
+                     new Vertex( r,  r, 0),
+                     new Vertex( r, -r, 0));
 
       this.addPrimitive(LineSegment.buildVertex(0, 1),
-                   LineSegment.buildVertex(1, 2),
-                   LineSegment.buildVertex(2, 3),
-                   LineSegment.buildVertex(3, 0));
+                        LineSegment.buildVertex(1, 2),
+                        LineSegment.buildVertex(2, 3),
+                        LineSegment.buildVertex(3, 0));
    }
 }//Square
