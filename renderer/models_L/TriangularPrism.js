@@ -18,7 +18,7 @@
 */
 //@ts-check
 import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
-import format from "../../../StringFormat.js";
+import format from "../../StringFormat.js";
 
 export default  class TriangularPrism extends Model
 {

@@ -46,7 +46,7 @@
    @see SphereSector
 */
 //@ts-check
-import format from "../../../StringFormat.js";
+import format from "../../StringFormat.js";
 import {SphereSector} from "./Models_LExport.js";
 
 //import {Vertex, LineSegment} from "../scene/SceneExport.js";

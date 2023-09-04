@@ -44,7 +44,7 @@
 
 import {Cube} from "./Models_LExport.js";
 import {Vertex, LineSegment} from "../scene/SceneExport.js";
-import format from "../../StringFormat";
+import format from "../../StringFormat.js";
 
 export default class Cube3 extends Cube
 {

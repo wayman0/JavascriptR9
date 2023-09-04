@@ -15,7 +15,7 @@
 */
 //@ts-check 
 
-import format from "../../../StringFormat";
+import format from "../../StringFormat.js";
 import {RingSector} from "./Models_LExport.js";
 
 export default class Ring extends RingSector

@@ -17,7 +17,7 @@
 */
 //@ts-check
 import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
-import format from "../../../StringFormat.js";
+import format from "../../StringFormat.js";
 
 export default class ViewFrustumModel extends Model
 {
@@ -35,7 +35,7 @@ export default class ViewFrustumModel extends Model
    */
    constructor(left=-.25, right=.25, bottom=-.25, top=.25, near=.25, far=1)
    {
-      super(undefined, undefined, undefined, undefined, "View Frustum Model");
+      super(undefined, undefined, undefined, "View Frustum Model");
 
       this.addVertex(new Vertex(left,  top,    -near),
                      new Vertex(right, top,    -near),

@@ -16,7 +16,7 @@
 //@ts-check 
 
 import {Model, Vertex, LineSegment} from "../scene/SceneExport.js";
-import format from "../../../StringFormat";
+import format from "../../StringFormat.js";
 
 export default class PyramidFrustum extends Model
 {
