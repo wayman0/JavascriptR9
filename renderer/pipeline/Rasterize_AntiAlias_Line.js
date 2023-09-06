@@ -208,6 +208,7 @@ export default function rasterize(model, ls, vp)
                 const xVPHi = yHi -1;
                 //const yVP = h-x -1;
                 const yVP = h-x;
+                
                 if(rastDebug)
                     logPixelsXAA(y, x, xVPLow, xVPHi, yVP, 
                                 rL, gL, bL, rH, gH, bH, vp);
